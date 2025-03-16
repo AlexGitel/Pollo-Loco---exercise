@@ -1,0 +1,53 @@
+* {
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-image: url('img/desert.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    font-family: 'Piedra', 'Open Sans', sans-serif;
+
+}
+
+h1 {
+    letter-spacing: 3px;
+    font-size: 48px;
+    text-shadow: 4px 4px 2px rgba(0, 0, 0, 0.2);
+}
+
+canvas {
+    /* importend for responsive*/
+    display: block;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+}
+
+
+/* Smartphone portrait */
+@media only screen and (max-width: 720px) {
+    canvas {
+        width: 100%;
+    }
+}
+
+/* Smartphone landscape */
+@media only screen and (max-height: 480px) {
+    canvas {
+        height: 100vh;
+    }
+
+    h1 {
+        display: none;
+    }
+}
