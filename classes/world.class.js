@@ -17,7 +17,7 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
-        this.run();
+        this.update();
     }
 
     setWorld() {
@@ -84,13 +84,14 @@ class World {
     /**
      * checked if character get colliding or keyboard - pressed 
      */
-    run() {
+    update() {
         setInterval(() => {
             this.checkCollisionsEnemy();
             this.checkThrowObjects();
             this.checkCollisionsCoins();
             this.checkCollisionsBottles();
             this.checkBottlesAmount();
+            this.checkThrowObjectCollision();
         }, 200);
     }
 
@@ -137,7 +138,7 @@ class World {
     */
     checkThrowObjects() {
         if (this.keyboard.D && this.character.bottlesAmount > 0) {
-            let bottle = new ThrowableObject(this.character.x + 45, this.character.y + 90, this.character.otherDirection);
+            let bottle = new ThrowableObject(this.character.x + 20, this.character.y + 120, this.character.otherDirection);
             this.throwableObject.push(bottle);
             this.character.bottlesAmount -= 20;
             setTimeout(() => { this.throwableObject.splice(0, 1) }, 1500); // clear Array
@@ -146,6 +147,33 @@ class World {
             this.character.bottlesAmount = 0;
         }
     }
+
+    /**
+     * it check's if enemy hited
+     */
+    checkThrowObjectCollision() {
+        this.throwableObject.forEach((bottle) => {
+            this.level.enemies.forEach((enemy, enemyIndex) => {
+                if (bottle.isColliding(enemy, enemyIndex)) {
+                    enemy.died();
+                    setTimeout(() => { this.level.enemies.splice(enemyIndex, 1) }, 300);
+                }
+            });
+        });
+    }
+
+    // checkThrowObjectCollision() {
+    //     this.throwableObject.forEach((bottle) => {
+    //         this.level.enemies.forEach((enemy) => {
+    //             if (bottle.isColliding(enemy)) {
+    //                 enemy.died();
+    //                 setTimeout(() => {
+    //                     this.level.enemies = this.level.enemies.filter(e => e !== enemy);
+    //                 }, 300);
+    //             }
+    //         });
+    //     });
+    // }
 
     /**
     * Number of bottles at the start and after throwing

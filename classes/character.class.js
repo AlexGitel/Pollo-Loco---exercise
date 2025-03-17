@@ -89,7 +89,7 @@ class Character extends MovableObject {
                 this.jump();
             }
 
-            this.world.camera_x = -this.x + 250;
+            this.world.camera_x = -this.x + 280;
         }, 1000 / 25);
 
 
