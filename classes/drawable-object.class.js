@@ -1,7 +1,6 @@
 class DrawableObject {
 
     x = 70;
-
     img;
     imagesCache = {};
     currentImage = 0;
@@ -13,13 +12,13 @@ class DrawableObject {
 
     /**
    * 
-   * @param {Array} arr - ['img/image1.png, img/image2.png ....]
+   * @param {Array} imagesArray - ['img/image1.png, img/image2.png ....]
    */
-    loadImages(arr) {
-        arr.forEach((path) => {
+    loadImages(imagesArray) {
+        imagesArray.forEach((path) => {
             let img = new Image();
             img.src = path;
-            img.style = 'transform: scaleX(-1)';
+            // img.style = 'transform: scaleX(-1)';
             this.imagesCache[path] = img;
         });
     }

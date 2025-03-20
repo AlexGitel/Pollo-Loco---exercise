@@ -1,7 +1,6 @@
 class MovableObject extends DrawableObject {
 
     speed = 0.15; // for moving Left/Right
-
     otherDirection = false; // to mirror image - usualy false (to turn and move to the LEFT)
     speedY = 0; // speed by falling down.
     acceleration = 3;
@@ -26,9 +25,7 @@ class MovableObject extends DrawableObject {
      * @param {Array} images - ['img/image1.png, img/image2.png ....]
      */
     animateImages(images) {
-        let i = this.currentImage % images.length; // (% - Modulo) - gerechnet so: i = 0 % 6 Indexe(Bilder) = 0,  1 % 6 => 1,  2 % 6 => 2  .....
-        // Ergebnisse: 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0........ somit entsteht Dauerschleife durch BilderArray
-
+        let i = this.currentImage % images.length;
         let path = images[i];
         this.img = this.imagesCache[path];
         this.currentImage++;
@@ -92,8 +89,6 @@ class MovableObject extends DrawableObject {
     getBottle() {
         if (this.bottlesAmount < 100) {
             this.bottlesAmount += 20;
-        } else if (this.bottlesAmount >= 100) {
-            this.bottlesAmount += 0;
         }
     }
 
@@ -108,5 +103,15 @@ class MovableObject extends DrawableObject {
         let timepassed = new Date().getTime() - this.lastHit;
         timepassed = timepassed / 1000; // Difference in sec
         return timepassed < 1; // true will be returned
+    }
+
+    died() {
+        if (this instanceof Chicken) {
+            this.loadImage('img/3_enemies_chicken/chicken_normal/2_dead/dead.png');
+            // this.animateImages(this.IMAGES_DEAD);
+        }
+        if (this instanceof Endboss) {
+            this.animateImages(this.ENDBOSS_IMAGES_HURT);
+        }
     }
 }

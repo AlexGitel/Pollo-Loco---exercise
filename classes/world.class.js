@@ -9,6 +9,7 @@ class World {
     statusbarHealth = new StatusbarHealth();
     statusbarCoins = new StatusbarCoins();
     statusbarBottles = new StatusbarBottles();
+    statusbarEndboss = new StatusbarEndboss();
     throwableObject = [];
 
     constructor(canvas, keyboard) {
@@ -33,6 +34,7 @@ class World {
         this.addToMap(this.statusbarHealth);
         this.addToMap(this.statusbarCoins);
         this.addToMap(this.statusbarBottles);
+        this.addToMap(this.statusbarEndboss);
         this.ctx.translate(this.camera_x, 0); // camera moving forwards for Statusbar
         this.addToMap(this.character);
         this.addArrayObjectsToMap(this.throwableObject);
@@ -100,7 +102,7 @@ class World {
             this.checkCollisionsCoins();
             this.checkCollisionsBottles();
             this.checkBottlesAmount();
-            this.checkThrowObjectCollision();
+            this.checkIfHitEnemy();
         }, 200);
     }
 
@@ -130,14 +132,16 @@ class World {
     }
 
     /**
-     * checked if character is colliding bottles
+     * if character is colliding bottles, checked, collect bottles or not
      */
     checkCollisionsBottles() {
         this.level.bottles.forEach((bottles, index) => {
             if (this.character.isColliding(bottles)) {
-                this.character.getBottle();
-                this.statusbarBottles.setPercentage(this.character.bottlesAmount);
-                this.level.bottles.splice(index, 1);
+                if (this.character.bottlesAmount < 100) {
+                    this.character.getBottle();
+                    this.statusbarBottles.setPercentage(this.character.bottlesAmount);
+                    this.level.bottles.splice(index, 1);
+                }
             }
         });
     }
@@ -160,18 +164,20 @@ class World {
     /**
      * it check's if enemy hited
      */
-    checkThrowObjectCollision() {
+    checkIfHitEnemy() {
         this.throwableObject.forEach((bottle) => {
             this.level.enemies.forEach((enemy, enemyIndex) => {
                 if (bottle.isColliding(enemy)) {
-                    enemy.died();
-                    // setTimeout(() => {
-                    //     this.level.enemies.splice(enemyIndex, 1);
-                    // }, 100);
+                    enemy.hit();
+                    this.statusbarEndboss.setPercentage(enemy.energy);
+
+                    // enemy.dead();
+                    //this.level.enemies.splice(enemyIndex, 1);
                 }
             });
         });
     }
+
 
     /**
     * Number of bottles at the start and after throwing
