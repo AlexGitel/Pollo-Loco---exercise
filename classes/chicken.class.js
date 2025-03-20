@@ -1,8 +1,8 @@
 class Chicken extends MovableObject {
 
-    y = 375;    // Position von Chicken unter Y
-    height = 60; // Höhe von allen Chicken
-    width = 50; // Breite von Chicken
+    y = 375;
+    height = 60;
+    width = 50;
 
     IMAGES_WALKING = [
         'img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',
@@ -11,6 +11,8 @@ class Chicken extends MovableObject {
     ];
 
     IMAGES_DIED = [
+        'img/3_enemies_chicken/chicken_normal/2_dead/dead.png',
+        'img/3_enemies_chicken/chicken_normal/2_dead/dead.png',
         'img/3_enemies_chicken/chicken_normal/2_dead/dead.png',
         'img/3_enemies_chicken/chicken_normal/2_dead/dead.png',
         'img/3_enemies_chicken/chicken_normal/2_dead/dead.png',
@@ -28,15 +30,21 @@ class Chicken extends MovableObject {
     animateChicken() {
         setInterval(() => {
             this.moveLeft();
-        }, 1000 / 50);  // 1000 millisec / 50 Bilder pro sec.
-
+        }, 1000 / 50);
 
         setInterval(() => {
             this.animateImages(this.IMAGES_WALKING);
+
+            if (this.hit()) {
+                this.animateImages(this.IMAGES_DIED);
+
+            }
         }, 270);
     }
 
     died() {
+        // this.animateImages(this.IMAGES_DIED);
+
         this.loadImage('img/3_enemies_chicken/chicken_normal/2_dead/dead.png');
     }
 }

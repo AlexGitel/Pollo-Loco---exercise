@@ -7,7 +7,7 @@ class DrawableObject {
     currentImage = 0;
 
     loadImage(path) {
-        this.img = new Image(); // equil = this.img = document.getElementById('image') <img id="image" src=...... >
+        this.img = new Image();
         this.img.src = path;
     }
 
@@ -29,7 +29,7 @@ class DrawableObject {
      * @param {Objects} ctx - to draw Frames around Objects
      */
     drawFrame(ctx) {
-        if (this instanceof Character || this instanceof Chicken || this instanceof Endboss || this instanceof Coins || this instanceof Bottles) {
+        if (this instanceof Character || this instanceof Endboss || this instanceof Coins || this instanceof Bottles) {
             ctx.beginPath();
             ctx.lineWidth = '5';
             ctx.strokeStyle = 'blue';

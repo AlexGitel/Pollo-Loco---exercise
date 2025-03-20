@@ -24,8 +24,8 @@ const level1 = new Level(
         new Cloud('img/5_background/layers/4_clouds/2.png', 600 * 4)
     ],
     [
-        // new Chicken(),
-        // new Chicken(),
+        new Chicken(),
+        new Chicken(),
         new Chicken(),
         new Endboss()
     ],

@@ -1,13 +1,13 @@
 
 let canvas;
 let world;
-let keyboard = new Keyboard(); // neue Instanz erstellt
+let keyboard = new Keyboard();
 
 
 function init() {
     canvas = document.getElementById('canvas');
-    // world wird dem init übergeben zum Aufrufen
-    world = new World(canvas, keyboard); // NEue Instanz mit keyboard wie canvas an die World übergeben.
+
+    world = new World(canvas, keyboard);
 }
 
 window.addEventListener("keydown", (ev) => { // it works only with keydown, not onkeydown or onkeypress.    ev = event

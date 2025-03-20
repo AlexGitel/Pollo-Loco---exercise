@@ -27,32 +27,41 @@ class World {
     draw() {    // 24-60 x / sec.
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); // clear canvas
         this.ctx.translate(this.camera_x, 0);
-        this.addObjectsToMap(this.level.backgroundObjects);
-        this.addObjectsToMap(this.level.clouds);
+        this.addArrayObjectsToMap(this.level.backgroundObjects);
+        this.addArrayObjectsToMap(this.level.clouds);
         this.ctx.translate(-this.camera_x, 0); // camera moving Back for Statusbar
         this.addToMap(this.statusbarHealth);
         this.addToMap(this.statusbarCoins);
         this.addToMap(this.statusbarBottles);
         this.ctx.translate(this.camera_x, 0); // camera moving forwards for Statusbar
         this.addToMap(this.character);
-        this.addObjectsToMap(this.throwableObject);
-        this.addObjectsToMap(this.level.enemies);
-        this.addObjectsToMap(this.level.coins);
-        this.addObjectsToMap(this.level.bottles);
+        this.addArrayObjectsToMap(this.throwableObject);
+        this.addArrayObjectsToMap(this.level.enemies);
+        this.addArrayObjectsToMap(this.level.coins);
+        this.addArrayObjectsToMap(this.level.bottles);
         this.ctx.translate(-this.camera_x, 0);
 
+        // draw() is called again and again
         let self = this; // self needed -> requestAnimationFrame don't accept 'this'.      
         requestAnimationFrame(function () {
             self.draw();
         });
     }
 
-    addObjectsToMap(objects) {
+    /**
+     * 
+     * @param {Array} objects -like Array enemies (new Chicken(), new Chicken())
+     */
+    addArrayObjectsToMap(objects) {
         objects.forEach(singleObject => {
             this.addToMap(singleObject);
         });
     }
 
+    /**
+     * 
+     * @param {every Object} movObj that you add to Map
+     */
     addToMap(movObj) {
         if (movObj.otherDirection) {
             this.flipImage(movObj);
@@ -134,14 +143,14 @@ class World {
     }
 
     /**
-    * it check's, if D pressed, to throw a bootle
+    * it check's, if D pressed, to throw a bootle and count bottles
     */
     checkThrowObjects() {
         if (this.keyboard.D && this.character.bottlesAmount > 0) {
             let bottle = new ThrowableObject(this.character.x + 20, this.character.y + 120, this.character.otherDirection);
             this.throwableObject.push(bottle);
             this.character.bottlesAmount -= 20;
-            setTimeout(() => { this.throwableObject.splice(0, 1) }, 1500); // clear Array
+            setTimeout(() => { this.throwableObject.splice(0, 1) }, 1500);
         }
         if (this.character.bottlesAmount <= 0) {
             this.character.bottlesAmount = 0;
@@ -154,26 +163,15 @@ class World {
     checkThrowObjectCollision() {
         this.throwableObject.forEach((bottle) => {
             this.level.enemies.forEach((enemy, enemyIndex) => {
-                if (bottle.isColliding(enemy, enemyIndex)) {
+                if (bottle.isColliding(enemy)) {
                     enemy.died();
-                    setTimeout(() => { this.level.enemies.splice(enemyIndex, 1) }, 300);
+                    // setTimeout(() => {
+                    //     this.level.enemies.splice(enemyIndex, 1);
+                    // }, 100);
                 }
             });
         });
     }
-
-    // checkThrowObjectCollision() {
-    //     this.throwableObject.forEach((bottle) => {
-    //         this.level.enemies.forEach((enemy) => {
-    //             if (bottle.isColliding(enemy)) {
-    //                 enemy.died();
-    //                 setTimeout(() => {
-    //                     this.level.enemies = this.level.enemies.filter(e => e !== enemy);
-    //                 }, 300);
-    //             }
-    //         });
-    //     });
-    // }
 
     /**
     * Number of bottles at the start and after throwing

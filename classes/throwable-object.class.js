@@ -30,7 +30,7 @@ class ThrowableObject extends MovableObject {
     }
 
     /**
-     * to throw the bottles
+     * to throw the bottles LEFT or RIGHT
      */
     throw() {
         this.speedY = 30;
