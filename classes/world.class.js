@@ -102,7 +102,7 @@ class World {
             this.checkCollisionsCoins();
             this.checkCollisionsBottles();
             this.checkBottlesAmount();
-            this.checkIfHitEnemy();
+            this.bottleHitEnemy();
         }, 200);
     }
 
@@ -164,19 +164,40 @@ class World {
     /**
      * it check's if enemy hited
      */
-    checkIfHitEnemy() {
+    bottleHitEnemy() {
         this.throwableObject.forEach((bottle) => {
             this.level.enemies.forEach((enemy, enemyIndex) => {
                 if (bottle.isColliding(enemy)) {
                     enemy.hit();
                     this.statusbarEndboss.setPercentage(enemy.energy);
 
-                    // enemy.dead();
+                    enemy.died();
                     //this.level.enemies.splice(enemyIndex, 1);
                 }
             });
         });
     }
+
+
+    // bottleHitEnemy() {
+    //     this.throwableObject.forEach((bottle) => {
+    //         this.level.enemies.forEach((enemy, enemyIndex) => {
+    //             if (bottle.isColliding(enemy)) {
+
+    //                 if (this instanceof Endboss) {
+    //                     enemy.hit();
+    //                     this.statusbarEndboss.setPercentage(enemy.energy);
+    //                 }
+    //                 // enemy.died();
+    //                 //this.level.enemies.splice(enemyIndex, 1);
+    //             }
+    //         });
+    //     });
+    // }
+
+
+
+
 
 
     /**
