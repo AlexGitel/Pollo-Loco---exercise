@@ -23,6 +23,7 @@ class World {
 
     setWorld() {
         this.character.world = this;
+        this.level.enemies[3].world = this;
     }
 
     draw() {    // 24-60 x / sec.
@@ -156,6 +157,7 @@ class World {
             this.character.bottlesAmount -= 20;
             setTimeout(() => { this.throwableObject.splice(0, 1) }, 1500);
         }
+
         if (this.character.bottlesAmount <= 0) {
             this.character.bottlesAmount = 0;
         }
@@ -166,39 +168,15 @@ class World {
      */
     bottleHitEnemy() {
         this.throwableObject.forEach((bottle) => {
-            this.level.enemies.forEach((enemy, enemyIndex) => {
+            this.level.enemies.forEach((enemy) => {
                 if (bottle.isColliding(enemy)) {
                     enemy.hit();
                     this.statusbarEndboss.setPercentage(enemy.energy);
-
-                    enemy.died();
-                    //this.level.enemies.splice(enemyIndex, 1);
+                    enemy.damaged();
                 }
             });
         });
     }
-
-
-    // bottleHitEnemy() {
-    //     this.throwableObject.forEach((bottle) => {
-    //         this.level.enemies.forEach((enemy, enemyIndex) => {
-    //             if (bottle.isColliding(enemy)) {
-
-    //                 if (this instanceof Endboss) {
-    //                     enemy.hit();
-    //                     this.statusbarEndboss.setPercentage(enemy.energy);
-    //                 }
-    //                 // enemy.died();
-    //                 //this.level.enemies.splice(enemyIndex, 1);
-    //             }
-    //         });
-    //     });
-    // }
-
-
-
-
-
 
     /**
     * Number of bottles at the start and after throwing

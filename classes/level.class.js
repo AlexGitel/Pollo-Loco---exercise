@@ -1,11 +1,11 @@
 class Level {
     backgroundObjects;
-    clouds;     // bekommt Variable aus world
+    clouds;
     enemies;
     coins;
     bottles;
 
-    constructor(bgObj, clouds, enem, coins, bottles) { // verbindet sich mit Variablen aus World.
+    constructor(bgObj, clouds, enem, coins, bottles) {
         this.backgroundObjects = bgObj;
         this.clouds = clouds;
         this.enemies = enem;

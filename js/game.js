@@ -10,7 +10,7 @@ function init() {
     world = new World(canvas, keyboard);
 }
 
-window.addEventListener("keydown", (ev) => { // it works only with keydown, not onkeydown or onkeypress.    ev = event
+window.addEventListener("keydown", (ev) => { // it works only with keydown.   ev = event
     if (ev.keyCode == 39) {
         keyboard.RIGHT = true;
     }

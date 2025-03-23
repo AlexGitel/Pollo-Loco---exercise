@@ -65,7 +65,7 @@ class MovableObject extends DrawableObject {
     }
 
     /**
-    * if Character is hitted
+    * Character or Endboss energy level after be hitted
     */
     hit() {
         if (this instanceof Character || this instanceof Endboss) {
@@ -95,7 +95,7 @@ class MovableObject extends DrawableObject {
     }
 
     /**
-    * life statusbar of Character = 0 - dead.
+    * life statusbar of Character / Endboss = 0.
     */
     isDead() {
         return this.energy == 0;
@@ -107,7 +107,7 @@ class MovableObject extends DrawableObject {
         return timepassed < 1; // true will be returned
     }
 
-    died() {
+    damaged() {
         if (this instanceof Chicken) {
             this.loadImage('img/3_enemies_chicken/chicken_normal/2_dead/dead.png');
             // this.animateImages(this.IMAGES_DEAD);
