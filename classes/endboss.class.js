@@ -3,9 +3,10 @@ class Endboss extends MovableObject {
     y = 145;
     height = 310;
     width = 200;
+    speed = 1.25;
 
 
-    IMAGES_WALKING = [
+    IMAGES_ENDBOSS_ALERT = [
         'img/4_enemie_boss_chicken/2_alert/G5.png',
         'img/4_enemie_boss_chicken/2_alert/G6.png',
         'img/4_enemie_boss_chicken/2_alert/G7.png',
@@ -14,6 +15,14 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/2_alert/G10.png',
         'img/4_enemie_boss_chicken/2_alert/G11.png',
         'img/4_enemie_boss_chicken/2_alert/G12.png'
+    ];
+
+    IMAGES_WALKING = [
+        'img/4_enemie_boss_chicken/1_walk/G1.png',
+        'img/4_enemie_boss_chicken/1_walk/G2.png',
+        'img/4_enemie_boss_chicken/1_walk/G3.png',
+        'img/4_enemie_boss_chicken/1_walk/G4.png'
+
     ];
 
     ENDBOSS_IMAGES_HURT = [
@@ -30,7 +39,8 @@ class Endboss extends MovableObject {
     world;
 
     constructor() {
-        super().loadImage(this.IMAGES_WALKING[0]);
+        super().loadImage(this.IMAGES_ENDBOSS_ALERT[0]);
+        this.loadImages(this.IMAGES_ENDBOSS_ALERT);
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.ENDBOSS_IMAGES_HURT);
         this.loadImages(this.ENDBOSS_IMAGES_DEAD);
@@ -39,16 +49,39 @@ class Endboss extends MovableObject {
     }
 
     animateEndboss() {
-        // setInterval(() => {
-        //     this.moveLeft();
-        // }, 1000 / 60);
+        let counter = 0;
+        let maxRepeat = 6;
+        let intervalTime = setInterval(() => {
+            if (this.world.character.x >= 2300) {
+                this.animateImages(this.IMAGES_ENDBOSS_ALERT);
+                counter++;
+            }
+
+            if (counter >= maxRepeat) {
+                clearInterval(intervalTime);
+                this.endbosstWalkingStart();
+            }
+        }, 200);
 
         setInterval(() => {
-            this.animateImages(this.IMAGES_WALKING);
             if (this.isDead()) {
+                this.speed = 0;
                 this.animateImages(this.ENDBOSS_IMAGES_DEAD);
-                setTimeout(() => { this.world.level.enemies.splice(0, 1) }, 800);
+                setTimeout(() => { this.world.level.enemies.splice([3], 1) }, 1200);
             }
         }, 200);
     }
+
+    endbosstWalkingStart() {
+        setInterval(() => {
+            if (this.world.character.x <= 2400) {
+                this.animateImages(this.IMAGES_WALKING);
+                // this.moveLeft();
+            }
+        }, 250);
+        setInterval(() => {
+            this.moveLeft();
+        }, 1000 / 30);
+    }
+
 }

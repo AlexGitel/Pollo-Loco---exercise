@@ -157,7 +157,6 @@ class World {
             this.character.bottlesAmount -= 20;
             setTimeout(() => { this.throwableObject.splice(0, 1) }, 1500);
         }
-
         if (this.character.bottlesAmount <= 0) {
             this.character.bottlesAmount = 0;
         }

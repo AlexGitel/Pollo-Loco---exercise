@@ -1,6 +1,6 @@
 class Character extends MovableObject {
 
-    y = 90; // Startposition of character
+    y = 90;
     width = 90;
     height = 250;
     speed = 14;
@@ -75,6 +75,7 @@ class Character extends MovableObject {
                 this.otherDirection = false;
                 // this.walking_sound.play();
             }
+
             if (this.world.keyboard.LEFT && this.x > -700) {
                 this.moveLeft();
                 this.otherDirection = true;

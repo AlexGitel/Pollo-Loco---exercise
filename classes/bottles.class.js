@@ -8,6 +8,7 @@ class Bottles extends MovableObject {
     IMAGES_BOTTLES = [
         'img/6_salsa_bottle/1_salsa_bottle_on_ground.png',
         'img/6_salsa_bottle/2_salsa_bottle_on_ground.png'
+
     ];
 
     constructor() {
