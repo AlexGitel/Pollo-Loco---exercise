@@ -18,7 +18,7 @@ class DrawableObject {
         imagesArray.forEach((path) => {
             let img = new Image();
             img.src = path;
-            // img.style = 'transform: scaleX(-1)';
+            //img.style = 'transform: scaleX(-1)';
             this.imagesCache[path] = img;
         });
     }
@@ -28,7 +28,7 @@ class DrawableObject {
      * @param {Objects} ctx - to draw Frames around Objects
      */
     drawFrame(ctx) {
-        if (this instanceof Character || this instanceof Coins || this instanceof Bottles) {
+        if (this instanceof Character || this instanceof Chicken) {
             ctx.beginPath();
             ctx.lineWidth = '5';
             ctx.strokeStyle = 'blue';

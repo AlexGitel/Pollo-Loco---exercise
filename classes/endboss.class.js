@@ -3,7 +3,7 @@ class Endboss extends MovableObject {
     y = 145;
     height = 310;
     width = 200;
-    speed = 1.25;
+    speed = 2.4;
 
 
     IMAGES_ENDBOSS_ALERT = [
@@ -59,7 +59,7 @@ class Endboss extends MovableObject {
 
             if (counter >= maxRepeat) {
                 clearInterval(intervalTime);
-                this.endbosstWalkingStart();
+                this.endbossWalkingStart();
             }
         }, 200);
 
@@ -67,21 +67,22 @@ class Endboss extends MovableObject {
             if (this.isDead()) {
                 this.speed = 0;
                 this.animateImages(this.ENDBOSS_IMAGES_DEAD);
-                setTimeout(() => { this.world.level.enemies.splice([3], 1) }, 1200);
+                if (this.isDead()) {
+                    setTimeout(() => { this.world.level.enemies.splice(0, 1) }, 1300);
+                }
             }
         }, 200);
     }
 
-    endbosstWalkingStart() {
-        setInterval(() => {
+    endbossWalkingStart() {
+        let walkTime = setInterval(() => {
             if (this.world.character.x <= 2400) {
                 this.animateImages(this.IMAGES_WALKING);
-                // this.moveLeft();
+                if (this.isDead()) {
+                    clearInterval(walkTime);
+                }
             }
-        }, 250);
-        setInterval(() => {
-            this.moveLeft();
-        }, 1000 / 30);
+        }, 200);
+        setTimeout(() => { setInterval(() => { this.moveLeft() }, 1000 / 30) }, 300);
     }
-
 }

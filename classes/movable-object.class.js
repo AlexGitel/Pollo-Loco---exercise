@@ -110,10 +110,12 @@ class MovableObject extends DrawableObject {
     damaged() {
         if (this instanceof Chicken) {
             this.loadImage('img/3_enemies_chicken/chicken_normal/2_dead/dead.png');
-            // this.animateImages(this.IMAGES_DEAD);
+            this.speed = 0;
         }
         if (this instanceof Endboss) {
             this.animateImages(this.ENDBOSS_IMAGES_HURT);
         }
     }
+
+
 }

@@ -111,13 +111,21 @@ class World {
      * checked if character is colliding enemys
      */
     checkCollisionsEnemy() {
-        this.level.enemies.forEach((enemy) => {
+        this.level.enemies.forEach((enemy, i) => {
             if (this.character.isColliding(enemy)) {
-                this.character.hit();
-                this.statusbarHealth.setPercentage(this.character.energy);
+
+                if (this.character.y + this.character.height - enemy.height < enemy.y) {
+                    enemy.damaged();
+                    setTimeout(() => { this.level.enemies.splice(i, 1); }, 150);
+                    this.character.speedY = 20;
+                } else {
+                    this.character.hit();
+                    this.statusbarHealth.setPercentage(this.character.energy);
+                }
             }
         });
     }
+
 
     /**
      * checked if character is colliding coins
@@ -167,13 +175,18 @@ class World {
      */
     bottleHitEnemy() {
         this.throwableObject.forEach((bottle) => {
-            this.level.enemies.forEach((enemy) => {
+            for (let i = this.level.enemies.length - 1; i >= 0; i--) {
+                let enemy = this.level.enemies[i];
                 if (bottle.isColliding(enemy)) {
                     enemy.hit();
                     this.statusbarEndboss.setPercentage(enemy.energy);
                     enemy.damaged();
+
+                    if (enemy instanceof Chicken) {
+                        setTimeout(() => { this.level.enemies.splice(i, 1) }, 150);
+                    }
                 }
-            });
+            }
         });
     }
 
