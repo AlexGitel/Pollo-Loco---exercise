@@ -3,11 +3,20 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 
+function startGame() {
+    document.getElementById('start-screen').classList.add('d-none');
+    initLevel();
+    init();
+}
 
 function init() {
     canvas = document.getElementById('canvas');
-
     world = new World(canvas, keyboard);
+}
+
+function toggleSpeakers() {
+    document.getElementById('speaker-on').classList.toggle('d-none');
+    document.getElementById('speaker-off').classList.toggle('d-none');
 }
 
 window.addEventListener("keydown", (ev) => { // it works only with keydown.   ev = event

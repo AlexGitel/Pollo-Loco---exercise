@@ -33,17 +33,36 @@
 
     <title>Document</title>
 </head>
-<body onload="init()">
+<body>
+        <h1>El Pollo Loco</h1>
+
+        <div id="start-screen" class="start-screen">
+            <div class="start-buttons">
+                <button class="button pointer" onclick="startGame()">Start</button>
+                <span>
+                    <img id="speaker-on" onclick="toggleSpeakers()" class="pointer speaker-icon" src="icons/speaker.png" alt="speaker-icon">
+                    <img id="speaker-off" onclick="toggleSpeakers()" class="pointer speaker-icon d-none" src="icons/speaker-deactivated.png" alt="speaker-icon">
+                </span>
+            </div>
+            <img class="start-img" src="img/9_intro_outro_screens/start/startscreen_1.png" alt="polo-loco-image">
+
+            <div class="controls">
+                <span>D = Throw bottles</span>
+                <span> Space = Jump</span>
+                <span> < = Left / Right = ></span>
+            </div> 
+        </div>
+
+        <canvas id="canvas" width="720" height="480"></canvas>
     
-    <h1>El Pollo Loco</h1>
-
-    <canvas id="canvas" width="720" height="480"></canvas>
-
-    <div class="controls">
-        <span>D = Throw bottles</span>
-        <span>Space = Jump</span>
-        <span> <- -> = Left / Right</span>
-    </div>
-
+        <div class="controls">
+            <span>D = Throw bottles</span>
+            <span> Space = Jump</span>
+            <span> < = Left / Right = ></span>
+            <span>
+                <img id="speaker-on" onclick="toggleSpeakers()" class="pointer speaker-icon" src="icons/speaker.png" alt="speaker-icon">
+                <img id="speaker-off" onclick="toggleSpeakers()" class="pointer speaker-icon d-none" src="icons/speaker-deactivated.png" alt="speaker-icon">
+            </span>
+        </div>  
 </body>
 </html>

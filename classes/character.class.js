@@ -52,6 +52,10 @@ class Character extends MovableObject {
         'img/2_character_pepe/4_hurt/H-43.png'
     ];
 
+    IMAGES_GAME_OVER = [
+        'img/9_intro_outro_screens/game_over/game over!.png'
+    ];
+
     world;
 
     // walking_sound = new Audio('audio/running.mp3');
@@ -63,6 +67,7 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_JUMPING);
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_HURT);
+        this.loadImage(this.IMAGES_GAME_OVER);
         this.applyGravity();
         this.animateCharacter();
     }
