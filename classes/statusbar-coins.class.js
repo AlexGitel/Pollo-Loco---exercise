@@ -1,12 +1,12 @@
 class StatusbarCoins extends DrawableObject {
 
     IMAGES = [
-        'img/7_statusbars/1_statusbar/1_statusbar_coin/green/0.png',
-        'img/7_statusbars/1_statusbar/1_statusbar_coin/green/20.png',
-        'img/7_statusbars/1_statusbar/1_statusbar_coin/green/40.png',
-        'img/7_statusbars/1_statusbar/1_statusbar_coin/green/60.png',
-        'img/7_statusbars/1_statusbar/1_statusbar_coin/green/80.png',
-        'img/7_statusbars/1_statusbar/1_statusbar_coin/green/100.png',
+        'assets/img/7_statusbars/1_statusbar/1_statusbar_coin/green/0.png',
+        'assets/img/7_statusbars/1_statusbar/1_statusbar_coin/green/20.png',
+        'assets/img/7_statusbars/1_statusbar/1_statusbar_coin/green/40.png',
+        'assets/img/7_statusbars/1_statusbar/1_statusbar_coin/green/60.png',
+        'assets/img/7_statusbars/1_statusbar/1_statusbar_coin/green/80.png',
+        'assets/img/7_statusbars/1_statusbar/1_statusbar_coin/green/100.png',
     ];
 
     percentage = 0;
@@ -21,12 +21,20 @@ class StatusbarCoins extends DrawableObject {
         this.setPercentage(0);
     }
 
+    /**
+     * 
+     * @param {amount of percentage} percentage - Variable
+     */
     setPercentage(percentage) {
         this.percentage = percentage;
         let path = this.IMAGES[this.resolveImageIndex()];
         this.img = this.imagesCache[path];
     }
 
+    /**
+     * 
+     * @returns to show the correct image when giving percentages
+     */
     resolveImageIndex() {
         if (this.percentage <= 0) {
             return 0;

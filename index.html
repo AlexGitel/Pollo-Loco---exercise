@@ -1,68 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
-    <link rel="manifest" href="favicon_io/site.webmanifest">
+        <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon_io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon_io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon_io/favicon-16x16.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon_io/android-chrome-192x192.png">
+        <link rel="manifest" href="assets/favicon_io/site.webmanifest">
 
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="fonts/fonts.css">
-    <script src="classes/drawable-object.class.js"></script>
-    <script src="classes/movable-object.class.js"></script>
-    <script src="classes/character.class.js"></script>
-    <script src="classes/chicken.class.js"></script>
-    <script src="classes/cloud.class.js"></script>
-    <script src="classes/statusbar-health.class.js"></script>
-    <script src="classes/statusbar-endboss.class.js"></script>
-    <script src="classes/statusbar-coins.class.js"></script>
-    <script src="classes/statusbar-bottles.class.js"></script>
-    <script src="classes/world.class.js"></script>
-    <script src="classes/background-objects.class.js"></script>
-    <script src="classes/keyboard.class.js"></script>
-    <script src="classes/level.class.js"></script>
-    <script src="classes/throwable-object.class.js"></script>
-    <script src="classes/endboss.class.js"></script>
-    <script src="classes/coins.class.js"></script>
-    <script src="classes/bottles.class.js"></script>
-    <script src="levels/level1.js"></script>
-    <script src="js/game.js"></script>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="assets/fonts/fonts.css">
+        <script src="classes/drawable-object.class.js"></script>
+        <script src="classes/movable-object.class.js"></script>
+        <script src="classes/character.class.js"></script>
+        <script src="classes/chicken.class.js"></script>
+        <script src="classes/chicken-small.class.js"></script>
+        <script src="classes/cloud.class.js"></script>
+        <script src="classes/statusbar-health.class.js"></script>
+        <script src="classes/statusbar-endboss.class.js"></script>
+        <script src="classes/statusbar-coins.class.js"></script>
+        <script src="classes/statusbar-bottles.class.js"></script>
+        <script src="classes/world.class.js"></script>
+        <script src="classes/background-objects.class.js"></script>
+        <script src="classes/keyboard.class.js"></script>
+        <script src="classes/level.class.js"></script>
+        <script src="classes/throwable-object.class.js"></script>
+        <script src="classes/endboss.class.js"></script>
+        <script src="classes/coins.class.js"></script>
+        <script src="classes/bottles.class.js"></script>
+        <script src="levels/level1.js"></script>
+        <script src="js/game.js"></script>
 
-    <title>Document</title>
-</head>
-<body>
-        <h1>El Pollo Loco</h1>
+        <title>El Pollo Loco</title>
+    </head>
+    <body>
+            <h1>El Pollo Loco</h1>
 
-        <div id="start-screen" class="start-screen">
-            <div class="start-buttons">
-                <button class="button pointer" onclick="startGame()">Start</button>
-                <span>
-                    <img id="speaker-on" onclick="toggleSpeakers()" class="pointer speaker-icon" src="icons/speaker.png" alt="speaker-icon">
-                    <img id="speaker-off" onclick="toggleSpeakers()" class="pointer speaker-icon d-none" src="icons/speaker-deactivated.png" alt="speaker-icon">
-                </span>
+                <!-- S T A R T S C R E E N -->
+            <div id="start-screen" class="start-screen">
+                <div class="start-buttons">
+                    <button class="button pointer" onclick="startGame()">Start</button>
+                </div>
+                <img class="start-img" src="assets/img/9_intro_outro_screens/start/startscreen_1.png" alt="polo-loco-image">
+
+                <div class="controls">
+                    <span>D = Throw bottles</span>
+                    <span> Space = Jump</span>
+                    <span> < = Left / Right = ></span>
+                </div> 
             </div>
-            <img class="start-img" src="img/9_intro_outro_screens/start/startscreen_1.png" alt="polo-loco-image">
 
+                <!-- C A N V A S -->
+            <canvas id="canvas" width="720" height="480"></canvas>
+        
             <div class="controls">
                 <span>D = Throw bottles</span>
                 <span> Space = Jump</span>
                 <span> < = Left / Right = ></span>
+            
+                <img id="speaker-on" onclick="toggleSpeakers()" class="pointer speaker-icon" src="assets/icons/speaker.png" alt="speaker-icon">
+                <img id="speaker-off" onclick="toggleSpeakers()" class="pointer speaker-icon d-none" src="assets/icons/speaker-deactivated.png" alt="speaker-icon">
             </div> 
-        </div>
-
-        <canvas id="canvas" width="720" height="480"></canvas>
-    
-        <div class="controls">
-            <span>D = Throw bottles</span>
-            <span> Space = Jump</span>
-            <span> < = Left / Right = ></span>
-            <span>
-                <img id="speaker-on" onclick="toggleSpeakers()" class="pointer speaker-icon" src="icons/speaker.png" alt="speaker-icon">
-                <img id="speaker-off" onclick="toggleSpeakers()" class="pointer speaker-icon d-none" src="icons/speaker-deactivated.png" alt="speaker-icon">
-            </span>
-        </div>  
-</body>
+            
+            
+            <!-- G A M E  O V E R  S C R E E N -->
+            <div id="game-over-screen" class="game-over-screen d-none">
+                <button class="restart-button pointer" onclick="stopGameAndRestart()">Start again?</button>
+                <img id="you-won-img" class="game-over-img" src="" alt="you-won-image">
+            </div>
+            
+    </body>
 </html>

@@ -1,12 +1,12 @@
 class StatusbarHealth extends DrawableObject {
 
     IMAGES = [
-        'img/7_statusbars/1_statusbar/2_statusbar_health/green/0.png',  // 0
-        'img/7_statusbars/1_statusbar/2_statusbar_health/green/20.png',
-        'img/7_statusbars/1_statusbar/2_statusbar_health/green/40.png',
-        'img/7_statusbars/1_statusbar/2_statusbar_health/green/60.png',
-        'img/7_statusbars/1_statusbar/2_statusbar_health/green/80.png', // 4
-        'img/7_statusbars/1_statusbar/2_statusbar_health/green/100.png' // 5
+        'assets/img/7_statusbars/1_statusbar/2_statusbar_health/green/0.png',  // 0
+        'assets/img/7_statusbars/1_statusbar/2_statusbar_health/green/20.png',
+        'assets/img/7_statusbars/1_statusbar/2_statusbar_health/green/40.png',
+        'assets/img/7_statusbars/1_statusbar/2_statusbar_health/green/60.png',
+        'assets/img/7_statusbars/1_statusbar/2_statusbar_health/green/80.png', // 4
+        'assets/img/7_statusbars/1_statusbar/2_statusbar_health/green/100.png' // 5
     ];
 
     percentage = 100;
@@ -21,12 +21,20 @@ class StatusbarHealth extends DrawableObject {
         this.setPercentage(100);
     }
 
+    /**
+     * 
+     * @param {amount of percentage} percentage - Variable
+     */
     setPercentage(percentage) {
         this.percentage = percentage;
         let path = this.IMAGES[this.resolveImageIndex()];
         this.img = this.imagesCache[path];
     }
 
+    /**
+    * 
+    * @returns to show the correct image when giving percentages
+    */
     resolveImageIndex() {
         if (this.percentage == 100) {
             return 5;

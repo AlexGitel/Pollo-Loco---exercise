@@ -26,6 +26,9 @@ class World {
         this.level.enemies[3].world = this;
     }
 
+    /**
+     * to draw the images on the map
+     */
     draw() {    // 24-60 x / sec.
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); // clear canvas
         this.ctx.translate(this.camera_x, 0);
@@ -72,22 +75,28 @@ class World {
 
         this.ctx.drawImage(movObj.img, movObj.x, movObj.y, movObj.width, movObj.height);
 
-        // movObj.drawFrame(this.ctx); // it draws blue Frames around the Objects
-
         if (movObj.otherDirection) {
             this.flipImageBack(movObj);
         }
     }
 
+    /**
+     * to flip the image over the 180°
+     * @param {Character or Endboss} movObj 
+     */
     flipImage(movObj) {
         this.ctx.save(); // it save's the actualy Position of Character
 
         this.ctx.translate(movObj.width, 0); // Object, around his width 
-        this.ctx.scale(-1, 1); // -1:  in x-Achse 180° 
+        this.ctx.scale(-1, 1); // -1:  in x-Axis 180° 
 
         movObj.x = movObj.x * -1;
     }
 
+    /**
+     * to flip the image back
+     * @param {Character or Endboss} movObj 
+     */
     flipImageBack(movObj) {
         movObj.x = movObj.x * -1;
         this.ctx.restore();
@@ -97,7 +106,7 @@ class World {
      * checked if character get colliding or keyboard - pressed 
      */
     update() {
-        setInterval(() => {
+        setStoppableInterval(() => {
             this.checkCollisionsEnemy();
             this.checkThrowObjects();
             this.checkCollisionsCoins();
@@ -130,9 +139,8 @@ class World {
         });
     }
 
-
     /**
-     * checked if character is colliding coins
+     * checked if character is colliding coins, if coins > 100, adds life to the character
      */
     checkCollisionsCoins() {
         this.level.coins.forEach((coins, index) => {
@@ -140,6 +148,10 @@ class World {
                 this.character.getCoin();
                 this.statusbarCoins.setPercentage(this.character.coinsAmount);
                 this.level.coins.splice(index, 1);
+            }
+            if (this.character.coinsAmount >= 100 && this.character.energy < 100) {
+                this.character.energy += 50;
+                this.statusbarHealth.setPercentage(this.character.energy);
             }
         });
     }
@@ -186,9 +198,7 @@ class World {
                     this.statusbarEndboss.setPercentage(enemy.energy);
                     enemy.damaged();
 
-                    if (enemy instanceof Chicken) {
-                        setTimeout(() => { this.level.enemies.splice(i, 1) }, 150);
-                    }
+                    if (enemy instanceof Chicken) { setTimeout(() => { this.level.enemies.splice(i, 1) }, 150); }
                 }
             }
         });

@@ -19,7 +19,6 @@ class MovableObject extends DrawableObject {
         this.x -= this.speed;
     }
 
-
     /**
      * 
      * @param {Array} images - ['img/image1.png, img/image2.png ....]
@@ -35,7 +34,7 @@ class MovableObject extends DrawableObject {
      * falling of Character onto the ground
      */
     applyGravity() {
-        setInterval(() => {
+        setStoppableInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
@@ -60,7 +59,7 @@ class MovableObject extends DrawableObject {
     isColliding(movObj) {
         return this.x + this.width > movObj.x &&
             this.y + this.height > movObj.y &&
-            this.x < movObj.x + movObj.width &&
+            this.x <= movObj.x + movObj.width &&
             this.y < movObj.y + movObj.height;
     }
 
@@ -107,15 +106,27 @@ class MovableObject extends DrawableObject {
         return timepassed < 1; // true will be returned
     }
 
+    /**
+     * if enemy hited, it shows images that enemies are damaged
+     */
     damaged() {
         if (this instanceof Chicken) {
-            this.loadImage('img/3_enemies_chicken/chicken_normal/2_dead/dead.png');
+            this.loadImage('assets/img/3_enemies_chicken/chicken_normal/2_dead/dead.png');
             this.speed = 0;
+        }
+        if (this instanceof ChickenSmall) {
+            this.animateImages(this.IMAGES_DEAD);
         }
         if (this instanceof Endboss) {
             this.animateImages(this.ENDBOSS_IMAGES_HURT);
         }
     }
 
-
+    /**
+    * shows Endscreen with image "You won"
+    */
+    showYouWon() {
+        document.getElementById('game-over-screen').classList.remove('d-none');
+        document.getElementById('you-won-img').src = "assets/img/9_intro_outro_screens/win/won_2.png";
+    }
 }
