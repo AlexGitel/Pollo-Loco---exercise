@@ -38,6 +38,9 @@ class Endboss extends MovableObject {
     ];
     world;
 
+    endboss_alert = new Audio('audio/endboss.mp3');
+    shock = new Audio('audio/shock.mp3');
+
     constructor() {
         super().loadImage(this.IMAGES_ENDBOSS_ALERT[0]);
         this.loadImages(this.IMAGES_ENDBOSS_ALERT);
@@ -56,6 +59,9 @@ class Endboss extends MovableObject {
         let maxRepeat = 6;
         let intervalTime = setInterval(() => {
             if (this.world.character.x >= 2300) {
+                gameStartAudio.pause();
+                this.shock.play();
+                this.endboss_alert.play();
                 this.animateImages(this.IMAGES_ENDBOSS_ALERT);
                 counter++;
             }
@@ -87,7 +93,6 @@ class Endboss extends MovableObject {
         let walkTime = setInterval(() => {
             if (this.world.character.x <= 2400) {
                 this.animateImages(this.IMAGES_WALKING);
-
                 this.persueCharacter();
 
                 if (this.isDead()) {

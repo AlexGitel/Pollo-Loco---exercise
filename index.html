@@ -60,8 +60,8 @@
                 <span> Space = Jump</span>
                 <span> < = Left / Right = ></span>
             
-                <img id="speaker-on" onclick="toggleSpeakers()" class="pointer speaker-icon" src="assets/icons/speaker.png" alt="speaker-icon">
-                <img id="speaker-off" onclick="toggleSpeakers()" class="pointer speaker-icon d-none" src="assets/icons/speaker-deactivated.png" alt="speaker-icon">
+                <img id="speaker-on" onclick="toggleSpeakers(), pauseAudio()" class="pointer speaker-icon" src="assets/icons/speaker.png" alt="speaker-icon">
+                <img id="speaker-off" onclick="toggleSpeakers(), playAudio()" class="pointer speaker-icon d-none" src="assets/icons/speaker-deactivated.png" alt="speaker-icon">
             </div> 
             
             
@@ -70,6 +70,5 @@
                 <button class="restart-button pointer" onclick="stopGameAndRestart()">Start again?</button>
                 <img id="you-won-img" class="game-over-img" src="" alt="you-won-image">
             </div>
-            
     </body>
 </html>

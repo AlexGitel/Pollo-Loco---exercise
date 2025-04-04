@@ -4,6 +4,7 @@ let world;
 let keyboard = new Keyboard();
 let intervalIds = [];
 
+gameStartAudio = new Audio('audio/gameStart.mp3')
 
 /**
  * start the game
@@ -12,6 +13,7 @@ function startGame() {
     document.getElementById('start-screen').classList.add('d-none');
     initLevel();
     init();
+    this.gameStartAudio.play();
 }
 
 /**
@@ -47,6 +49,14 @@ function setStoppableInterval(fn, time) {
 function toggleSpeakers() {
     document.getElementById('speaker-on').classList.toggle('d-none');
     document.getElementById('speaker-off').classList.toggle('d-none');
+}
+
+function playAudio() {
+    this.gameStartAudio.play();
+}
+
+function pauseAudio() {
+    this.gameStartAudio.pause();
 }
 
 window.addEventListener("keydown", (ev) => { // it works only with keydown.   ev = event

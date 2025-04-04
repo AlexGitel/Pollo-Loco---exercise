@@ -58,7 +58,9 @@ class Character extends MovableObject {
 
     world;
 
-    // walking_sound = new Audio('audio/running.mp3');
+    walking_sound = new Audio('audio/walking.mp3');
+    jumping_sound = new Audio('audio/juhu.mp3');
+    getPain = new Audio('audio/pain.mp3');
 
     constructor() {
         super().loadImage('assets/img/2_character_pepe/3_jump/J-35.png');
@@ -77,22 +79,22 @@ class Character extends MovableObject {
      */
     animateCharacter() {
         setStoppableInterval(() => {
-            // this.walking_sound.pause();
             if (this.world.keyboard.RIGHT && this.x < 2340) {
                 this.moveRight();
                 this.otherDirection = false;
-                // this.walking_sound.play();
+                this.walking_sound.play();
             }
             if (this.world.keyboard.LEFT && this.x > -700) {
                 this.moveLeft();
                 this.otherDirection = true;
-                // this.walking_sound.play();
+                this.walking_sound.play();
             }
             if (!this.world.keyboard.RIGHT && !this.world.keyboard.LEFT) {
                 this.loadImage('assets/img/2_character_pepe/3_jump/J-31.png');
             }
             if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump();
+                this.jumping_sound.play();
             }
 
             this.world.camera_x = -this.x + 280;
@@ -108,6 +110,7 @@ class Character extends MovableObject {
 
             } else if (this.isHurt()) {
                 this.animateImages(this.IMAGES_HURT);
+                this.getPain.play();
 
             } else if (this.isAboveGround()) {
                 this.animateImages(this.IMAGES_FALLING_DOWN);

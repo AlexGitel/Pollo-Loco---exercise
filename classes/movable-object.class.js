@@ -1,8 +1,8 @@
 class MovableObject extends DrawableObject {
 
-    speed = 0.15; // for moving Left/Right
+    speed = 0.15; // moving Left/Right
     otherDirection = false; // to mirror image - usualy false (to turn and move to the LEFT)
-    speedY = 0; // speed by falling down.
+    speedY = 0;
     acceleration = 3;
 
     energy = 100;
@@ -113,9 +113,11 @@ class MovableObject extends DrawableObject {
         if (this instanceof Chicken) {
             this.loadImage('assets/img/3_enemies_chicken/chicken_normal/2_dead/dead.png');
             this.speed = 0;
+            this.squashing_sound.play();
         }
         if (this instanceof ChickenSmall) {
             this.animateImages(this.IMAGES_DEAD);
+            this.squashing_sound.play();
         }
         if (this instanceof Endboss) {
             this.animateImages(this.ENDBOSS_IMAGES_HURT);

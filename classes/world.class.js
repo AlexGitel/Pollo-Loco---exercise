@@ -25,6 +25,7 @@ class World {
         this.character.world = this;
         this.level.enemies[3].world = this;
     }
+    soundForCoins = new Audio('audio/take_coin.mp3');
 
     /**
      * to draw the images on the map
@@ -122,22 +123,40 @@ class World {
     checkCollisionsEnemy() {
         this.level.enemies.forEach((enemy, i) => {
             if (this.character.isColliding(enemy)) {
-                if (enemy instanceof Endboss) {
+                if (this.character.y + this.character.height - enemy.height < enemy.y) {
+                    enemy.damaged();
+                    setTimeout(() => { this.level.enemies.splice(i, 1); }, 150);
+                    this.character.speedY = 20;
+                } else {
                     this.character.hit();
                     this.statusbarHealth.setPercentage(this.character.energy);
-                } else {
-                    if (this.character.y + this.character.height - enemy.height < enemy.y) {
-                        enemy.damaged();
-                        setTimeout(() => { this.level.enemies.splice(i, 1); }, 150);
-                        this.character.speedY = 20;
-                    } else {
-                        this.character.hit();
-                        this.statusbarHealth.setPercentage(this.character.energy);
-                    }
                 }
             }
         });
     }
+
+
+    // checkCollisionsEnemy() {
+    //     this.level.enemies.forEach((enemy, i) => {
+    //         if (this.character.isColliding(enemy)) {
+    //             if (enemy) {
+    //                 this.character.hit();
+    //                 this.statusbarHealth.setPercentage(this.character.energy);
+    //             } else {
+    //                 if (this.character.y + this.character.height - enemy.height < enemy.y) {
+    //                     enemy.damaged();
+    //                     setTimeout(() => { this.level.enemies.splice(i, 1); }, 150);
+    //                     this.character.speedY = 20;
+    //                 }
+
+    //                 else {
+    //                     this.character.hit();
+    //                     this.statusbarHealth.setPercentage(this.character.energy);
+    //                 }
+    //             }
+    //         }
+    //     });
+    // }
 
     /**
      * checked if character is colliding coins, if coins > 100, adds life to the character
@@ -146,6 +165,7 @@ class World {
         this.level.coins.forEach((coins, index) => {
             if (this.character.isColliding(coins)) {
                 this.character.getCoin();
+                this.soundForCoins.play();
                 this.statusbarCoins.setPercentage(this.character.coinsAmount);
                 this.level.coins.splice(index, 1);
             }
@@ -197,8 +217,7 @@ class World {
                     enemy.hit();
                     this.statusbarEndboss.setPercentage(enemy.energy);
                     enemy.damaged();
-
-                    if (enemy instanceof Chicken) { setTimeout(() => { this.level.enemies.splice(i, 1) }, 150); }
+                    if (enemy instanceof Chicken || enemy instanceof ChickenSmall) { setTimeout(() => { this.level.enemies.splice(i, 1) }, 150); }
                 }
             }
         });
