@@ -49,7 +49,7 @@ class MovableObject extends DrawableObject {
         if (this instanceof ThrowableObject) {
             return this.y <= 360;
         } else {
-            return this.y < 190;
+            return this.y < 185;
         }
     }
 
@@ -122,13 +122,5 @@ class MovableObject extends DrawableObject {
         if (this instanceof Endboss) {
             this.animateImages(this.ENDBOSS_IMAGES_HURT);
         }
-    }
-
-    /**
-    * shows Endscreen with image "You won"
-    */
-    showYouWon() {
-        document.getElementById('game-over-screen').classList.remove('d-none');
-        document.getElementById('you-won-img').src = "assets/img/9_intro_outro_screens/win/won_2.png";
     }
 }

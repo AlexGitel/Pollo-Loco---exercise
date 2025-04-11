@@ -11,6 +11,7 @@
         <link rel="manifest" href="assets/favicon_io/site.webmanifest">
 
         <link rel="stylesheet" href="style.css">
+        <!-- <link rel="stylesheet" type="text/css" href="css/style_l.css" media="screen and (orientation: landscape)"> -->
         <link rel="stylesheet" href="assets/fonts/fonts.css">
         <script src="classes/drawable-object.class.js"></script>
         <script src="classes/movable-object.class.js"></script>
@@ -24,46 +25,64 @@
         <script src="classes/statusbar-bottles.class.js"></script>
         <script src="classes/world.class.js"></script>
         <script src="classes/background-objects.class.js"></script>
-        <script src="classes/keyboard.class.js"></script>
+        <!-- <script src="classes/keyboard.class.js"></script> -->
         <script src="classes/level.class.js"></script>
         <script src="classes/throwable-object.class.js"></script>
         <script src="classes/endboss.class.js"></script>
         <script src="classes/coins.class.js"></script>
         <script src="classes/bottles.class.js"></script>
         <script src="levels/level1.js"></script>
+        <script src="classes/keyboard.class.js"></script>
         <script src="js/game.js"></script>
 
         <title>El Pollo Loco</title>
     </head>
     <body>
-            <h1>El Pollo Loco</h1>
+            <h1 id="title" class="d-none">El Pollo Loco</h1>
 
                 <!-- S T A R T S C R E E N -->
             <div id="start-screen" class="start-screen">
-                <div class="start-buttons">
-                    <button class="button pointer" onclick="startGame()">Start</button>
-                </div>
-                <img class="start-img" src="assets/img/9_intro_outro_screens/start/startscreen_1.png" alt="polo-loco-image">
-
-                <div class="controls">
+                <button class="start-button pointer" onclick="startGame()">Start</button>
+             
+                <div id="controls" class="controls">
                     <span>D = Throw bottles</span>
                     <span> Space = Jump</span>
                     <span> < = Left / Right = ></span>
+<!--                 
+                    <img id="speaker-on" onclick="toggleSpeakers(), pauseAudio()" class="pointer speaker-icon" src="assets/icons/speaker.png" alt="speaker-icon">
+                    <img id="speaker-off" onclick="toggleSpeakers(), playAudio()" class="pointer speaker-icon d-none" src="assets/icons/speaker-deactivated.png" alt="speaker-icon"> -->
                 </div> 
             </div>
 
                 <!-- C A N V A S -->
-            <canvas id="canvas" width="720" height="480"></canvas>
-        
-            <div class="controls">
-                <span>D = Throw bottles</span>
-                <span> Space = Jump</span>
-                <span> < = Left / Right = ></span>
+            <canvas id="canvas" width="720" height="480"></canvas>   
             
-                <img id="speaker-on" onclick="toggleSpeakers(), pauseAudio()" class="pointer speaker-icon" src="assets/icons/speaker.png" alt="speaker-icon">
-                <img id="speaker-off" onclick="toggleSpeakers(), playAudio()" class="pointer speaker-icon d-none" src="assets/icons/speaker-deactivated.png" alt="speaker-icon">
-            </div> 
             
+
+                <!--  Overlay for Mobile  -->
+            <div id="mobile-overlay" class="mobile-overlay d-none">
+                <div class="panels-container">
+
+                    <div class="panel-top">
+                        <button class="pointer" onclick="startGame()">Start</button>
+                        <img id="speaker-on" onclick="toggleSpeakers(), pauseAudio()" class="pointer speaker-icon" src="assets/icons/speaker.png" alt="speaker-icon">
+                        <img id="speaker-off" onclick="toggleSpeakers(), playAudio()" class="pointer speaker-icon d-none" src="assets/icons/speaker-deactivated.png" alt="speaker-icon">
+                    </div>
+
+                    <div class="panel-bottom">
+                        <div class="action-buttons">
+                            <button id="btnLeft"><img class="arrow-icon" src="assets/icons/step-back.png" alt="step-back-icon"></button>
+                            <button id="btnRight"><img class="arrow-icon" src="assets/icons/next-step.png" alt="next-step-icon"></button>
+                        </div> 
+                        <div class="action-buttons">
+                            <button id="btnJump" ><img class="arrow-icon" style="transform: rotate(90deg);" src="assets/icons/step-back.png" alt="step-back-icon"></button>
+                            <button id="btnThrow"><img class="bomb-icon" src="assets/icons/bomb.png" alt="throw-icon"></button>
+                        </div>
+                    </div>
+
+                </div>  
+            </div>
+
             
             <!-- G A M E  O V E R  S C R E E N -->
             <div id="game-over-screen" class="game-over-screen d-none">

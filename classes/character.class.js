@@ -1,6 +1,6 @@
 class Character extends MovableObject {
 
-    y = 90;
+    y = 85;
     width = 90;
     height = 250;
     speed = 14;
@@ -106,7 +106,9 @@ class Character extends MovableObject {
          */
         setStoppableInterval(() => {
             if (this.isDead()) {
+                you_lost.play();
                 this.animateImages(this.IMAGES_DEAD);
+                showYouLost();
 
             } else if (this.isHurt()) {
                 this.animateImages(this.IMAGES_HURT);

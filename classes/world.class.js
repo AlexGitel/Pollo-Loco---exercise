@@ -123,40 +123,22 @@ class World {
     checkCollisionsEnemy() {
         this.level.enemies.forEach((enemy, i) => {
             if (this.character.isColliding(enemy)) {
-                if (this.character.y + this.character.height - enemy.height < enemy.y) {
-                    enemy.damaged();
-                    setTimeout(() => { this.level.enemies.splice(i, 1); }, 150);
-                    this.character.speedY = 20;
-                } else {
+                if (enemy instanceof Endboss) {
                     this.character.hit();
                     this.statusbarHealth.setPercentage(this.character.energy);
+                } else {
+                    if (this.character.y + this.character.height - enemy.height < enemy.y) {
+                        enemy.damaged();
+                        setTimeout(() => { this.level.enemies.splice(i, 1); }, 150);
+                        this.character.speedY = 20;
+                    } else {
+                        this.character.hit();
+                        this.statusbarHealth.setPercentage(this.character.energy);
+                    }
                 }
             }
         });
     }
-
-
-    // checkCollisionsEnemy() {
-    //     this.level.enemies.forEach((enemy, i) => {
-    //         if (this.character.isColliding(enemy)) {
-    //             if (enemy) {
-    //                 this.character.hit();
-    //                 this.statusbarHealth.setPercentage(this.character.energy);
-    //             } else {
-    //                 if (this.character.y + this.character.height - enemy.height < enemy.y) {
-    //                     enemy.damaged();
-    //                     setTimeout(() => { this.level.enemies.splice(i, 1); }, 150);
-    //                     this.character.speedY = 20;
-    //                 }
-
-    //                 else {
-    //                     this.character.hit();
-    //                     this.statusbarHealth.setPercentage(this.character.energy);
-    //                 }
-    //             }
-    //         }
-    //     });
-    // }
 
     /**
      * checked if character is colliding coins, if coins > 100, adds life to the character

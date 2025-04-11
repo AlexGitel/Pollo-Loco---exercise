@@ -4,13 +4,28 @@ let world;
 let keyboard = new Keyboard();
 let intervalIds = [];
 
-gameStartAudio = new Audio('audio/gameStart.mp3')
+gameStartAudio = new Audio('audio/gameStart.mp3');
+you_lost = new Audio('audio/you_lost.mp3');
+finish_sound = new Audio('audio/finish_sound.mp3');
+
+
+
+THROW_STOP = new Date().getTime();
+THROW_START = 0;
+
+
 
 /**
  * start the game
  */
 function startGame() {
+    document.getElementById('title').classList.remove('d-none');
     document.getElementById('start-screen').classList.add('d-none');
+
+    if (window.innerWidth <= 992) {
+        document.getElementById('mobile-overlay').classList.remove('d-none');
+    }
+
     initLevel();
     init();
     this.gameStartAudio.play();
@@ -51,6 +66,9 @@ function toggleSpeakers() {
     document.getElementById('speaker-off').classList.toggle('d-none');
 }
 
+/**
+ * possibility to turn on/off the music after starting the game
+ */
 function playAudio() {
     this.gameStartAudio.play();
 }
@@ -59,6 +77,31 @@ function pauseAudio() {
     this.gameStartAudio.pause();
 }
 
+/**
+* shows Endscreen with image "You won"
+*/
+function showYouWon() {
+    this.finish_sound.play();
+    document.getElementById('game-over-screen').classList.remove('d-none');
+    document.getElementById('you-won-img').src = "assets/img/9_intro_outro_screens/win/won_2.png";
+    intervalIds.forEach(clearInterval);
+}
+
+/**
+* shows Endscreen with image "You lost"
+*/
+function showYouLost() {
+    this.gameStartAudio.pause();
+    document.getElementById('game-over-screen').classList.remove('d-none');
+    document.getElementById('title').classList.add('d-none');
+    document.getElementById('controls').classList.add('d-none');
+    document.getElementById('you-won-img').src = "assets/img/9_intro_outro_screens/game_over/oh no you lost!.png";
+    intervalIds.forEach(clearInterval);
+}
+
+/**
+ * it checks the using of keyboard
+ */
 window.addEventListener("keydown", (ev) => { // it works only with keydown.   ev = event
     if (ev.keyCode == 39) {
         keyboard.RIGHT = true;
@@ -104,4 +147,57 @@ window.addEventListener("keyup", (ev) => {
     if (ev.keyCode == 68) {
         keyboard.D = false;
     }
+});
+
+
+
+
+/**
+* it checks the using of mobile buttons
+*/
+
+document.getElementById('btnLeft').addEventListener('touchstart', (e) => {
+    e.preventDefault();
+
+    keyboard.LEFT = true;
+});
+document.getElementById('btnLeft').addEventListener('touchend', (e) => {
+    e.preventDefault();
+    keyboard.LEFT = false;
+});
+document.getElementById('btnRight').addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    keyboard.RIGHT = true;
+});
+document.getElementById('btnRight').addEventListener('touchend', (e) => {
+    e.preventDefault();
+    keyboard.RIGHT = false;
+});
+document.getElementById('btnJump').addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    keyboard.SPACE = true;
+});
+document.getElementById('btnJump').addEventListener('touchend', (e) => {
+    e.preventDefault();
+    keyboard.SPACE = false;
+});
+
+document.getElementById('btnThrow').addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    keyboard.D = true;
+
+
+    //     if (this.THROW_STOP > this.THROW_START && !e.repeat) {
+    //         if ((new Date().getTime() - this.THROW_START) > 1000) {
+    //             this.THROW_START = new Date().getTime();
+    //         }
+    //         this.keyboard.D = true;
+    //     }
+});
+
+
+document.getElementById('btnThrow').addEventListener('touchend', (e) => {
+    e.preventDefault();
+    // this.THROW_STOP = new Date().getTime();
+    keyboard.D = false;
 });
