@@ -2,16 +2,15 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
+        <html translate="no"></html>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon_io/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon_io/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon_io/favicon-16x16.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon_io/android-chrome-192x192.png">
         <link rel="manifest" href="assets/favicon_io/site.webmanifest">
 
         <link rel="stylesheet" href="style.css">
-        <!-- <link rel="stylesheet" type="text/css" href="css/style_l.css" media="screen and (orientation: landscape)"> -->
         <link rel="stylesheet" href="assets/fonts/fonts.css">
         <script src="classes/drawable-object.class.js"></script>
         <script src="classes/movable-object.class.js"></script>
@@ -25,32 +24,42 @@
         <script src="classes/statusbar-bottles.class.js"></script>
         <script src="classes/world.class.js"></script>
         <script src="classes/background-objects.class.js"></script>
-        <!-- <script src="classes/keyboard.class.js"></script> -->
+        <script src="classes/keyboard.class.js"></script>
         <script src="classes/level.class.js"></script>
         <script src="classes/throwable-object.class.js"></script>
         <script src="classes/endboss.class.js"></script>
         <script src="classes/coins.class.js"></script>
         <script src="classes/bottles.class.js"></script>
         <script src="levels/level1.js"></script>
-        <script src="classes/keyboard.class.js"></script>
         <script src="js/game.js"></script>
 
         <title>El Pollo Loco</title>
     </head>
     <body>
+
+
+        <div id="checkOrientation">Please rotate your device to landscape mode to play the game</div>
+
             <h1 id="title" class="d-none">El Pollo Loco</h1>
 
-                <!-- S T A R T S C R E E N -->
+            <!-- S T A R T S C R E E N -->
             <div id="start-screen" class="start-screen">
-                <button class="start-button pointer" onclick="startGame()">Start</button>
+                <button class="startBtn pointer" onclick="startGame()"><img src="assets/icons/start.png" alt=""></button>
              
-                <div id="controls" class="controls">
+                <!-- Controls-info-display-startscreen -->
+                <div id="controls" class="controls-info-display">
                     <span>D = Throw bottles</span>
                     <span> Space = Jump</span>
                     <span> < = Left / Right = ></span>
-<!--                 
-                    <img id="speaker-on" onclick="toggleSpeakers(), pauseAudio()" class="pointer speaker-icon" src="assets/icons/speaker.png" alt="speaker-icon">
-                    <img id="speaker-off" onclick="toggleSpeakers(), playAudio()" class="pointer speaker-icon d-none" src="assets/icons/speaker-deactivated.png" alt="speaker-icon"> -->
+                </div> 
+
+
+                <!-- Controls-info-mobile-startscreen -->
+                <div id="controls-mobile" class="controls-info-mobile d-none">
+                    <span><img class="info-icon-arrow" style="transform: rotate(-180deg);" src="assets/icons/arrow.png" alt="arrow-icon"> = Left</span>
+                    <span><img class="info-icon-arrow" src="assets/icons/arrow.png" alt="arrow-icon"> = Right</span>
+                    <span><img class="info-icon-bottle" src="assets/icons/bottle.png" alt="bottle-icon"> = Throw</span>
+                    <span><img class="info-icon-arrow" style="transform: rotate(-90deg);" src="assets/icons/arrow.png" alt="arrow-icon"> = Jump</span>
                 </div> 
             </div>
 
@@ -64,19 +73,19 @@
                 <div class="panels-container">
 
                     <div class="panel-top">
-                        <button class="pointer" onclick="startGame()">Start</button>
-                        <img id="speaker-on" onclick="toggleSpeakers(), pauseAudio()" class="pointer speaker-icon" src="assets/icons/speaker.png" alt="speaker-icon">
-                        <img id="speaker-off" onclick="toggleSpeakers(), playAudio()" class="pointer speaker-icon d-none" src="assets/icons/speaker-deactivated.png" alt="speaker-icon">
+                        <!-- <button class="pointer" onclick="startGame()">start</button> -->
+                        <img id="speaker-on" onclick="toggleSpeakers(), pauseAudio()" class="pointer speaker-icon" src="assets/icons/sound-turn-on.png" alt="speaker-icon">
+                        <img id="speaker-off" onclick="toggleSpeakers(), playAudio()" class="pointer speaker-icon d-none" src="assets/icons/sound-turn-off.png" alt="speaker-icon">
                     </div>
 
                     <div class="panel-bottom">
                         <div class="action-buttons">
-                            <button id="btnLeft"><img class="arrow-icon" src="assets/icons/step-back.png" alt="step-back-icon"></button>
-                            <button id="btnRight"><img class="arrow-icon" src="assets/icons/next-step.png" alt="next-step-icon"></button>
+                            <button id="btnLeft"><img class="arrow-icon" style="transform: rotate(-180deg);" src="assets/icons/arrow.png" alt="arrow-icon"></button>
+                            <button id="btnRight"><img class="arrow-icon" src="assets/icons/arrow.png" alt="arrow-icon"></button>
                         </div> 
                         <div class="action-buttons">
-                            <button id="btnJump" ><img class="arrow-icon" style="transform: rotate(90deg);" src="assets/icons/step-back.png" alt="step-back-icon"></button>
-                            <button id="btnThrow"><img class="bomb-icon" src="assets/icons/bomb.png" alt="throw-icon"></button>
+                            <button id="btnJump" ><img class="arrow-icon" style="transform: rotate(-90deg);" src="assets/icons/arrow.png" alt="arrow-icon"></button>
+                            <button id="btnThrow"><img class="bottle-icon" src="assets/icons/bottle.png" alt="bottle-icon"></button>
                         </div>
                     </div>
 
@@ -89,5 +98,22 @@
                 <button class="restart-button pointer" onclick="stopGameAndRestart()">Start again?</button>
                 <img id="you-won-img" class="game-over-img" src="" alt="you-won-image">
             </div>
+
+
+            <!-- to check the landscape orientation on mobile devices -->
+            <script>
+                function checkOrientation() {
+                  const warning = document.getElementById("checkOrientation");
+                  if (window.innerHeight > window.innerWidth) {
+                    warning.style.display = "flex";
+                  } else {
+                    warning.style.display = "none";
+                  }
+                }
+                window.addEventListener("load", checkOrientation);
+              
+                window.addEventListener("resize", checkOrientation);
+                window.addEventListener("orientationchange", checkOrientation);
+              </script>
     </body>
 </html>

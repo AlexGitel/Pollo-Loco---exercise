@@ -62,6 +62,7 @@ class Endboss extends MovableObject {
         let intervalTime = setInterval(() => {
             if (this.world.character.x >= 2300) {
                 gameStartAudio.pause();
+                gameStartAudio.currentTime = 0;
                 this.shock.play();
                 this.endboss_alert.play();
                 this.animateImages(this.IMAGES_ENDBOSS_ALERT);
@@ -85,6 +86,7 @@ class Endboss extends MovableObject {
 
                 if (this.world.level.enemies.length <= 0) {
                     this.last_cry.pause();
+                    this.last_cry.currentTime = 0;
                     showYouWon();
                 }
             }
