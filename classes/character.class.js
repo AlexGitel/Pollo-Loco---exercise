@@ -61,6 +61,7 @@ class Character extends MovableObject {
     walking_sound = new Audio('audio/walking.mp3');
     jumping_sound = new Audio('audio/juhu.mp3');
     getPain = new Audio('audio/pain.mp3');
+    you_lost = new Audio('audio/you_lost.mp3');
 
     constructor() {
         super().loadImage('assets/img/2_character_pepe/3_jump/J-35.png');
@@ -106,7 +107,7 @@ class Character extends MovableObject {
          */
         setStoppableInterval(() => {
             if (this.isDead()) {
-                you_lost.play();
+                this.you_lost.play();
                 this.animateImages(this.IMAGES_DEAD);
                 showYouLost();
 
