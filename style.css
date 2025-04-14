@@ -192,7 +192,7 @@ canvas {
 
 
 
-@media only screen and (max-width: 992px) {
+@media only screen and (max-width: 1370px) {
     .controls-info-mobile {
         height: 34px;
         font-size: smaller;
