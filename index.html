@@ -41,21 +41,20 @@
         <div id="checkOrientation">Please rotate your device to landscape mode to play the game</div>
 
 
-            <h1 id="title" class="d-none">El Pollo Loco</h1>
+            <h1 id="title">El Pollo Loco</h1>
 
             <!-- S T A R T S C R E E N -->
             <div id="start-screen" class="start-screen">
                 <button class="startBtn pointer" onclick="startGame()"><img src="assets/icons/start.png" alt=""></button>
              
-                <!-- Controls-info-startscreen-for-display -->
+                <!-- Section about controls buttons (startscreen display) -->
                 <div id="controls" class="controls-info-display">
                     <span>D = Throw bottles</span>
                     <span> Space = Jump</span>
                     <span> < = Left / Right = ></span>
                 </div> 
 
-
-                <!-- Controls-info-startscreen-for-mobile -->
+                <!-- Section about controls buttons (startscreen mobile) -->
                 <div id="controls-mobile" class="controls-info-mobile d-none">
                     <span><img class="info-icon-arrow" style="transform: rotate(-180deg);" src="assets/icons/arrow.png" alt="arrow-icon"> = Left</span>
                     <span><img class="info-icon-arrow" src="assets/icons/arrow.png" alt="arrow-icon"> = Right</span>
@@ -68,8 +67,8 @@
                 <!--  Overlay for mute button  -->
             <div id="overlay-mute-button" class="overlay-for-mute-button d-none"> 
                 <div class="mute-button-div">
-                    <img id="speaker-on" onclick="toggleSpeakers(), pauseAudio()" class="pointer speaker-icon" src="assets/icons/sound-turn-on.png" alt="speaker-icon">
-                    <img id="speaker-off" onclick="toggleSpeakers(), playAudio()" class="pointer speaker-icon d-none" src="assets/icons/sound-turn-off.png" alt="speaker-icon">
+                    <img id="mute-on" onclick="toggleSpeakersDisplay(), pauseAudio()" class="pointer speaker-icon" src="assets/icons/sound-turn-on.png" alt="speaker-icon">
+                    <img id="mute-off" onclick="toggleSpeakersDisplay(), playAudio()" class="pointer speaker-icon d-none" src="assets/icons/sound-turn-off.png" alt="speaker-icon">
                 </div>
             </div>
                
@@ -85,8 +84,8 @@
                 <div class="panels-container">
 
                     <div class="panel-top">
-                        <img id="speaker-on" onclick="toggleSpeakers(), pauseAudio()" class="pointer speaker-icon" src="assets/icons/sound-turn-on.png" alt="speaker-icon">
-                        <img id="speaker-off" onclick="toggleSpeakers(), playAudio()" class="pointer speaker-icon d-none" src="assets/icons/sound-turn-off.png" alt="speaker-icon">
+                        <img id="speaker-on" onclick="toggleSpeakersMobile(), pauseAudio()" class="pointer speaker-icon" src="assets/icons/sound-turn-on.png" alt="speaker-icon">
+                        <img id="speaker-off" onclick="toggleSpeakersMobile(), playAudio()" class="pointer speaker-icon d-none" src="assets/icons/sound-turn-off.png" alt="speaker-icon">
                     </div>
 
                     <div class="panel-bottom">
