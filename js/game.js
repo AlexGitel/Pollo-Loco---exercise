@@ -5,7 +5,6 @@ let keyboard = new Keyboard();
 let intervalIds = [];
 
 gameStartAudio = new Audio('audio/gameStart.mp3');
-you_lost = new Audio('audio/you_lost.mp3');
 finish_sound = new Audio('audio/finish_sound.mp3');
 
 /**
@@ -14,6 +13,7 @@ finish_sound = new Audio('audio/finish_sound.mp3');
 function startGame() {
     document.getElementById('title').classList.remove('d-none');
     document.getElementById('start-screen').classList.add('d-none');
+    document.getElementById('overlay-mute-button').classList.remove('d-none');
 
     if (window.innerWidth <= 992) {
         document.getElementById('mobile-overlay').classList.remove('d-none');
@@ -68,8 +68,8 @@ function playAudio() {
 }
 
 function pauseAudio() {
-    this.gameStartAudio.pause();
-    this.gameStartAudio.currentTime = 0;
+    gameStartAudio.pause();
+    gameStartAudio.currentTime = 0;
 }
 
 /**
@@ -79,6 +79,7 @@ function showYouWon() {
     this.finish_sound.play();
     document.getElementById('game-over-screen').classList.remove('d-none');
     document.getElementById('you-won-img').src = "assets/img/9_intro_outro_screens/win/won_2.png";
+    document.getElementById('overlay-mute-button').classList.add('d-none');
     intervalIds.forEach(clearInterval);
 }
 
@@ -92,13 +93,14 @@ function showYouLost() {
     document.getElementById('title').classList.add('d-none');
     document.getElementById('controls').classList.add('d-none');
     document.getElementById('you-won-img').src = "assets/img/9_intro_outro_screens/game_over/oh no you lost!.png";
+    document.getElementById('overlay-mute-button').classList.add('d-none');
     intervalIds.forEach(clearInterval);
 }
 
 /**
  * it checks the using of keyboard
  */
-window.addEventListener("keydown", (ev) => { // it works only with keydown.   ev = event
+window.addEventListener("keydown", (ev) => { // works only with keydown.   ev = event
     if (ev.keyCode == 39) {
         keyboard.RIGHT = true;
     }
@@ -145,47 +147,56 @@ window.addEventListener("keyup", (ev) => {
 });
 
 
-
-
 /**
 * it checks the using of mobile buttons
 */
-
 window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('btnLeft').addEventListener('touchstart', (e) => {
         e.preventDefault();
-
         keyboard.LEFT = true;
-    });
+        // });
+    }, { passive: false }); // empfohlen ChatGPT
+
     document.getElementById('btnLeft').addEventListener('touchend', (e) => {
         e.preventDefault();
         keyboard.LEFT = false;
-    });
+        // });
+    }, { passive: false }); // empfohlen ChatGPT
+
     document.getElementById('btnRight').addEventListener('touchstart', (e) => {
         e.preventDefault();
         keyboard.RIGHT = true;
-    });
+        // });
+    }, { passive: false });
+
     document.getElementById('btnRight').addEventListener('touchend', (e) => {
         e.preventDefault();
         keyboard.RIGHT = false;
-    });
+        // });
+    }, { passive: false });
+
     document.getElementById('btnJump').addEventListener('touchstart', (e) => {
         e.preventDefault();
         keyboard.SPACE = true;
-    });
+        // });
+    }, { passive: false });
+
     document.getElementById('btnJump').addEventListener('touchend', (e) => {
         e.preventDefault();
         keyboard.SPACE = false;
-    });
+        // });
+    }, { passive: false });
 
     document.getElementById('btnThrow').addEventListener('touchstart', (e) => {
         e.preventDefault();
         keyboard.D = true;
-    });
+        // });
+    }, { passive: false });
 
 
     document.getElementById('btnThrow').addEventListener('touchend', (e) => {
         e.preventDefault();
         keyboard.D = false;
-    });
+        // });
+    }, { passive: false });
 });

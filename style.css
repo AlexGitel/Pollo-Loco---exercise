@@ -124,7 +124,7 @@ canvas {
     font-size: larger;
     position: absolute;
     padding: 0 0 15px;
-    color: darkblue;
+    color: darkorange;
 }
 
 .mobile-overlay {
@@ -135,6 +135,21 @@ canvas {
     height: 100%;
     position: absolute;
     z-index: 2;
+}
+
+.overlay-for-mute-button {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    position: absolute;
+    z-index: 2;
+}
+
+.mute-button-div img {
+    padding: 25px 25px 0 0;
 }
 
 .panels-container {
@@ -192,7 +207,7 @@ canvas {
 
 
 
-@media only screen and (max-width: 992px) {
+@media only screen and (max-width: 1370px) {
     .controls-info-mobile {
         height: 34px;
         font-size: smaller;

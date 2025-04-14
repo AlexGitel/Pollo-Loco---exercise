@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" translate="no">
     <head>
         <meta charset="UTF-8">
-        <html translate="no"></html>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon_io/apple-touch-icon.png">
@@ -37,8 +36,8 @@
     </head>
     <body>
 
-
         <div id="checkOrientation">Please rotate your device to landscape mode to play the game</div>
+
 
             <h1 id="title" class="d-none">El Pollo Loco</h1>
 
@@ -46,7 +45,7 @@
             <div id="start-screen" class="start-screen">
                 <button class="startBtn pointer" onclick="startGame()"><img src="assets/icons/start.png" alt=""></button>
              
-                <!-- Controls-info-display-startscreen -->
+                <!-- Controls-info-startscreen-for-display -->
                 <div id="controls" class="controls-info-display">
                     <span>D = Throw bottles</span>
                     <span> Space = Jump</span>
@@ -54,7 +53,7 @@
                 </div> 
 
 
-                <!-- Controls-info-mobile-startscreen -->
+                <!-- Controls-info-startscreen-for-mobile -->
                 <div id="controls-mobile" class="controls-info-mobile d-none">
                     <span><img class="info-icon-arrow" style="transform: rotate(-180deg);" src="assets/icons/arrow.png" alt="arrow-icon"> = Left</span>
                     <span><img class="info-icon-arrow" src="assets/icons/arrow.png" alt="arrow-icon"> = Right</span>
@@ -62,6 +61,17 @@
                     <span><img class="info-icon-arrow" style="transform: rotate(-90deg);" src="assets/icons/arrow.png" alt="arrow-icon"> = Jump</span>
                 </div> 
             </div>
+
+               
+                <!--  Overlay for mute button  -->
+            <div id="overlay-mute-button" class="overlay-for-mute-button d-none"> 
+                <div class="mute-button-div">
+                    <img id="speaker-on" onclick="toggleSpeakers(), pauseAudio()" class="pointer speaker-icon" src="assets/icons/sound-turn-on.png" alt="speaker-icon">
+                    <img id="speaker-off" onclick="toggleSpeakers(), playAudio()" class="pointer speaker-icon d-none" src="assets/icons/sound-turn-off.png" alt="speaker-icon">
+                </div>
+            </div>
+               
+            
 
                 <!-- C A N V A S -->
             <canvas id="canvas" width="720" height="480"></canvas>   
@@ -73,7 +83,6 @@
                 <div class="panels-container">
 
                     <div class="panel-top">
-                        <!-- <button class="pointer" onclick="startGame()">start</button> -->
                         <img id="speaker-on" onclick="toggleSpeakers(), pauseAudio()" class="pointer speaker-icon" src="assets/icons/sound-turn-on.png" alt="speaker-icon">
                         <img id="speaker-off" onclick="toggleSpeakers(), playAudio()" class="pointer speaker-icon d-none" src="assets/icons/sound-turn-off.png" alt="speaker-icon">
                     </div>
