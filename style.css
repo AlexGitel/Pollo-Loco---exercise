@@ -12,10 +12,11 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     height: 100vh;
-    /* overflow: hidden;
-    margin: 0;
-    padding: 0;
-    touch-action: none; */
+
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
 
 .pointer {
@@ -210,12 +211,9 @@ canvas {
     border: silver solid 2px;
 }
 
-/* .div-as-button img {
-    user-select: none;
-    -webkit-user-drag: none;
-    -webkit-touch-callout: none;
-    touch-action: none;
-} */
+.div-as-button img {
+    pointer-events: none;
+}
 
 .info-icon-bottle,
 .info-icon-arrow {

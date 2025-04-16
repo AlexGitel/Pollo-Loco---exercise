@@ -166,58 +166,59 @@ window.addEventListener("keydown", (event) => {
 */
 window.addEventListener('DOMContentLoaded', () => {
 
-    // document.addEventListener('contextmenu', function (e) {
-    //     e.preventDefault();
-    // });
-
+    ['btnLeft', 'btnRight', 'btnJump', 'btnThrow'].forEach(id => {
+        const btn = document.getElementById(id);
+        btn.addEventListener('contextmenu', e => e.preventDefault());
+    });
 
     document.getElementById('btnLeft').addEventListener('touchstart', (e) => {
         e.preventDefault();
         keyboard.LEFT = true;
-    });
-    // }, { passive: false });
+        // });
+    }, { passive: false });
 
     document.getElementById('btnLeft').addEventListener('touchend', (e) => {
         e.preventDefault();
         keyboard.LEFT = false;
-    });
+        // });
+    }, { passive: false });
 
     document.getElementById('btnRight').addEventListener('touchstart', (e) => {
         e.preventDefault();
         keyboard.RIGHT = true;
-    });
+        // });
+    }, { passive: false });
 
     document.getElementById('btnRight').addEventListener('touchend', (e) => {
         e.preventDefault();
         keyboard.RIGHT = false;
-    });
+        // });
+    }, { passive: false });
 
     document.getElementById('btnJump').addEventListener('touchstart', (e) => {
         e.preventDefault();
         keyboard.SPACE = true;
-    });
+        // });
+    }, { passive: false });
 
     document.getElementById('btnJump').addEventListener('touchend', (e) => {
         e.preventDefault();
         keyboard.SPACE = false;
-    });
+        // });
+    }, { passive: false });
 
     document.getElementById('btnThrow').addEventListener('touchstart', (e) => {
         e.preventDefault();
         keyboard.D = true;
-    });
+        // });
+    }, { passive: false });
 
     document.getElementById('btnThrow').addEventListener('touchend', (e) => {
         e.preventDefault();
         keyboard.D = false;
-    });
+        // });
+    }, { passive: false });
 });
-
-
-
-
-
-
 
 
 
@@ -232,51 +233,3 @@ window.addEventListener('DOMContentLoaded', () => {
 //     const div = document.getElementById("myDiv");
 //     div.addEventListener("contextmenu", (e) => { e.preventDefault() });
 // }
-
-
-
-// window.addEventListener("keydown", (ev) => { // works only with keydown.   ev = event
-//     if (ev.keyCode == 39) {
-//         keyboard.RIGHT = true;
-//     }
-
-//     if (ev.keyCode == 37) {
-//         keyboard.LEFT = true;
-//     }
-
-//     if (ev.keyCode == 38) {
-//         keyboard.UP = true;
-//     }
-//     if (ev.keyCode == 40) {
-//         keyboard.DOWN = true;
-//     }
-//     if (ev.keyCode == 32) {
-//         keyboard.SPACE = true;
-//     }
-//     if (ev.keyCode == 68) {
-//         keyboard.D = true;
-//     }
-// });
-
-// window.addEventListener("keyup", (ev) => {
-//     if (ev.keyCode == 39) {
-//         keyboard.RIGHT = false;
-//     }
-
-//     if (ev.keyCode == 37) {
-//         keyboard.LEFT = false;
-//     }
-
-//     if (ev.keyCode == 38) {
-//         keyboard.UP = false;
-//     }
-//     if (ev.keyCode == 40) {
-//         keyboard.DOWN = false;
-//     }
-//     if (ev.keyCode == 32) {
-//         keyboard.SPACE = false;
-//     }
-//     if (ev.keyCode == 68) {
-//         keyboard.D = false;
-//     }
-// });
