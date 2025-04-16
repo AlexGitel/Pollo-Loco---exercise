@@ -124,130 +124,159 @@ function showYouLost() {
 }
 
 /**
- * it checks the using of keyboard
+ * for using the keyboard to move the Character, jump, throw.
  */
-window.addEventListener("keydown", (ev) => { // works only with keydown.   ev = event
-    if (ev.keyCode == 39) {
-        keyboard.RIGHT = true;
-    }
 
-    if (ev.keyCode == 37) {
-        keyboard.LEFT = true;
-    }
-
-    if (ev.keyCode == 38) {
-        keyboard.UP = true;
-    }
-    if (ev.keyCode == 40) {
-        keyboard.DOWN = true;
-    }
-    if (ev.keyCode == 32) {
-        keyboard.SPACE = true;
-    }
-    if (ev.keyCode == 68) {
-        keyboard.D = true;
+window.addEventListener("keyup", (event) => {
+    switch (event.code) {
+        case "ArrowLeft":
+            keyboard.LEFT = false;
+            break;
+        case "ArrowRight":
+            keyboard.RIGHT = false;
+            break;
+        case "Space":
+            keyboard.SPACE = false;
+            break;
+        case "KeyD":
+            keyboard.D = false;
+            break;
     }
 });
 
-window.addEventListener("keyup", (ev) => {
-    if (ev.keyCode == 39) {
-        keyboard.RIGHT = false;
-    }
-
-    if (ev.keyCode == 37) {
-        keyboard.LEFT = false;
-    }
-
-    if (ev.keyCode == 38) {
-        keyboard.UP = false;
-    }
-    if (ev.keyCode == 40) {
-        keyboard.DOWN = false;
-    }
-    if (ev.keyCode == 32) {
-        keyboard.SPACE = false;
-    }
-    if (ev.keyCode == 68) {
-        keyboard.D = false;
+window.addEventListener("keydown", (event) => {
+    switch (event.code) {
+        case "ArrowLeft":
+            keyboard.LEFT = true;
+            break;
+        case "ArrowRight":
+            keyboard.RIGHT = true;
+            break;
+        case "Space":
+            keyboard.SPACE = true;
+            break;
+        case "KeyD":
+            keyboard.D = true;
+            break;
     }
 });
-
 
 /**
 * it checks the using of mobile buttons
 */
+window.addEventListener('DOMContentLoaded', () => {
+
+    // document.addEventListener('contextmenu', function (e) {
+    //     e.preventDefault();
+    // });
+
+
+    document.getElementById('btnLeft').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.LEFT = true;
+    });
+    // }, { passive: false });
+
+    document.getElementById('btnLeft').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.LEFT = false;
+    });
+
+    document.getElementById('btnRight').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.RIGHT = true;
+    });
+
+    document.getElementById('btnRight').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.RIGHT = false;
+    });
+
+    document.getElementById('btnJump').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.SPACE = true;
+    });
+
+    document.getElementById('btnJump').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.SPACE = false;
+    });
+
+    document.getElementById('btnThrow').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.D = true;
+    });
+
+    document.getElementById('btnThrow').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.D = false;
+    });
+});
+
+
+
+
+
+
+
+
+
 // window.addEventListener('DOMContentLoaded', () => {
-//     document.getElementById('btnLeft').addEventListener('touchstart', (e) => {
-//         e.preventDefault();
-//         keyboard.LEFT = true;
-//         // });
-//     }, { passive: false });
-
-//     document.getElementById('btnLeft').addEventListener('touchend', (e) => {
-//         e.preventDefault();
-//         keyboard.LEFT = false;
-//         // });
-//     }, { passive: false });
-
-//     document.getElementById('btnRight').addEventListener('touchstart', (e) => {
-//         e.preventDefault();
-//         keyboard.RIGHT = true;
-//         // });
-//     }, { passive: false });
-
-//     document.getElementById('btnRight').addEventListener('touchend', (e) => {
-//         e.preventDefault();
-//         keyboard.RIGHT = false;
-//         // });
-//     }, { passive: false });
-
-//     document.getElementById('btnJump').addEventListener('touchstart', (e) => {
-//         e.preventDefault();
-//         keyboard.SPACE = true;
-//         // });
-//     }, { passive: false });
-
-//     document.getElementById('btnJump').addEventListener('touchend', (e) => {
-//         e.preventDefault();
-//         keyboard.SPACE = false;
-//         // });
-//     }, { passive: false });
-
-//     document.getElementById('btnThrow').addEventListener('touchstart', (e) => {
-//         e.preventDefault();
-//         keyboard.D = true;
-//         // });
-//     }, { passive: false });
-
-
-//     document.getElementById('btnThrow').addEventListener('touchend', (e) => {
-//         e.preventDefault();
-//         keyboard.D = false;
-//         // });
-//     }, { passive: false });
+//     bindButton('btnLeft', 'LEFT');
+//     bindButton('btnRight', 'RIGHT');
+//     bindButton('btnJump', 'SPACE');
+//     bindButton('btnThrow', 'D');
 // });
 
-function bindButton(id, key) {
-    const btn = document.getElementById(id);
-    btn.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
-        keyboard[key] = true;
-    });
+// function bindButton(id, key) {
+//     const div = document.getElementById("myDiv");
+//     div.addEventListener("contextmenu", (e) => { e.preventDefault() });
+// }
 
-    btn.addEventListener('pointerup', (e) => {
-        e.preventDefault();
-        keyboard[key] = false;
-    });
 
-    btn.addEventListener('pointerleave', (e) => {
-        // Falls Finger vom Button rutscht
-        keyboard[key] = false;
-    });
-}
 
-window.addEventListener('DOMContentLoaded', () => {
-    bindButton('btnLeft', 'LEFT');
-    bindButton('btnRight', 'RIGHT');
-    bindButton('btnJump', 'SPACE');
-    bindButton('btnThrow', 'D');
-});
+// window.addEventListener("keydown", (ev) => { // works only with keydown.   ev = event
+//     if (ev.keyCode == 39) {
+//         keyboard.RIGHT = true;
+//     }
+
+//     if (ev.keyCode == 37) {
+//         keyboard.LEFT = true;
+//     }
+
+//     if (ev.keyCode == 38) {
+//         keyboard.UP = true;
+//     }
+//     if (ev.keyCode == 40) {
+//         keyboard.DOWN = true;
+//     }
+//     if (ev.keyCode == 32) {
+//         keyboard.SPACE = true;
+//     }
+//     if (ev.keyCode == 68) {
+//         keyboard.D = true;
+//     }
+// });
+
+// window.addEventListener("keyup", (ev) => {
+//     if (ev.keyCode == 39) {
+//         keyboard.RIGHT = false;
+//     }
+
+//     if (ev.keyCode == 37) {
+//         keyboard.LEFT = false;
+//     }
+
+//     if (ev.keyCode == 38) {
+//         keyboard.UP = false;
+//     }
+//     if (ev.keyCode == 40) {
+//         keyboard.DOWN = false;
+//     }
+//     if (ev.keyCode == 32) {
+//         keyboard.SPACE = false;
+//     }
+//     if (ev.keyCode == 68) {
+//         keyboard.D = false;
+//     }
+// });

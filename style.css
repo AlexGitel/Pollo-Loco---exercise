@@ -3,15 +3,6 @@
     font-family: 'Piedra', 'Open Sans', sans-serif;
 }
 
-html,
-body {
-    overflow: hidden;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    touch-action: none;
-}
-
 body {
     display: flex;
     flex-direction: column;
@@ -21,6 +12,10 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     height: 100vh;
+    /* overflow: hidden;
+    margin: 0;
+    padding: 0;
+    touch-action: none; */
 }
 
 .pointer {
@@ -215,12 +210,12 @@ canvas {
     border: silver solid 2px;
 }
 
-button img {
+/* .div-as-button img {
     user-select: none;
     -webkit-user-drag: none;
     -webkit-touch-callout: none;
     touch-action: none;
-}
+} */
 
 .info-icon-bottle,
 .info-icon-arrow {
