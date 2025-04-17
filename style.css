@@ -15,7 +15,7 @@ body {
 
     touch-action: manipulation;
     user-select: none;
-    -webkit-user-select: none;
+    /* -webkit-user-select: none; */
     -ms-user-select: none;
 }
 
@@ -223,7 +223,11 @@ canvas {
 
 
 
-@media only screen and (max-width: 1400px) {
+@media (max-width: 992px) {
+    .controls-info-display {
+        display: none;
+    }
+
     .controls-info-mobile {
         height: 37px;
         font-size: smaller;
@@ -232,10 +236,9 @@ canvas {
         gap: 40px;
     }
 
-    .controls-info-display {
-        display: none;
+    .mobile-overlay {
+        display: block;
     }
-
 }
 
 /* Smartphone portrait */
