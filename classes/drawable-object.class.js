@@ -7,7 +7,7 @@ class DrawableObject {
 
     /**
      * 
-     * @param {path of the Image} path 
+     * @param {path of the Image} path  - like ['img/image1.png']
      */
     loadImage(path) {
         this.img = new Image();
@@ -22,7 +22,6 @@ class DrawableObject {
         imagesArray.forEach((path) => {
             let img = new Image();
             img.src = path;
-            //img.style = 'transform: scaleX(-1)';
             this.imagesCache[path] = img;
         });
     }

@@ -5,6 +5,19 @@ class Character extends MovableObject {
     height = 250;
     speed = 14;
 
+    IMAGES_GET_A_NAP = [
+        'assets/img/2_character_pepe/1_idle/long_idle/I-11.png',
+        'assets/img/2_character_pepe/1_idle/long_idle/I-12.png',
+        'assets/img/2_character_pepe/1_idle/long_idle/I-13.png',
+        'assets/img/2_character_pepe/1_idle/long_idle/I-14.png',
+        'assets/img/2_character_pepe/1_idle/long_idle/I-15.png',
+        'assets/img/2_character_pepe/1_idle/long_idle/I-16.png',
+        'assets/img/2_character_pepe/1_idle/long_idle/I-17.png',
+        'assets/img/2_character_pepe/1_idle/long_idle/I-18.png',
+        'assets/img/2_character_pepe/1_idle/long_idle/I-19.png',
+        'assets/img/2_character_pepe/1_idle/long_idle/I-20.png'
+    ];
+
     IMAGES_FALLING_DOWN = [
         'assets/img/2_character_pepe/3_jump/J-35.png',
         'assets/img/2_character_pepe/3_jump/J-36.png',
@@ -64,7 +77,9 @@ class Character extends MovableObject {
     you_lost = new Audio('audio/you_lost.mp3');
 
     constructor() {
-        super().loadImage('assets/img/2_character_pepe/3_jump/J-35.png');
+        super();
+        this.loadImage('assets/img/2_character_pepe/3_jump/J-35.png');
+        this.loadImages(this.IMAGES_GET_A_NAP);
         this.loadImages(this.IMAGES_FALLING_DOWN);
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_JUMPING);
@@ -80,56 +95,69 @@ class Character extends MovableObject {
      */
     animateCharacter() {
         setStoppableInterval(() => {
-            if (this.world.keyboard.RIGHT && this.x < 2340) {
-                this.moveRight();
-                this.otherDirection = false;
-                this.walking_sound.play();
-            }
-            if (this.world.keyboard.LEFT && this.x > -700) {
-                this.moveLeft();
-                this.otherDirection = true;
-                this.walking_sound.play();
-            }
-            if (!this.world.keyboard.RIGHT && !this.world.keyboard.LEFT) {
-                this.loadImage('assets/img/2_character_pepe/3_jump/J-31.png');
-            }
-            if (this.world.keyboard.SPACE && !this.isAboveGround()) {
-                this.jump();
-                this.jumping_sound.play();
-            }
-
+            this.ifKeyRight();
+            this.ifKeyLeft();
+            this.ifStanding();
+            this.ifJump();
             this.world.camera_x = -this.x + 280;
+            this.updateAnimations();
         }, 1000 / 25);
+    }
 
-
-        /**
-         * checks the situation and shows the correct images
-         */
-        setStoppableInterval(() => {
-            if (this.isDead()) {
-                this.you_lost.play();
-                this.animateImages(this.IMAGES_DEAD);
-                showYouLost();
-
-            } else if (this.isHurt()) {
-                this.animateImages(this.IMAGES_HURT);
-                this.getPain.play();
-
-            } else if (this.isAboveGround()) {
-                this.animateImages(this.IMAGES_FALLING_DOWN);
-
-            } else {
-                if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                    this.animateImages(this.IMAGES_WALKING);
-                }
-            }
-        }, 40);
+    updateAnimations() {
+        if (this.isDead()) {
+            this.you_lost.play();
+            this.animateImages(this.IMAGES_DEAD);
+            showYouLost();
+        } else if (this.isHurt()) {
+            this.animateImages(this.IMAGES_HURT);
+            this.getPain.play();
+        } else if (this.isAboveGround()) {
+            this.animateImages(this.IMAGES_FALLING_DOWN);
+        } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+            this.animateImages(this.IMAGES_WALKING);
+        }
     }
 
     /**
-     * for jumping
+     * for jumping, if Key Space is pressed
      */
-    jump() {
-        this.speedY = 30;
+    ifJump() {
+        if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+            this.speedY = 30;
+            this.jumping_sound.play();
+        }
+    }
+
+    /**
+     * if it is pressed Key Right
+     */
+    ifKeyRight() {
+        if (this.world.keyboard.RIGHT && this.x < 2340) {
+            this.moveRight();
+            this.otherDirection = false;
+            this.walking_sound.play();
+        }
+    }
+
+    /**
+     * if it is pressed Key Left
+     */
+    ifKeyLeft() {
+        if (this.world.keyboard.LEFT && this.x > -700) {
+            this.moveLeft();
+            this.otherDirection = true;
+            this.walking_sound.play();
+        }
+    }
+
+    /**
+     * if character has no moving, character is getting napping
+     */
+    ifStanding() {
+        if (!this.world.keyboard.RIGHT && !this.world.keyboard.LEFT) {
+            this.loadImage('assets/img/2_character_pepe/3_jump/J-31.png');
+            this.animateImages(this.IMAGES_GET_A_NAP);
+        }
     }
 }

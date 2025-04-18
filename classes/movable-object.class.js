@@ -1,15 +1,13 @@
 class MovableObject extends DrawableObject {
 
-    speed = 0.15; // moving Left/Right
-    otherDirection = false; // to mirror image - usualy false (to turn and move to the LEFT)
+    speed = 0.15;
+    otherDirection = false;
     speedY = 0;
     acceleration = 3;
-
     energy = 100;
     coinsAmount = 0;
     bottlesAmount = 100;
     lastHit = 0;
-
 
     moveRight() {
         this.x += this.speed;
@@ -102,14 +100,19 @@ class MovableObject extends DrawableObject {
 
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;
-        timepassed = timepassed / 1000; // Difference in sec
-        return timepassed < 1; // true will be returned
+        timepassed = timepassed / 1000;
+        return timepassed < 1;
     }
 
     /**
      * if enemy hited, it shows images that enemies are damaged
      */
     damaged() {
+        this.chickensGetDamage();
+        this.endbossGetDamage();
+    }
+
+    chickensGetDamage() {
         if (this instanceof Chicken) {
             this.loadImage('assets/img/3_enemies_chicken/chicken_normal/2_dead/dead.png');
             this.speed = 0;
@@ -119,6 +122,9 @@ class MovableObject extends DrawableObject {
             this.animateImages(this.IMAGES_DEAD);
             this.squashing_sound.play();
         }
+    }
+
+    endbossGetDamage() {
         if (this instanceof Endboss) {
             this.animateImages(this.ENDBOSS_IMAGES_HURT);
         }

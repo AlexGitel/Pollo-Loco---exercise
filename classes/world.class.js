@@ -30,17 +30,17 @@ class World {
     /**
      * to draw the images on the map
      */
-    draw() {    // 24-60 x / sec.
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); // clear canvas
+    draw() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);
         this.addArrayObjectsToMap(this.level.backgroundObjects);
         this.addArrayObjectsToMap(this.level.clouds);
-        this.ctx.translate(-this.camera_x, 0); // camera moving Back for Statusbar
+        this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.statusbarHealth);
         this.addToMap(this.statusbarCoins);
         this.addToMap(this.statusbarBottles);
         this.addToMap(this.statusbarEndboss);
-        this.ctx.translate(this.camera_x, 0); // camera moving forwards for Statusbar
+        this.ctx.translate(this.camera_x, 0);
         this.addToMap(this.character);
         this.addArrayObjectsToMap(this.throwableObject);
         this.addArrayObjectsToMap(this.level.enemies);
@@ -48,8 +48,7 @@ class World {
         this.addArrayObjectsToMap(this.level.bottles);
         this.ctx.translate(-this.camera_x, 0);
 
-        // draw() is called again and again
-        let self = this; // self needed -> requestAnimationFrame don't accept 'this'.      
+        let self = this;
         requestAnimationFrame(function () {
             self.draw();
         });
@@ -57,7 +56,7 @@ class World {
 
     /**
      * 
-     * @param {Array} objects -like Array enemies (new Chicken(), new Chicken())
+     * @param {Array} objects - Array for enemies (new Chicken(), new Chicken())
      */
     addArrayObjectsToMap(objects) {
         objects.forEach(singleObject => {
@@ -81,39 +80,23 @@ class World {
     }
 
     /**
-     * to flip the image over the 180°
-     * @param {Character or Endboss} movObj 
+     * to flip the image over the 180° Axis
+     * @param {like Character or Endboss} movObj 
      */
     flipImage(movObj) {
-        this.ctx.save(); // it save's the actualy Position of Character
-
-        this.ctx.translate(movObj.width, 0); // Object, around his width 
-        this.ctx.scale(-1, 1); // -1:  in x-Axis 180° 
-
+        this.ctx.save();
+        this.ctx.translate(movObj.width, 0);
+        this.ctx.scale(-1, 1);
         movObj.x = movObj.x * -1;
     }
 
     /**
      * to flip the image back
-     * @param {Character or Endboss} movObj 
+     * @param {like Character or Endboss} movObj 
      */
     flipImageBack(movObj) {
         movObj.x = movObj.x * -1;
         this.ctx.restore();
-    }
-
-    /**
-     * checked if character get colliding or keyboard - pressed 
-     */
-    update() {
-        setStoppableInterval(() => {
-            this.checkCollisionsEnemy();
-            this.checkThrowObjects();
-            this.checkCollisionsCoins();
-            this.checkCollisionsBottles();
-            this.checkBottlesAmount();
-            this.bottleHitEnemy();
-        }, 200);
     }
 
     /**
@@ -211,5 +194,19 @@ class World {
         if (this.character.bottlesAmount <= 100) {
             this.statusbarBottles.setPercentage(this.character.bottlesAmount);
         }
+    }
+
+    /**
+     * checked if character get colliding or keyboard - pressed 
+     */
+    update() {
+        setStoppableInterval(() => {
+            this.checkCollisionsEnemy();
+            this.checkThrowObjects();
+            this.checkCollisionsCoins();
+            this.checkCollisionsBottles();
+            this.checkBottlesAmount();
+            this.bottleHitEnemy();
+        }, 200);
     }
 }

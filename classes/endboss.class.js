@@ -5,7 +5,6 @@ class Endboss extends MovableObject {
     width = 200;
     speed = 16;
 
-
     IMAGES_ENDBOSS_ALERT = [
         'assets/img/4_enemie_boss_chicken/2_alert/G5.png',
         'assets/img/4_enemie_boss_chicken/2_alert/G6.png',
