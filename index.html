@@ -111,14 +111,14 @@
             </div>
 
 
-            <!-- to check the landscape orientation on mobile devices -->
+            <!-- recommendation to change to the landscape on mobile devices-->
             <script>
                 function checkOrientation() {
-                  const warning = document.getElementById("checkOrientation");
-                  if (window.innerHeight > window.innerWidth) {
-                    warning.style.display = "flex";
+                  const warning = document.getElementById('checkOrientation');
+                  if (window.innerWidth <= 480 && window.innerHeight > window.innerWidth) {
+                    warning.style.display = 'flex';
                   } else {
-                    warning.style.display = "none";
+                    warning.style.display = 'none';
                   }
                 }
                 window.addEventListener("load", checkOrientation);

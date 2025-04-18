@@ -15,8 +15,11 @@ body {
 
     touch-action: manipulation;
     user-select: none;
-    /* -webkit-user-select: none; */
-    -ms-user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+
+    /* overflow: auto; */
+    /* padding-bottom: 100px; */
 }
 
 .pointer {
@@ -223,7 +226,7 @@ canvas {
 
 
 
-@media (max-width: 992px) {
+@media (max-width: 1024px) {
     .controls-info-display {
         display: none;
     }
