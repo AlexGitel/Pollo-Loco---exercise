@@ -166,6 +166,13 @@ canvas {
     justify-content: end;
     padding-right: 20px;
     padding-top: 10px;
+    gap: 15px;
+}
+
+.fullscreen-btn {
+    background-color: transparent;
+    border: none;
+    font-size: x-small;
 }
 
 .panel-bottom {
@@ -196,7 +203,6 @@ canvas {
 .bottle-icon {
     width: 38px;
     height: 38px;
-    background-color: white;
     border-radius: 50%;
     border: silver solid 2px;
 }
@@ -211,7 +217,22 @@ canvas {
     height: 25px;
 }
 
+.fullscreen {
+    /* for Android, Desktop */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
+.fullscreen-fake {
+    /* for iOS */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+}
 
 @media (max-width: 1024px) {
     .controls-info-display {
