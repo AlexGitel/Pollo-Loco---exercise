@@ -1,0 +1,12 @@
+* {
+    margin: 0;
+    font-family: 'Piedra', 'Open Sans', sans-serif;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.d-none {
+    display: none !important;
+}

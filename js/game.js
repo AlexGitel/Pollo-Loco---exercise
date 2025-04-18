@@ -175,7 +175,6 @@ window.addEventListener('DOMContentLoaded', () => {
         const btn = document.getElementById(id);
         btn.addEventListener('contextmenu', event => event.preventDefault());
     });
-
     mobileBtnPress();
     mobileBtnRelease();
 });
