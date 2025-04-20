@@ -55,10 +55,10 @@ class MovableObject extends DrawableObject {
      *  if Character.isColliding(Chicken, Endboss, enemies, coins)
      */
     isColliding(movObj) {
-        return this.x + this.width > movObj.x &&
-            this.y + this.height > movObj.y &&
-            this.x <= movObj.x + movObj.width &&
-            this.y < movObj.y + movObj.height;
+        return (this.x + this.width) >= movObj.x &&
+            this.x <= (movObj.x + movObj.width) &&
+            (this.y + this.height) >= movObj.y &&
+            this.y <= (movObj.y + movObj.height);
     }
 
     /**

@@ -105,11 +105,12 @@ class World {
     checkCollisionsEnemy() {
         this.level.enemies.forEach((enemy, i) => {
             if (this.character.isColliding(enemy)) {
+                let fallingDown = this.character.speedY > 0 && this.character.isAboveGround();
                 if (enemy instanceof Endboss) {
                     this.character.hit();
                     this.statusbarHealth.setPercentage(this.character.energy);
                 } else {
-                    if (this.character.y + this.character.height - enemy.height < enemy.y) {
+                    if (fallingDown || this.character.y + this.character.height - enemy.height < enemy.y) {
                         enemy.damaged();
                         setTimeout(() => { this.level.enemies.splice(i, 1); }, 150);
                         this.character.speedY = 20;
