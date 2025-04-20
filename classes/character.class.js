@@ -95,37 +95,34 @@ class Character extends MovableObject {
      */
     animateCharacter() {
         setStoppableInterval(() => {
+            this.characterFallingDown();
+            this.ifStanding();
             this.ifKeyRight();
             this.ifKeyLeft();
-            this.ifStanding();
+            this.characterWalking();
             this.ifJump();
-            this.world.camera_x = -this.x + 280;
-            this.updateAnimations();
+            this.characterDead();
+            this.characterHurt();
+            this.updateCamera();
         }, 1000 / 25);
     }
 
-    updateAnimations() {
-        if (this.isDead()) {
-            this.you_lost.play();
-            this.animateImages(this.IMAGES_DEAD);
-            showYouLost();
-        } else if (this.isHurt()) {
-            this.animateImages(this.IMAGES_HURT);
-            this.getPain.play();
-        } else if (this.isAboveGround()) {
+    /**
+     * character falling down after start the game
+     */
+    characterFallingDown() {
+        if (this.isAboveGround()) {
             this.animateImages(this.IMAGES_FALLING_DOWN);
-        } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-            this.animateImages(this.IMAGES_WALKING);
         }
     }
 
     /**
-     * for jumping, if Key Space is pressed
-     */
-    ifJump() {
-        if (this.world.keyboard.SPACE && !this.isAboveGround()) {
-            this.speedY = 30;
-            this.jumping_sound.play();
+    * if character has no moving, character is getting napping
+    */
+    ifStanding() {
+        if (!this.world.keyboard.RIGHT && !this.world.keyboard.LEFT) {
+            this.loadImage('assets/img/2_character_pepe/3_jump/J-31.png');
+            this.animateImages(this.IMAGES_GET_A_NAP);
         }
     }
 
@@ -152,12 +149,49 @@ class Character extends MovableObject {
     }
 
     /**
-     * if character has no moving, character is getting napping
+     * character walking animation
      */
-    ifStanding() {
-        if (!this.world.keyboard.RIGHT && !this.world.keyboard.LEFT) {
-            this.loadImage('assets/img/2_character_pepe/3_jump/J-31.png');
-            this.animateImages(this.IMAGES_GET_A_NAP);
+    characterWalking() {
+        if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+            this.animateImages(this.IMAGES_WALKING);
         }
+    }
+
+    /**
+   * for jumping, if Key Space is pressed
+   */
+    ifJump() {
+        if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+            this.speedY = 30;
+            this.jumping_sound.play();
+        }
+    }
+
+    /**
+     * in case if character is dead, game over.
+     */
+    characterDead() {
+        if (this.isDead()) {
+            this.you_lost.play();
+            this.animateImages(this.IMAGES_DEAD);
+            showYouLost();
+        }
+    }
+
+    /**
+     * character get hurt animation - from Chicken, Endboss collision.
+     */
+    characterHurt() {
+        if (this.isHurt()) {
+            this.animateImages(this.IMAGES_HURT);
+            this.getPain.play();
+        }
+    }
+
+    /**
+     * position of character on the screen at the game start
+     */
+    updateCamera() {
+        this.world.camera_x = -this.x + 280;
     }
 }

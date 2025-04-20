@@ -16,6 +16,7 @@ function startGame() {
     checkSpeakers();
     checkIfMobile();
     document.getElementById('start-screen').classList.add('d-none');
+    document.getElementById('title').classList.remove('d-none');
     initLevel();
     init();
     this.gameStartAudio.play();
@@ -37,38 +38,6 @@ function stopGameAndRestart() {
     intervalIds = [];
     document.getElementById('game-over-screen').classList.add('d-none');
     startGame();
-}
-
-/* View in fullscreen */
-function isIOS() {
-    return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-}
-
-function toggleFullscreen() {
-    const element = document.getElementById('fullscreen');
-
-    if (isIOS()) {
-        element.classList.toggle('fullscreen-fake');
-        return;
-    }
-
-    if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-        if (element.requestFullscreen) {
-            element.requestFullscreen();
-        } else if (element.webkitRequestFullscreen) {
-            element.webkitRequestFullscreen();
-        } else if (element.msRequestFullscreen) {
-            element.msRequestFullscreen();
-        }
-    } else {
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        } else if (document.webkitExitFullscreen) {
-            document.webkitExitFullscreen();
-        } else if (document.msExitFullscreen) {
-            document.msExitFullscreen();
-        }
-    }
 }
 
 /**

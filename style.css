@@ -39,39 +39,35 @@ body {
 .start-screen {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    /* justify-content: flex-end; */
+    justify-content: flex-start;
     align-items: center;
     position: absolute;
     z-index: 1;
     max-width: 992px;
     width: 100%;
     max-height: 540px;
-    height: 100vh;
+    height: 100%;
     background-image: url('assets/img/9_intro_outro_screens/start/startscreen_1.png');
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain;
 }
 
-.startBtn {
+.playBtn {
     background-color: transparent;
     border: none;
-    padding-top: 25px;
-}
-
-.startBtn img {
-    width: 45px;
-    height: 45px;
+    font-size: large;
 }
 
 .game-over-img {
     height: 100%;
 }
 
-.start-img {
+/* .start-img {
     width: 100%;
     height: 100%;
-}
+} */
 
 h1 {
     letter-spacing: 3px;
@@ -86,11 +82,16 @@ canvas {
 
 .controls-info-display {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    gap: 30px;
+    width: 80%;
     height: 50px;
-    font-size: large;
+    font-size: larger;
+}
+
+.btnInfo {
+    display: flex;
+    gap: 30px
 }
 
 .info-icons-div {
@@ -169,12 +170,6 @@ canvas {
     gap: 15px;
 }
 
-.fullscreen-btn {
-    background-color: transparent;
-    border: none;
-    font-size: x-small;
-}
-
 .panel-bottom {
     display: flex;
     justify-content: space-between;
@@ -217,34 +212,36 @@ canvas {
     height: 25px;
 }
 
-.fullscreen {
-    /* for Android, Desktop */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.fullscreen-fake {
-    /* for iOS */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 9999;
-}
-
-@media (max-width: 1024px) {
+@media (max-width: 1280px) {
     .controls-info-display {
         display: none;
     }
 
     .controls-info-mobile {
-        height: 37px;
+        height: 50px;
         font-size: smaller;
         display: flex !important;
         align-items: center;
-        gap: 40px;
+        width: 80%;
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 992px) {
+
+    .start-screen {
+        max-height: 320px;
+    }
+
+    .playBtn {
+        font-size: small;
+    }
+
+    .controls-info-mobile {
+        font-size: xx-small;
+        gap: 50px;
+        width: fit-content;
+        height: 80px;
     }
 
     .mobile-overlay {
@@ -259,9 +256,14 @@ canvas {
     }
 }
 
-@media(max-height: 528px) {
 
-    h1,
+
+
+
+
+
+
+@media(max-height: 528px) {
     .mute-button-div {
         display: none;
     }
@@ -273,9 +275,7 @@ canvas {
         height: 100vh;
     }
 
-    .startBtn {
-        padding-top: 15px;
-    }
+
 
     span {
         display: flex;
