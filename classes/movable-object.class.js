@@ -29,6 +29,21 @@ class MovableObject extends DrawableObject {
     }
 
     /**
+    * to play images only one time and then stop.
+    * @param {Array} images - ['img/image1.png, img/image2.png ....]
+    */
+    animateImagesOnce(images) {
+        if (this.currentImage < images.length) {
+            let path = images[this.currentImage];
+            this.img = this.imagesCache[path];
+            this.currentImage++;
+            if (this.currentImage === images.length) {
+                this.currentImage < images.length;
+            }
+        }
+    }
+
+    /**
      * falling of Character onto the ground
      */
     applyGravity() {

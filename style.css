@@ -12,13 +12,10 @@ body {
     user-select: none;
     -webkit-user-select: none;
     -webkit-touch-callout: none;
-
-    /* overflow: auto; */
-    /* padding-bottom: 100px; */
 }
 
 #checkOrientation {
-    /* to check the landscape orientation on mobile devices */
+    /* for landscape orientation on mobile devices */
     display: none;
     position: fixed;
     top: 0;
@@ -26,8 +23,8 @@ body {
     right: 0;
     bottom: 0;
     padding: 20px;
-    background: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(6px);
     color: indigo;
     font-size: 27px;
     text-align: center;
@@ -39,7 +36,6 @@ body {
 .start-screen {
     display: flex;
     flex-direction: column;
-    /* justify-content: flex-end; */
     justify-content: flex-start;
     align-items: center;
     position: absolute;
@@ -254,6 +250,8 @@ canvas {
     canvas {
         width: 100%;
     }
+
+
 }
 
 
@@ -264,7 +262,9 @@ canvas {
 
 
 @media(max-height: 528px) {
-    .mute-button-div {
+
+    .mute-button-div,
+    h1 {
         display: none;
     }
 }

@@ -1,10 +1,10 @@
 class World {
 
-    character = new Character();
     level = level1;
     canvas;
     ctx;
     keyboard;
+    character = new Character();
     camera_x = 0;
     statusbarHealth = new StatusbarHealth();
     statusbarCoins = new StatusbarCoins();
@@ -16,8 +16,8 @@ class World {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
-        this.draw();
         this.setWorld();
+        this.draw();
         this.update();
     }
 
@@ -47,6 +47,8 @@ class World {
         this.addArrayObjectsToMap(this.level.coins);
         this.addArrayObjectsToMap(this.level.bottles);
         this.ctx.translate(-this.camera_x, 0);
+
+        this.character.updateAnimationCharacter();
 
         let self = this;
         requestAnimationFrame(function () {

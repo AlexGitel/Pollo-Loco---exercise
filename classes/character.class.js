@@ -5,6 +5,8 @@ class Character extends MovableObject {
     height = 250;
     speed = 14;
 
+    world;
+
     IMAGES_GET_A_NAP = [
         'assets/img/2_character_pepe/1_idle/long_idle/I-11.png',
         'assets/img/2_character_pepe/1_idle/long_idle/I-12.png',
@@ -23,8 +25,7 @@ class Character extends MovableObject {
         'assets/img/2_character_pepe/3_jump/J-36.png',
         'assets/img/2_character_pepe/3_jump/J-37.png',
         'assets/img/2_character_pepe/3_jump/J-38.png',
-        'assets/img/2_character_pepe/3_jump/J-39.png',
-        'assets/img/2_character_pepe/3_jump/J-31.png'
+        'assets/img/2_character_pepe/1_idle/idle/I-1.png'
     ];
 
     IMAGES_WALKING = [
@@ -69,12 +70,14 @@ class Character extends MovableObject {
         'assets/img/9_intro_outro_screens/game_over/game over!.png'
     ];
 
-    world;
-
     walking_sound = new Audio('audio/walking.mp3');
     jumping_sound = new Audio('audio/juhu.mp3');
     getPain = new Audio('audio/pain.mp3');
     you_lost = new Audio('audio/you_lost.mp3');
+
+    frameCount = 0;
+    frameSkip = 3;
+    sleeping = false;
 
     constructor() {
         super();
@@ -87,42 +90,56 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_HURT);
         this.loadImage(this.IMAGES_GAME_OVER);
         this.applyGravity();
-        this.animateCharacter();
     }
 
     /**
      * character get moving, jumping
      */
-    animateCharacter() {
-        setStoppableInterval(() => {
+    updateAnimationCharacter() {
+        this.frameCount++;
+        if (this.frameCount >= this.frameSkip) {
             this.characterFallingDown();
-            this.ifStanding();
             this.ifKeyRight();
             this.ifKeyLeft();
-            this.characterWalking();
             this.ifJump();
             this.characterDead();
             this.characterHurt();
-            this.updateCamera();
-        }, 1000 / 25);
+            this.frameCount = 0;
+        }
+        this.updateCamera();
     }
 
     /**
-     * character falling down after start the game
-     */
+    * character falling down after start the game
+    * if character has no moving, hi get a nap
+    */
     characterFallingDown() {
         if (this.isAboveGround()) {
-            this.animateImages(this.IMAGES_FALLING_DOWN);
+            this.animateImagesOnce(this.IMAGES_FALLING_DOWN);
+        }
+        this.ifStanding();
+    }
+
+    ifStanding() {
+        if (!this.isAboveGround()) {
+            setTimeout(() => {
+                this.startSleeping(this.IMAGES_GET_A_NAP);
+                //this.animateImages(this.IMAGES_GET_A_NAP);
+            }, 1200);
         }
     }
 
-    /**
-    * if character has no moving, character is getting napping
-    */
-    ifStanding() {
-        if (!this.world.keyboard.RIGHT && !this.world.keyboard.LEFT) {
-            this.loadImage('assets/img/2_character_pepe/3_jump/J-31.png');
-            this.animateImages(this.IMAGES_GET_A_NAP);
+    startSleeping(images) {
+        this.sleeping = true;
+        if (this.sleeping) {
+            if (this.currentImage < images.length) {
+                let path = images[this.currentImage];
+                this.img = this.imagesCache[path];
+                this.currentImage++;
+                if (this.currentImage === images.length) {
+                    this.currentImage = 0;
+                }
+            }
         }
     }
 
@@ -131,7 +148,9 @@ class Character extends MovableObject {
      */
     ifKeyRight() {
         if (this.world.keyboard.RIGHT && this.x < 2340) {
+            this.sleeping = false;
             this.moveRight();
+            this.animateImages(this.IMAGES_WALKING);
             this.otherDirection = false;
             this.walking_sound.play();
         }
@@ -142,27 +161,21 @@ class Character extends MovableObject {
      */
     ifKeyLeft() {
         if (this.world.keyboard.LEFT && this.x > -700) {
+            this.sleeping = false;
             this.moveLeft();
+            this.animateImages(this.IMAGES_WALKING);
             this.otherDirection = true;
             this.walking_sound.play();
         }
     }
 
     /**
-     * character walking animation
-     */
-    characterWalking() {
-        if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-            this.animateImages(this.IMAGES_WALKING);
-        }
-    }
-
-    /**
-   * for jumping, if Key Space is pressed
-   */
+    * for jumping, if Key Space is pressed
+    */
     ifJump() {
         if (this.world.keyboard.SPACE && !this.isAboveGround()) {
             this.speedY = 30;
+            this.animateImages(this.IMAGES_JUMPING);
             this.jumping_sound.play();
         }
     }
