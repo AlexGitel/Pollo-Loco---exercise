@@ -37,9 +37,9 @@ class Endboss extends MovableObject {
     ];
     world;
 
-    endboss_alert = new Audio('audio/endboss.mp3');
-    shock = new Audio('audio/shock.mp3');
-    last_cry = new Audio('audio/last_cry.mp3');
+    // endboss_alert = new Audio('audio/endboss.mp3');
+    // shock = new Audio('audio/shock.mp3');
+    // last_cry = new Audio('audio/last_cry.mp3');
 
     constructor() {
         super().loadImage(this.IMAGES_ENDBOSS_ALERT[0]);
@@ -62,8 +62,8 @@ class Endboss extends MovableObject {
             if (this.world.character.x >= 2300) {
                 gameStartAudio.pause();
                 gameStartAudio.currentTime = 0;
-                this.shock.play();
-                this.endboss_alert.play();
+                shock.play();
+                endboss_alert.play();
                 this.animateImages(this.IMAGES_ENDBOSS_ALERT);
                 counter++;
             }
@@ -81,11 +81,11 @@ class Endboss extends MovableObject {
                 this.speed = 0;
                 this.animateImages(this.ENDBOSS_IMAGES_DEAD);
                 setTimeout(() => { this.world.level.enemies.splice(0, 1) }, 1300);
-                this.last_cry.play();
+                last_cry.play();
 
                 if (this.world.level.enemies.length <= 0) {
-                    this.last_cry.pause();
-                    this.last_cry.currentTime = 0;
+                    last_cry.pause();
+                    last_cry.currentTime = 0;
                     showYouWon();
                 }
             }

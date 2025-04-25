@@ -18,8 +18,6 @@ class ChickenSmall extends MovableObject {
         'assets/img/3_enemies_chicken/chicken_small/2_dead/dead.png'
     ];
 
-    squashing_sound = new Audio('audio/squash.mp3');
-
     constructor() {
         super().loadImage('assets/img/3_enemies_chicken/chicken_small/1_walk/1_w.png');
         this.loadImages(this.IMAGES_WALKING);

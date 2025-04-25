@@ -5,21 +5,33 @@ let character;
 let keyboard = new Keyboard();
 let intervalIds = [];
 let mobileBtns = ['btnLeft', 'btnRight', 'btnJump', 'btnThrow'];
+let isMuted = false;
 
-gameStartAudio = new Audio('audio/gameStart.mp3');
-finish_sound = new Audio('audio/finish_sound.mp3');
+allSounds = [
+    gameStartAudio = new Audio('audio/gameStart.mp3'),
+    finish_sound = new Audio('audio/finish_sound.mp3'),
+    you_lost = new Audio('audio/you_lost.mp3'),
+    soundForCoins = new Audio('audio/take_coin.mp3'),
+    walking_sound = new Audio('audio/walking.mp3'),
+    jumping_sound = new Audio('audio/juhu.mp3'),
+    squashing_sound = new Audio('audio/squash.mp3'),
+    getPain = new Audio('audio/pain.mp3'),
+    throw_bottle_sound = new Audio('audio/throw_bottle.mp3'),
+    burst_sound = new Audio('audio/burst_sound.mp3'),
+    endboss_alert = new Audio('audio/endboss.mp3'),
+    shock = new Audio('audio/shock.mp3'),
+    last_cry = new Audio('audio/last_cry.mp3')
+];
 
 /**
  * start the game
  */
 function startGame() {
-    checkSpeakers();
     checkIfMobile();
     document.getElementById('start-screen').classList.add('d-none');
-    document.getElementById('title').classList.remove('d-none');
     initLevel();
     init();
-    this.gameStartAudio.play();
+    playAudio(this.gameStartAudio);
 }
 
 /**
@@ -34,6 +46,7 @@ function init() {
  * stop the game, clear all intervals, restart the game
  */
 function stopGameAndRestart() {
+    stopAudio(this.you_lost);
     intervalIds.forEach(clearInterval);
     intervalIds = [];
     document.getElementById('game-over-screen').classList.add('d-none');
@@ -56,6 +69,10 @@ function setStoppableInterval(fn, time) {
 function toggleSpeakersDisplay() {
     document.getElementById('mute-on').classList.toggle('d-none');
     document.getElementById('mute-off').classList.toggle('d-none');
+    isMuted = !isMuted;
+    allSounds.forEach(sound => {
+        sound.muted = isMuted;
+    });
 }
 
 /**
@@ -64,67 +81,58 @@ function toggleSpeakersDisplay() {
 function toggleSpeakersMobile() {
     document.getElementById('speaker-on').classList.toggle('d-none');
     document.getElementById('speaker-off').classList.toggle('d-none');
-}
-
-/**
- * checked mute-button before starting
- */
-function checkSpeakers() {
-    document.getElementById('speaker-on').classList.remove('d-none');
-    document.getElementById('speaker-off').classList.add('d-none');
+    isMuted = !isMuted;
+    allSounds.forEach(sound => {
+        sound.muted = isMuted;
+    });
 }
 
 /**
  * checked if mobile or display view, than removes aktion buttons or not
  */
 function checkIfMobile() {
-    if (window.innerWidth <= 1024) {
+    if (window.innerWidth <= 1200) {
         document.getElementById('mobile-overlay').classList.remove('d-none');
-        document.getElementById('overlay-mute-button').classList.add('d-none');
-
     } else {
         document.getElementById('mobile-overlay').classList.add('d-none');
-        document.getElementById('overlay-mute-button').classList.remove('d-none');
     }
 }
 
 /**
- * possibility to turn on the start audio after starting the game
+ * start playing audio
  */
-function playAudio() {
-    this.gameStartAudio.play();
+function playAudio(audio) {
+    audio.play();
 }
 
 /**
- * possibility to turn off the start audio and reset to beginning of the audio
+ * stop the playing audio
  */
-function pauseAudio() {
-    gameStartAudio.pause();
-    gameStartAudio.currentTime = 0;
+function stopAudio(audio) {
+    audio.pause();
+    audio.currentTime = 0;
 }
 
 /**
-* shows Endscreen with image "You won"
+* shows Endscreen "You won"
 */
 function showYouWon() {
     this.finish_sound.play();
     document.getElementById('game-over-screen').classList.remove('d-none');
     document.getElementById('you-won-img').src = "assets/img/9_intro_outro_screens/win/won_2.png";
-    document.getElementById('overlay-mute-button').classList.add('d-none');
     document.getElementById('mobile-overlay').classList.add('d-none');
     intervalIds.forEach(clearInterval);
 }
 
 /**
-* shows Endscreen with image "You lost"
+* shows Endscreen "You lost"
 */
 function showYouLost() {
-    this.gameStartAudio.pause();
-    this.gameStartAudio.currentTime = 0;
+    stopAudio(this.gameStartAudio);
+    playAudio(this.you_lost);
     document.getElementById('game-over-screen').classList.remove('d-none');
     document.getElementById('controls').classList.add('d-none');
     document.getElementById('you-won-img').src = "assets/img/9_intro_outro_screens/game_over/oh no you lost!.png";
-    document.getElementById('overlay-mute-button').classList.add('d-none');
     document.getElementById('mobile-overlay').classList.add('d-none');
     intervalIds.forEach(clearInterval);
 }

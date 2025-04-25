@@ -130,12 +130,11 @@ class MovableObject extends DrawableObject {
     chickensGetDamage() {
         if (this instanceof Chicken) {
             this.loadImage('assets/img/3_enemies_chicken/chicken_normal/2_dead/dead.png');
-            this.speed = 0;
-            this.squashing_sound.play();
+            playAudio(squashing_sound);
         }
         if (this instanceof ChickenSmall) {
             this.animateImages(this.IMAGES_DEAD);
-            this.squashing_sound.play();
+            playAudio(squashing_sound);
         }
     }
 

@@ -45,8 +45,7 @@ class Character extends MovableObject {
         'assets/img/2_character_pepe/3_jump/J-35.png',
         'assets/img/2_character_pepe/3_jump/J-36.png',
         'assets/img/2_character_pepe/3_jump/J-37.png',
-        'assets/img/2_character_pepe/3_jump/J-38.png',
-        'assets/img/2_character_pepe/3_jump/J-31.png'
+        'assets/img/2_character_pepe/3_jump/J-38.png'
     ];
 
     IMAGES_DEAD = [
@@ -70,18 +69,18 @@ class Character extends MovableObject {
         'assets/img/9_intro_outro_screens/game_over/game over!.png'
     ];
 
-    walking_sound = new Audio('audio/walking.mp3');
-    jumping_sound = new Audio('audio/juhu.mp3');
-    getPain = new Audio('audio/pain.mp3');
-    you_lost = new Audio('audio/you_lost.mp3');
+    // walking_sound = new Audio('audio/walking.mp3');
+    // jumping_sound = new Audio('audio/juhu.mp3');
+    // getPain = new Audio('audio/pain.mp3');
+    // you_lost = new Audio('audio/you_lost.mp3');
 
     frameCount = 0;
     frameSkip = 3;
-    sleeping = false;
+    sleepTimeCounter = 0;
+    isDeadCounter = 0;
 
     constructor() {
         super();
-        this.loadImage('assets/img/2_character_pepe/3_jump/J-35.png');
         this.loadImages(this.IMAGES_GET_A_NAP);
         this.loadImages(this.IMAGES_FALLING_DOWN);
         this.loadImages(this.IMAGES_WALKING);
@@ -107,6 +106,23 @@ class Character extends MovableObject {
             this.frameCount = 0;
         }
         this.updateCamera();
+        this.sleepTimeCounterChecking();
+    }
+
+    /**
+     * controls the use of key buttons and controls the sleepTimeCounter
+     * that will be needed for ifStanding().
+     */
+    sleepTimeCounterChecking() {
+        const noKeyPressed = !this.world.keyboard.RIGHT && !this.world.keyboard.LEFT && !this.world.keyboard.SPACE;
+        if (noKeyPressed) {
+            if (this.sleepTimeCounter === 0) {
+                this.loadImage('assets/img/2_character_pepe/1_idle/idle/I-1.png');
+            }
+            this.sleepTimeCounter++;
+        } else {
+            this.sleepTimeCounter = 0;
+        }
     }
 
     /**
@@ -120,26 +136,12 @@ class Character extends MovableObject {
         this.ifStanding();
     }
 
+    /**
+     * function for sleeping mode, if Character is standing
+     */
     ifStanding() {
-        if (!this.isAboveGround()) {
-            setTimeout(() => {
-                this.startSleeping(this.IMAGES_GET_A_NAP);
-                //this.animateImages(this.IMAGES_GET_A_NAP);
-            }, 1200);
-        }
-    }
-
-    startSleeping(images) {
-        this.sleeping = true;
-        if (this.sleeping) {
-            if (this.currentImage < images.length) {
-                let path = images[this.currentImage];
-                this.img = this.imagesCache[path];
-                this.currentImage++;
-                if (this.currentImage === images.length) {
-                    this.currentImage = 0;
-                }
-            }
+        if (!this.isAboveGround() && this.sleepTimeCounter > 60) {
+            this.animateImages(this.IMAGES_GET_A_NAP);
         }
     }
 
@@ -147,12 +149,13 @@ class Character extends MovableObject {
      * if it is pressed Key Right
      */
     ifKeyRight() {
-        if (this.world.keyboard.RIGHT && this.x < 2340) {
-            this.sleeping = false;
-            this.moveRight();
+        if (this.world.keyboard.RIGHT) {
+            if (this.x < 2340) {
+                this.moveRight();
+            }
             this.animateImages(this.IMAGES_WALKING);
             this.otherDirection = false;
-            this.walking_sound.play();
+            walking_sound.play();
         }
     }
 
@@ -160,12 +163,13 @@ class Character extends MovableObject {
      * if it is pressed Key Left
      */
     ifKeyLeft() {
-        if (this.world.keyboard.LEFT && this.x > -700) {
-            this.sleeping = false;
-            this.moveLeft();
+        if (this.world.keyboard.LEFT) {
+            if (this.x > -700) {
+                this.moveLeft();
+            }
             this.animateImages(this.IMAGES_WALKING);
             this.otherDirection = true;
-            this.walking_sound.play();
+            walking_sound.play();
         }
     }
 
@@ -173,10 +177,22 @@ class Character extends MovableObject {
     * for jumping, if Key Space is pressed
     */
     ifJump() {
-        if (this.world.keyboard.SPACE && !this.isAboveGround()) {
-            this.speedY = 30;
+        if (this.world.keyboard.SPACE) {
+            if (!this.isAboveGround()) {
+                this.speedY = 30;
+            }
             this.animateImages(this.IMAGES_JUMPING);
-            this.jumping_sound.play();
+            jumping_sound.play();
+        }
+    }
+
+    /**
+    * character get hurt - Chicken, Endboss collision.
+    */
+    characterHurt() {
+        if (this.isHurt()) {
+            playAudio(getPain);
+            this.animateImages(this.IMAGES_HURT);
         }
     }
 
@@ -185,19 +201,11 @@ class Character extends MovableObject {
      */
     characterDead() {
         if (this.isDead()) {
-            this.you_lost.play();
+            this.isDeadCounter++;
             this.animateImages(this.IMAGES_DEAD);
-            showYouLost();
-        }
-    }
-
-    /**
-     * character get hurt animation - from Chicken, Endboss collision.
-     */
-    characterHurt() {
-        if (this.isHurt()) {
-            this.animateImages(this.IMAGES_HURT);
-            this.getPain.play();
+            if (this.isDeadCounter === 60) {
+                showYouLost();
+            }
         }
     }
 

@@ -41,13 +41,18 @@
         <div id="checkOrientation">Please rotate your device to landscape mode. <br>
             Bitte drehen Sie Ihr Gerät in den Querformatmodus</div>
 
-
-            <h1 id="title" class="d-none">El Pollo Loco</h1>
+            <!-- HEADLINE AND MUTE-BUTTON -->
+            <div class="headline-mute-button-div">
+                <h1 id="title">El Pollo Loco</h1>
+                <div style="padding-right: 20px">
+                    <img id="mute-on" onclick="toggleSpeakersDisplay(), stopAudio(gameStartAudio)" class="pointer speaker-icon" src="assets/icons/sound-turn-on.svg" alt="speaker-icon">
+                    <img id="mute-off" onclick="toggleSpeakersDisplay(), playAudio(gameStartAudio)" class="pointer speaker-icon d-none" src="assets/icons/sound-turn-off.svg" alt="speaker-icon">
+                </div>
+            </div>
+           
 
             <!-- S T A R T S C R E E N -->
             <div id="start-screen" class="start-screen">
-
-                <!-- <img src="assets/img/9_intro_outro_screens/start/startscreen_1.png" alt=""> -->
 
                 <!-- Section about controls buttons (startscreen display) -->
                 <div id="controls" class="controls-info-display">
@@ -72,20 +77,9 @@
                 </div> 
             </div>
 
-                
-                <!--  Overlay for mute button  -->
-            <div id="overlay-mute-button" class="overlay-for-mute-button d-none"> 
-                <div class="mute-button-div">
-                    <img id="mute-on" onclick="toggleSpeakersDisplay(), pauseAudio()" class="pointer speaker-icon" src="assets/icons/sound-turn-on.svg" alt="speaker-icon">
-                    <img id="mute-off" onclick="toggleSpeakersDisplay(), playAudio()" class="pointer speaker-icon d-none" src="assets/icons/sound-turn-off.svg" alt="speaker-icon">
-                </div>
-            </div>
-                
-            
 
                 <!-- C A N V A S -->
             <canvas id="canvas" width="720" height="480"></canvas>   
-            
             
 
                 <!--  Overlay for Mobile  -->
@@ -93,8 +87,8 @@
                 <div class="panels-container">
 
                     <div class="panel-top">
-                        <img id="speaker-on" onclick="toggleSpeakersMobile(), pauseAudio()" class="pointer speaker-icon" src="assets/icons/sound-turn-on.svg" alt="speaker-icon">
-                        <img id="speaker-off" onclick="toggleSpeakersMobile(), playAudio()" class="pointer speaker-icon d-none" src="assets/icons/sound-turn-off.svg" alt="speaker-icon">
+                        <img id="speaker-on" onclick="toggleSpeakersMobile(), stopAudio(gameStartAudio)" class="pointer speaker-icon" src="assets/icons/sound-turn-on.svg" alt="speaker-icon">
+                        <img id="speaker-off" onclick="toggleSpeakersMobile(), playAudio(gameStartAudio)" class="pointer speaker-icon d-none" src="assets/icons/sound-turn-off.svg" alt="speaker-icon">
                     </div>
 
                     <div class="panel-bottom">

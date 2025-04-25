@@ -25,7 +25,6 @@ class World {
         this.character.world = this;
         this.level.enemies[3].world = this;
     }
-    soundForCoins = new Audio('audio/take_coin.mp3');
 
     /**
      * to draw the images on the map
@@ -132,7 +131,7 @@ class World {
         this.level.coins.forEach((coins, index) => {
             if (this.character.isColliding(coins)) {
                 this.character.getCoin();
-                this.soundForCoins.play();
+                soundForCoins.play();
                 this.statusbarCoins.setPercentage(this.character.coinsAmount);
                 this.level.coins.splice(index, 1);
             }
