@@ -153,6 +153,7 @@ window.addEventListener("keyup", (event) => {
             break;
         case "KeyD":
             keyboard.D = false;
+            world.singleThrow = true;
             break;
     }
 });
@@ -197,7 +198,6 @@ function mobileBtnPress() {
     mobileBtns.forEach(id => {
         document.getElementById(id).addEventListener('touchstart', (event) => {
             event.preventDefault();
-
             if (id === 'btnLeft') keyboard.LEFT = true;
             else if (id === 'btnRight') keyboard.RIGHT = true;
             else if (id === 'btnJump') keyboard.SPACE = true;
@@ -214,11 +214,11 @@ function mobileBtnRelease() {
     mobileBtns.forEach(id => {
         document.getElementById(id).addEventListener('touchend', (event) => {
             event.preventDefault();
-
             if (id === 'btnLeft') keyboard.LEFT = false;
             else if (id === 'btnRight') keyboard.RIGHT = false;
             else if (id === 'btnJump') keyboard.SPACE = false;
             else if (id === 'btnThrow') keyboard.D = false;
+            world.singleThrow = true;
         }, { passive: false });
     });
 }

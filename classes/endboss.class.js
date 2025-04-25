@@ -42,7 +42,8 @@ class Endboss extends MovableObject {
     // last_cry = new Audio('audio/last_cry.mp3');
 
     constructor() {
-        super().loadImage(this.IMAGES_ENDBOSS_ALERT[0]);
+        super();
+        this.loadImage(this.IMAGES_ENDBOSS_ALERT[0]);
         this.loadImages(this.IMAGES_ENDBOSS_ALERT);
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.ENDBOSS_IMAGES_HURT);

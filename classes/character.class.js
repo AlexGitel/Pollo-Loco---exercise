@@ -114,7 +114,8 @@ class Character extends MovableObject {
      * that will be needed for ifStanding().
      */
     sleepTimeCounterChecking() {
-        const noKeyPressed = !this.world.keyboard.RIGHT && !this.world.keyboard.LEFT && !this.world.keyboard.SPACE;
+        const noKeyPressed = !this.world.keyboard.RIGHT && !this.world.keyboard.LEFT
+            && !this.world.keyboard.SPACE && !this.world.keyboard.D;
         if (noKeyPressed) {
             if (this.sleepTimeCounter === 0) {
                 this.loadImage('assets/img/2_character_pepe/1_idle/idle/I-1.png');

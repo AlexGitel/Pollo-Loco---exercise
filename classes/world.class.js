@@ -11,6 +11,7 @@ class World {
     statusbarBottles = new StatusbarBottles();
     statusbarEndboss = new StatusbarEndboss();
     throwableObject = [];
+    singleThrow = true;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -67,7 +68,7 @@ class World {
 
     /**
      * 
-     * @param {every Object} movObj that you add to Map
+     * @param {Object} movObj that you add to Map
      */
     addToMap(movObj) {
         if (movObj.otherDirection) {
@@ -82,7 +83,7 @@ class World {
 
     /**
      * to flip the image over the 180° Axis
-     * @param {like Character or Endboss} movObj 
+     * @param {Object, like Character or Endboss} movObj 
      */
     flipImage(movObj) {
         this.ctx.save();
@@ -93,7 +94,7 @@ class World {
 
     /**
      * to flip the image back
-     * @param {like Character or Endboss} movObj 
+     * @param {Object, like Character or Endboss} movObj 
      */
     flipImageBack(movObj) {
         movObj.x = movObj.x * -1;
@@ -125,21 +126,32 @@ class World {
     }
 
     /**
-     * checked if character is colliding coins, if coins > 100, adds life to the character
+     * if character is colliding coins, he collect it,
+     * if coins amount > 100, adds life to the character
      */
     checkCollisionsCoins() {
         this.level.coins.forEach((coins, index) => {
-            if (this.character.isColliding(coins)) {
-                this.character.getCoin();
-                soundForCoins.play();
-                this.statusbarCoins.setPercentage(this.character.coinsAmount);
-                this.level.coins.splice(index, 1);
-            }
+            this.collectCoins(coins, index);
+
             if (this.character.coinsAmount >= 100 && this.character.energy < 100) {
                 this.character.energy += 50;
                 this.statusbarHealth.setPercentage(this.character.energy);
             }
         });
+    }
+
+    /**
+     * the coins will be collected
+     * @param {Object} - each coins 
+     * @param {number} - index of coins
+     */
+    collectCoins(coins, index) {
+        if (this.character.isColliding(coins)) {
+            this.character.getCoin();
+            soundForCoins.play();
+            this.statusbarCoins.setPercentage(this.character.coinsAmount);
+            this.level.coins.splice(index, 1);
+        }
     }
 
     /**
@@ -158,17 +170,29 @@ class World {
     }
 
     /**
-    * it check's, if D pressed, to throw a bootle and count bottles
+    * it check's, if D pressed, to throw a bootle and counts rest of bottles
     */
     checkThrowObjects() {
-        if (this.keyboard.D && this.character.bottlesAmount > 0) {
+        this.keyPressed();
+        if (this.character.bottlesAmount <= 0) {
+            this.character.bottlesAmount = 0;
+        }
+    }
+
+    /**
+     * key D is pressed, bottle has been thrown
+     */
+    keyPressed() {
+        let singleShot = this.keyboard.D && this.singleThrow;
+        if (singleShot && this.character.bottlesAmount > 0) {
+            this.singleThrow = false;
             let bottle = new ThrowableObject(this.character.x + 20, this.character.y + 120, this.character.otherDirection);
             this.throwableObject.push(bottle);
             this.character.bottlesAmount -= 20;
-            setTimeout(() => { this.throwableObject.splice(0, 1) }, 1500);
-        }
-        if (this.character.bottlesAmount <= 0) {
-            this.character.bottlesAmount = 0;
+
+            setTimeout(() => {
+                this.throwableObject.splice(0, 1);
+            }, 1500);
         }
     }
 
@@ -180,17 +204,30 @@ class World {
             for (let i = this.level.enemies.length - 1; i >= 0; i--) {
                 let enemy = this.level.enemies[i];
                 if (bottle.isColliding(enemy)) {
-                    enemy.hit();
-                    this.statusbarEndboss.setPercentage(enemy.energy);
-                    enemy.damaged();
-                    if (enemy instanceof Chicken || enemy instanceof ChickenSmall) { setTimeout(() => { this.level.enemies.splice(i, 1) }, 150); }
+                    this.enemyConsequences(enemy, i);
                 }
             }
         });
     }
 
     /**
-    * Number of bottles at the start and after throwing
+     * the consequences when an enemy is hit by a bottle.
+     * @param {Object} - each enemy that got hit
+     * @param {number} - index of the enemy
+     */
+    enemyConsequences(enemy, i) {
+        enemy.hit();
+        this.statusbarEndboss.setPercentage(enemy.energy);
+        enemy.damaged();
+        if (enemy instanceof Chicken || enemy instanceof ChickenSmall) {
+            setTimeout(() => {
+                this.level.enemies.splice(i, 1)
+            }, 150);
+        }
+    }
+
+    /**
+    * regulates number of bottles at the start and after throwing
     */
     checkBottlesAmount() {
         if (this.character.bottlesAmount <= 100) {

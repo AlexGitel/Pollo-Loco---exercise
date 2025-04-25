@@ -10,7 +10,8 @@ class Coins extends MovableObject {
     ];
 
     constructor() {
-        super().loadImage('assets/img/8_coin/coin_1.png');
+        super();
+        this.loadImage('assets/img/8_coin/coin_1.png');
         this.loadImages(this.COINS_IMAGES);
         this.x = 350 + Math.random() * 2000;
         this.y = 200 + Math.random() * 230;
