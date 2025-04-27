@@ -41,8 +41,9 @@ class World {
         this.addToMap(this.statusbarBottles);
         this.addToMap(this.statusbarEndboss);
         this.ctx.translate(this.camera_x, 0);
-        this.addToMap(this.character);
+        // this.addToMap(this.character);
         this.addArrayObjectsToMap(this.throwableObject);
+        this.addToMap(this.character);
         this.addArrayObjectsToMap(this.level.enemies);
         this.addArrayObjectsToMap(this.level.coins);
         this.addArrayObjectsToMap(this.level.bottles);
@@ -104,25 +105,62 @@ class World {
     /**
      * checked if character is colliding enemys, running or jumping
      */
-    checkCollisionsEnemy() {
+    checkCollisionsEnemy() {  //  MEINE VARIANTE
         this.level.enemies.forEach((enemy, i) => {
             if (this.character.isColliding(enemy)) {
-                let fallingDown = this.character.speedY > 0 && this.character.isAboveGround();
-                if (enemy instanceof Endboss) {
-                    this.character.hit();
-                    this.statusbarHealth.setPercentage(this.character.energy);
+                let fallingDown = this.character.speedY > 0;
+                let characterBottom = (this.character.y + this.character.height) - enemy.height;
+
+                console.log('Pepe - bottom ', characterBottom);
+                console.log('Chicken - top', enemy.y);
+
+
+                if (fallingDown && characterBottom < enemy.y) {
+                    console.log('er fällt', fallingDown);
+                    enemy.damaged();
+                    this.character.speedY = 20;
+                    setTimeout(() => { this.level.enemies.splice(i, 1); }, 150);
                 } else {
-                    if (fallingDown || this.character.y + this.character.height - enemy.height < enemy.y) {
-                        enemy.damaged();
-                        setTimeout(() => { this.level.enemies.splice(i, 1); }, 150);
-                        this.character.speedY = 20;
-                    } else {
-                        this.character.hit();
-                        this.statusbarHealth.setPercentage(this.character.energy);
-                    }
+                    this.lostEnergy();
                 }
             }
         });
+    }
+
+    // checkCollisionsEnemy() { //   VARIANTE ChatGPT
+    //     let enemiesToRemove = [];
+
+    //     this.level.enemies.forEach((enemy, i) => {
+    //         if (this.character.isColliding(enemy)) {
+    //             let fallingDown = this.character.speedY > 0;
+    //             // let characterBottom = (this.character.y + this.character.height) - enemy.height;
+    //             let characterBottom = this.character.y + this.character.height;
+
+    //             console.log('Pepe - bottom ', characterBottom);
+    //             console.log('Chicken - top', enemy.y);
+
+    //             if (fallingDown && characterBottom < enemy.y + 20) {
+    //                 console.log('er fällt', fallingDown);
+    //                 enemy.damaged();
+    //                 this.character.speedY = 20;
+    //                 enemiesToRemove.push(i);
+    //             } else {
+    //                 this.lostEnergy();
+    //             }
+    //         }
+    //     });
+
+    //     enemiesToRemove.reverse().forEach(i => {
+    //         this.level.enemies.splice(i, 1);
+    //     });
+    // }
+
+    /**
+     * if collision with enemy, character loses his energy
+     */
+    lostEnergy() {
+        this.character.hit();
+        this.statusbarHealth.setPercentage(this.character.energy);
     }
 
     /**

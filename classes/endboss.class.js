@@ -1,7 +1,7 @@
 class Endboss extends MovableObject {
 
-    y = 145;
-    height = 310;
+    y = 137;
+    height = 320;
     width = 200;
     speed = 16;
 
@@ -36,10 +36,6 @@ class Endboss extends MovableObject {
         'assets/img/4_enemie_boss_chicken/5_dead/G26.png'
     ];
     world;
-
-    // endboss_alert = new Audio('audio/endboss.mp3');
-    // shock = new Audio('audio/shock.mp3');
-    // last_cry = new Audio('audio/last_cry.mp3');
 
     constructor() {
         super();

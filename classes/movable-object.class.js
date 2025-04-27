@@ -76,6 +76,13 @@ class MovableObject extends DrawableObject {
             this.y <= (movObj.y + movObj.height);
     }
 
+    // isColliding(movObj) {
+    //     return (this.x + this.width) >= movObj.x &&
+    //         this.x <= (movObj.x + movObj.width) &&
+    //         (this.y + this.offsetY + this.height) >= movObj.y &&
+    //         (this.y + this.offsetY) <= (movObj.y + movObj.height);
+    // }
+
     /**
     * Character or Endboss energy level after be hitted
     */

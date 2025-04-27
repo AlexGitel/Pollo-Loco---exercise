@@ -69,11 +69,6 @@ class Character extends MovableObject {
         'assets/img/9_intro_outro_screens/game_over/game over!.png'
     ];
 
-    // walking_sound = new Audio('audio/walking.mp3');
-    // jumping_sound = new Audio('audio/juhu.mp3');
-    // getPain = new Audio('audio/pain.mp3');
-    // you_lost = new Audio('audio/you_lost.mp3');
-
     frameCount = 0;
     frameSkip = 3;
     sleepTimeCounter = 0;
