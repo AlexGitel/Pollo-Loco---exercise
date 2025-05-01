@@ -197,7 +197,7 @@ canvas {
     height: 25px;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1400px) {
     .controls-info-display {
         display: none;
     }
@@ -209,6 +209,10 @@ canvas {
         align-items: center;
         width: 80%;
         justify-content: space-between;
+    }
+
+    #headline-mute-button-div {
+        display: none;
     }
 }
 
@@ -228,23 +232,12 @@ canvas {
         width: fit-content;
         height: 80px;
     }
-
-    .mobile-overlay {
-        display: block;
-    }
 }
 
 /* Smartphone portrait */
 @media only screen and (max-width: 720px) {
     canvas {
         width: 100%;
-    }
-}
-
-@media(max-height: 528px) {
-
-    .headline-mute-button-div {
-        display: none;
     }
 }
 
