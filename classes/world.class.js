@@ -260,6 +260,7 @@ class World {
      */
     update() {
         setStoppableInterval(() => {
+            checkIfMobile();
             this.checkCollisionsEnemy();
             this.checkThrowObjects();
             this.checkCollisionsCoins();

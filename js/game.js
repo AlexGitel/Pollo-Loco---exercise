@@ -27,7 +27,6 @@ allSounds = [
  * start the game
  */
 function startGame() {
-    checkIfMobile();
     document.getElementById('start-screen').classList.add('d-none');
     initLevel();
     init();
@@ -91,7 +90,7 @@ function toggleSpeakersMobile() {
  * checked if mobile or display view, than removes aktion buttons or not
  */
 function checkIfMobile() {
-    if (window.innerWidth <= 1200) {
+    if (window.innerWidth <= 1400) {
         document.getElementById('mobile-overlay').classList.remove('d-none');
     } else {
         document.getElementById('mobile-overlay').classList.add('d-none');
