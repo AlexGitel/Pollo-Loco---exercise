@@ -41,7 +41,6 @@ class World {
         this.addToMap(this.statusbarBottles);
         this.addToMap(this.statusbarEndboss);
         this.ctx.translate(this.camera_x, 0);
-        // this.addToMap(this.character);
         this.addArrayObjectsToMap(this.throwableObject);
         this.addToMap(this.character);
         this.addArrayObjectsToMap(this.level.enemies);
@@ -84,7 +83,7 @@ class World {
 
     /**
      * to flip the image over the 180° Axis
-     * @param {Object, like Character or Endboss} movObj 
+     * @param {Object} movObj , like Character or Endboss
      */
     flipImage(movObj) {
         this.ctx.save();
@@ -95,7 +94,7 @@ class World {
 
     /**
      * to flip the image back
-     * @param {Object, like Character or Endboss} movObj 
+     * @param {Object} movObj , like Character or Endboss
      */
     flipImageBack(movObj) {
         movObj.x = movObj.x * -1;
@@ -103,23 +102,19 @@ class World {
     }
 
     /**
-     * checked if character is colliding enemys, running or jumping
+     * checked if character is colliding enemies, running or jumping
      */
-    checkCollisionsEnemy() {  //  MEINE VARIANTE
-        this.level.enemies.forEach((enemy, i) => {
+    checkCollisionsEnemy() {
+        this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
-                let fallingDown = this.character.speedY > 0;
-                let characterBottom = (this.character.y + this.character.height) - enemy.height;
-
-                console.log('Pepe - bottom ', characterBottom);
-                console.log('Chicken - top', enemy.y);
-
-
-                if (fallingDown && characterBottom < enemy.y) {
-                    console.log('er fällt', fallingDown);
+                if (this.character.speedY < 0 && this.character.isAboveGround()) {
                     enemy.damaged();
-                    this.character.speedY = 20;
-                    setTimeout(() => { this.level.enemies.splice(i, 1); }, 150);
+                    if (enemy instanceof Chicken || enemy instanceof ChickenSmall) {
+                        this.character.speedY = 20;
+                    } else {
+                        this.lostEnergy();
+                    }
+                    this.isSplicable(enemy);
                 } else {
                     this.lostEnergy();
                 }
@@ -127,33 +122,20 @@ class World {
         });
     }
 
-    // checkCollisionsEnemy() { //   VARIANTE ChatGPT
-    //     let enemiesToRemove = [];
-
-    //     this.level.enemies.forEach((enemy, i) => {
-    //         if (this.character.isColliding(enemy)) {
-    //             let fallingDown = this.character.speedY > 0;
-    //             // let characterBottom = (this.character.y + this.character.height) - enemy.height;
-    //             let characterBottom = this.character.y + this.character.height;
-
-    //             console.log('Pepe - bottom ', characterBottom);
-    //             console.log('Chicken - top', enemy.y);
-
-    //             if (fallingDown && characterBottom < enemy.y + 20) {
-    //                 console.log('er fällt', fallingDown);
-    //                 enemy.damaged();
-    //                 this.character.speedY = 20;
-    //                 enemiesToRemove.push(i);
-    //             } else {
-    //                 this.lostEnergy();
-    //             }
-    //         }
-    //     });
-
-    //     enemiesToRemove.reverse().forEach(i => {
-    //         this.level.enemies.splice(i, 1);
-    //     });
-    // }
+    /**
+     * if enemy is damaged, it get true, and will be removed - filter
+     * @param {Array} enemy Array for enemies (new Chicken(), new ChickenSmall(), new Endboss)
+     */
+    isSplicable(enemy) {
+        setTimeout(() => {
+            if (enemy instanceof Endboss) {
+                enemy.splicable = false;
+            } else {
+                enemy.splicable = true;
+                this.level.enemies = this.level.enemies.filter(enemy => !enemy.splicable);
+            }
+        }, 100);
+    }
 
     /**
      * if collision with enemy, character loses his energy
@@ -193,7 +175,7 @@ class World {
     }
 
     /**
-     * if character is colliding bottles, checked, collect bottles or not
+     * if character is colliding bottles, he collects bottles or not if amount > 100
      */
     checkCollisionsBottles() {
         this.level.bottles.forEach((bottles, index) => {
@@ -284,6 +266,6 @@ class World {
             this.checkCollisionsBottles();
             this.checkBottlesAmount();
             this.bottleHitEnemy();
-        }, 200);
+        }, 100);
     }
 }

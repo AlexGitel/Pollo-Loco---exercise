@@ -197,6 +197,7 @@ class Character extends MovableObject {
      */
     characterDead() {
         if (this.isDead()) {
+            this.speed = 0;
             this.isDeadCounter++;
             this.animateImages(this.IMAGES_DEAD);
             if (this.isDeadCounter === 60) {

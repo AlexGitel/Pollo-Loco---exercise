@@ -57,10 +57,9 @@ class Endboss extends MovableObject {
         let maxRepeat = 6;
         let intervalTime = setInterval(() => {
             if (this.world.character.x >= 2300) {
-                gameStartAudio.pause();
-                gameStartAudio.currentTime = 0;
-                shock.play();
-                endboss_alert.play();
+                stopAudio(gameStartAudio);
+                playAudio(shock);
+                playAudio(endboss_alert);
                 this.animateImages(this.IMAGES_ENDBOSS_ALERT);
                 counter++;
             }
@@ -78,11 +77,9 @@ class Endboss extends MovableObject {
                 this.speed = 0;
                 this.animateImages(this.ENDBOSS_IMAGES_DEAD);
                 setTimeout(() => { this.world.level.enemies.splice(0, 1) }, 1300);
-                last_cry.play();
+                playAudio(last_cry);
 
                 if (this.world.level.enemies.length <= 0) {
-                    last_cry.pause();
-                    last_cry.currentTime = 0;
                     showYouWon();
                 }
             }

@@ -118,6 +118,7 @@ function stopAudio(audio) {
 */
 function showYouWon() {
     this.finish_sound.play();
+    stopAudio(last_cry);
     document.getElementById('game-over-screen').classList.remove('d-none');
     document.getElementById('you-won-img').src = "assets/img/9_intro_outro_screens/win/won_2.png";
     document.getElementById('mobile-overlay').classList.add('d-none');

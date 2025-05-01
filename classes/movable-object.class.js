@@ -8,6 +8,7 @@ class MovableObject extends DrawableObject {
     coinsAmount = 0;
     bottlesAmount = 100;
     lastHit = 0;
+    offsetY = 15;
 
     moveRight() {
         this.x += this.speed;
@@ -72,26 +73,20 @@ class MovableObject extends DrawableObject {
     isColliding(movObj) {
         return (this.x + this.width) >= movObj.x &&
             this.x <= (movObj.x + movObj.width) &&
-            (this.y + this.height) >= movObj.y &&
-            this.y <= (movObj.y + movObj.height);
+            (this.y + this.height + this.offsetY) >= movObj.y &&
+            (this.y + this.offsetY) <= (movObj.y + movObj.height);
     }
-
-    // isColliding(movObj) {
-    //     return (this.x + this.width) >= movObj.x &&
-    //         this.x <= (movObj.x + movObj.width) &&
-    //         (this.y + this.offsetY + this.height) >= movObj.y &&
-    //         (this.y + this.offsetY) <= (movObj.y + movObj.height);
-    // }
 
     /**
     * Character or Endboss energy level after be hitted
     */
     hit() {
         if (this instanceof Character || this instanceof Endboss) {
-            this.energy -= 5;
+            this.energy -= 1.3;
             if (this.energy < 0) {
                 this.energy = 0;
-            } else {
+            }
+            else {
                 this.lastHit = new Date().getTime();
             }
         }
@@ -136,11 +131,13 @@ class MovableObject extends DrawableObject {
 
     chickensGetDamage() {
         if (this instanceof Chicken) {
+            this.speed = 0;
             this.loadImage('assets/img/3_enemies_chicken/chicken_normal/2_dead/dead.png');
             playAudio(squashing_sound);
         }
         if (this instanceof ChickenSmall) {
-            this.animateImages(this.IMAGES_DEAD);
+            this.speed = 0;
+            this.loadImage('assets/img/3_enemies_chicken/chicken_small/2_dead/dead.png');
             playAudio(squashing_sound);
         }
     }

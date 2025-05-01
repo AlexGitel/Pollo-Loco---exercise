@@ -198,7 +198,9 @@ canvas {
 }
 
 @media (max-width: 1200px) {
-    .controls-info-display {
+
+    .controls-info-display,
+    .mute-btn-div {
         display: none;
     }
 
