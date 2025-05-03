@@ -23,7 +23,7 @@ class StatusbarCoins extends DrawableObject {
 
     /**
      * 
-     * @param {amount of percentage} percentage - Variable
+     * @param {number} percentage - Variable, amount of percentage
      */
     setPercentage(percentage) {
         this.percentage = percentage;

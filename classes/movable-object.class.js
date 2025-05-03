@@ -10,10 +10,16 @@ class MovableObject extends DrawableObject {
     lastHit = 0;
     offsetY = 15;
 
+    /**
+     * moving of movable objects, like Character, Endboss
+     */
     moveRight() {
         this.x += this.speed;
     }
 
+    /**
+     * moving of movable objects, like Character, Endboss
+     */
     moveLeft() {
         this.x -= this.speed;
     }
@@ -45,7 +51,7 @@ class MovableObject extends DrawableObject {
     }
 
     /**
-     * falling of Character onto the ground
+     * falling onto the ground
      */
     applyGravity() {
         setStoppableInterval(() => {
@@ -93,7 +99,7 @@ class MovableObject extends DrawableObject {
     }
 
     /**
-     * to fill the life statusbar
+     * to fill the coin statusbar and than increase live of character
      */
     getCoin() {
         this.coinsAmount += 15;
@@ -129,6 +135,9 @@ class MovableObject extends DrawableObject {
         this.endbossGetDamage();
     }
 
+    /**
+     * if enemy damaged, the image of dead enemy will be shown
+     */
     chickensGetDamage() {
         if (this instanceof Chicken) {
             this.speed = 0;
@@ -142,6 +151,9 @@ class MovableObject extends DrawableObject {
         }
     }
 
+    /**
+     * if enemy damaged, the image of dead Endboss will be shown
+     */
     endbossGetDamage() {
         if (this instanceof Endboss) {
             this.animateImages(this.ENDBOSS_IMAGES_HURT);

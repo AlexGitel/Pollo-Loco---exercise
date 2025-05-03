@@ -70,22 +70,6 @@ class Endboss extends MovableObject {
                 this.endbossWalkingStart();
             }
         }, 200);
-
-        // /**
-        // * to check: if dead - stop the moving, play dead.images, splice and show endscreen
-        // */
-        // let finalAnimation = setInterval(() => {
-        //     if (this.isDead()) {
-        //         this.speed = 0;
-        //         this.animateImages(this.ENDBOSS_IMAGES_DEAD);
-        //         setTimeout(() => { this.world.level.enemies.splice(0, 1) }, 2000);
-        //         playAudio(last_cry);
-        //         if (this.world.level.enemies.length <= 0) {
-        //             showYouWon();
-        //             clearInterval(finalAnimation);
-        //         }
-        //     }
-        // }, 200);
     }
 
     /**
@@ -95,6 +79,7 @@ class Endboss extends MovableObject {
         let walkTime = setInterval(() => {
             if (this.world.character.x <= 2400) {
                 this.animateImages(this.IMAGES_WALKING);
+                stopAudio(shock);
                 if (!this.isDead() && !this.world.character.isDead()) {
                     this.persueCharacter();
                 }
@@ -155,23 +140,3 @@ class Endboss extends MovableObject {
         }, 200);
     }
 }
-
-
-//     persueCharacter() {
-
-//         if (this.world.character.x > this.x) {
-//             let pointOne = this.world.character.x > this.x;
-//             this.otherDirection = true;
-//             pointOne += 30;
-//             this.moveRight();
-
-//         } else if (this.world.character.x < this.x) {
-//             let pointTwo = this.world.character.x < this.x;
-//             this.otherDirection = false;
-//             if (this.otherDirection = false) {
-//                 pointTwo -= 30;
-//                 this.moveLeft();
-//             }
-//         }
-//     }
-// }

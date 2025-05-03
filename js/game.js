@@ -46,8 +46,8 @@ function init() {
  */
 function stopGameAndRestart() {
     stopAudio(this.you_lost);
-    intervalIds.forEach(clearInterval);
-    intervalIds = [];
+    intervalIds.forEach(id => clearInterval(id));
+    intervalIds.length = 0;
     document.getElementById('game-over-screen').classList.add('d-none');
     startGame();
 }
@@ -121,7 +121,7 @@ function showYouWon() {
     document.getElementById('game-over-screen').classList.remove('d-none');
     document.getElementById('you-won-img').src = "assets/img/9_intro_outro_screens/win/won_2.png";
     document.getElementById('mobile-overlay').classList.add('d-none');
-    intervalIds.forEach(clearInterval);
+    intervalIds.forEach(id => clearInterval(id));
 }
 
 /**
@@ -134,7 +134,7 @@ function showYouLost() {
     document.getElementById('controls').classList.add('d-none');
     document.getElementById('you-won-img').src = "assets/img/9_intro_outro_screens/game_over/oh no you lost!.png";
     document.getElementById('mobile-overlay').classList.add('d-none');
-    intervalIds.forEach(clearInterval);
+    intervalIds.forEach(id => clearInterval(id));
 }
 
 /**

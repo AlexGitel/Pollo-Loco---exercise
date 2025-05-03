@@ -10,3 +10,10 @@
 .d-none {
     display: none !important;
 }
+
+a {
+    text-decoration: none;
+    color: black;
+    padding: 0 0 26px 0;
+    font-size: x-small;
+}

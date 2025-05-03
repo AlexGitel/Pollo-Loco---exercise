@@ -133,6 +133,7 @@ class World {
             } else {
                 enemy.splicable = true;
                 this.level.enemies = this.level.enemies.filter(enemy => !enemy.splicable);
+                stopAudio(squashing_sound);
             }
         }, 100);
     }
@@ -205,11 +206,10 @@ class World {
     keyPressed() {
         let singleShot = this.keyboard.D && this.singleThrow;
         if (singleShot && this.character.bottlesAmount > 0) {
-            this.singleThrow = false;
             let bottle = new ThrowableObject(this.character.x + 20, this.character.y + 120, this.character.otherDirection);
             this.throwableObject.push(bottle);
             this.character.bottlesAmount -= 20;
-
+            this.singleThrow = false;
             setTimeout(() => {
                 this.throwableObject.splice(0, 1);
             }, 1500);

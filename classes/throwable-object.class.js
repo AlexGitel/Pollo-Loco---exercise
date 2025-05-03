@@ -24,39 +24,52 @@ class ThrowableObject extends MovableObject {
         this.loadImages(this.BOTTLES_SPLASHING);
         this.x = x;
         this.y = y;
-        this.flyDirection = characterOtherDirection;
         this.height = 60;
         this.width = 60;
+        this.flyDirection = characterOtherDirection;
         this.throw();
     }
 
-    /**
-     * to throw the bottles LEFT or RIGHT
-     */
     throw() {
         this.speedY = 30;
         this.applyGravity();
         let flyTime = setInterval(() => {
-            if (this.flyDirection === false && this.isAboveGround()) {
-                this.x += 8;
-                this.animateImages(this.BOTTLES_ROTATING);
-                throw_bottle_sound.play();
+            this.flightRight();
+            this.flightLeft();
+
+            if (!this.isAboveGround()) {
+                this.playSplashAnimation();
+                stopAudio(throw_bottle_sound);
+                playAudio(burst_sound);
+                clearInterval(flyTime);
             }
-            if (this.flyDirection === true && this.isAboveGround()) {
-                this.x -= 8;
-                this.animateImages(this.BOTTLES_ROTATING);
-                throw_bottle_sound.play();
-            } else
-                if (!this.isAboveGround()) {
-                    this.playSplashAnimation();
-                    burst_sound.play();
-                    clearInterval(flyTime);
-                }
         }, 25);
     }
 
     /**
-    * Plays the splash animation and then stops
+     * flight of the bottle to the right after throwing
+     */
+    flightRight() {
+        if (this.flyDirection === false && this.isAboveGround()) {
+            this.x += 6;
+            this.animateImages(this.BOTTLES_ROTATING);
+            playAudio(throw_bottle_sound);
+        }
+    }
+
+    /**
+    * flight of the bottle to the left after throwing
+    */
+    flightLeft() {
+        if (this.flyDirection === true && this.isAboveGround()) {
+            this.x -= 6;
+            this.animateImages(this.BOTTLES_ROTATING);
+            playAudio(throw_bottle_sound);
+        }
+    }
+
+    /**
+    * Plays the splash animation of the bottle
     */
     playSplashAnimation() {
         let index = 0;

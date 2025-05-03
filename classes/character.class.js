@@ -4,7 +4,6 @@ class Character extends MovableObject {
     width = 90;
     height = 250;
     speed = 14;
-
     world;
 
     IMAGES_GET_A_NAP = [
@@ -151,7 +150,7 @@ class Character extends MovableObject {
             }
             this.animateImages(this.IMAGES_WALKING);
             this.otherDirection = false;
-            walking_sound.play();
+            playAudio(walking_sound);
         }
     }
 
@@ -165,7 +164,7 @@ class Character extends MovableObject {
             }
             this.animateImages(this.IMAGES_WALKING);
             this.otherDirection = true;
-            walking_sound.play();
+            playAudio(walking_sound);
         }
     }
 
@@ -178,7 +177,7 @@ class Character extends MovableObject {
                 this.speedY = 30;
             }
             this.animateImages(this.IMAGES_JUMPING);
-            jumping_sound.play();
+            playAudio(jumping_sound);
         }
     }
 
