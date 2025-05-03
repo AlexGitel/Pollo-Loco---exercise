@@ -195,6 +195,25 @@ canvas {
     height: 25px;
 }
 
+.imprint-content {
+    font-size: xxx-large;
+}
+
+.imprint-link {
+    font-size: 50px;
+    padding: 0;
+}
+
+@media (max-width: 1920px) {
+    .imprint-content {
+        font-size: x-large;
+    }
+
+    .imprint-link {
+        font-size: large;
+    }
+}
+
 @media (max-width: 1400px) {
     .controls-info-display {
         display: none;
@@ -249,6 +268,19 @@ canvas {
 @media only screen and (max-width: 720px) {
     canvas {
         width: 100%;
+    }
+
+    .imprint-content {
+        text-align: center;
+        font-size: medium;
+    }
+
+    .imprint-link {
+        font-size: smaller;
+    }
+
+    h2 {
+        font-size: 26px;
     }
 }
 
