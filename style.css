@@ -7,7 +7,7 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     height: 100vh;
-
+    overflow: hidden;
     touch-action: manipulation;
     user-select: none;
     -webkit-user-select: none;
@@ -106,24 +106,28 @@ canvas {
 }
 
 .game-over-screen {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
     position: absolute;
-    z-index: 3;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 100%;
-    height: 100vh;
+    aspect-ratio: 3 / 2;
     background-image: url('assets/img/desert.png');
     background-position: center;
     background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    z-index: 3;
 }
 
 .restart-button {
     background-color: transparent;
     border: none;
-    font-size: xx-large;
+    font-size: xxx-large;
     position: absolute;
-    padding: 0 0 15px;
+    padding: 0 0 70px;
     color: darkorange;
 }
 
@@ -212,6 +216,16 @@ canvas {
     .imprint-link {
         font-size: large;
     }
+
+    .restart-button {
+        font-size: xx-large;
+        padding: 0 0 15px;
+    }
+
+    /* .game-over-screen {
+        max-width: 720px;
+        max-height: 550px;
+    } */
 }
 
 @media (max-width: 1400px) {
@@ -232,21 +246,21 @@ canvas {
         display: none;
     }
 
-    .game-over-screen {
-        max-width: 992px;
-        max-height: 540px;
-    }
-
     .restart-button {
         font-size: larger;
     }
 }
 
 @media (max-width: 992px) {
-
     .start-screen {
         max-height: 320px;
     }
+
+    /* 
+    .game-over-screen {
+        max-width: 720px;
+        max-height: 550px;
+    } */
 
     .playBtn {
         font-size: small;
@@ -266,6 +280,7 @@ canvas {
 
 /* Smartphone portrait */
 @media only screen and (max-width: 720px) {
+
     canvas {
         width: 100%;
     }

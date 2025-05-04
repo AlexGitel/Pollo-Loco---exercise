@@ -69,6 +69,8 @@ function toggleSpeakersDisplay() {
     document.getElementById('mute-on').classList.toggle('d-none');
     document.getElementById('mute-off').classList.toggle('d-none');
     isMuted = !isMuted;
+    localStorage.setItem('isMuted', isMuted);
+
     allSounds.forEach(sound => {
         sound.muted = isMuted;
     });
@@ -81,6 +83,8 @@ function toggleSpeakersMobile() {
     document.getElementById('speaker-on').classList.toggle('d-none');
     document.getElementById('speaker-off').classList.toggle('d-none');
     isMuted = !isMuted;
+    localStorage.setItem('isMuted', isMuted);
+
     allSounds.forEach(sound => {
         sound.muted = isMuted;
     });
@@ -101,6 +105,10 @@ function checkIfMobile() {
  * start playing audio
  */
 function playAudio(audio) {
+    const savedTime = localStorage.getItem('audioCurrentTime');
+    if (savedTime) {
+        audio.currentTime = parseFloat(savedTime);
+    }
     audio.play();
 }
 
@@ -108,8 +116,8 @@ function playAudio(audio) {
  * stop the playing audio
  */
 function stopAudio(audio) {
+    localStorage.setItem('audioCurrentTime', audio.currentTime);
     audio.pause();
-    audio.currentTime = 0;
 }
 
 /**
@@ -221,4 +229,34 @@ function mobileBtnRelease() {
             world.singleThrow = true;
         }, { passive: false });
     });
+
+    /**
+     * checks if the muted status exist and get it from the Local Storage.
+     */
+    window.addEventListener('load', () => {
+        const muteStatus = localStorage.getItem('isMuted');
+        if (muteStatus === 'true') {
+            isMuted = true;
+            allSounds.forEach(sound => sound.muted = true);
+
+            checkMuteBtnsDisplay();
+            checkMuteBtnsMobile();
+        }
+    });
+
+    /**
+     *  it checks and if necessary changed the mute buttons on display
+     */
+    function checkMuteBtnsDisplay() {
+        document.getElementById('mute-on').classList.add('d-none');
+        document.getElementById('mute-off').classList.remove('d-none');
+    }
+
+    /**
+     * it checks and if necessary changed the mute buttons on mobile
+     */
+    function checkMuteBtnsMobile() {
+        document.getElementById('speaker-on')?.classList.add('d-none');
+        document.getElementById('speaker-off')?.classList.remove('d-none');
+    }
 }
