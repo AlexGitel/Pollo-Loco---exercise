@@ -58,6 +58,7 @@ body {
 
 .game-over-img {
     height: 100%;
+    width: 100%;
 }
 
 .headline-mute-button-div {
@@ -106,19 +107,11 @@ canvas {
 }
 
 .game-over-screen {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
+    position: fixed;
     aspect-ratio: 3 / 2;
-    background-image: url('assets/img/desert.png');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
     display: flex;
     justify-content: center;
-    align-items: flex-end;
+    align-items: center;
     z-index: 3;
 }
 
@@ -127,8 +120,7 @@ canvas {
     border: none;
     font-size: xxx-large;
     position: absolute;
-    padding: 0 0 70px;
-    color: darkorange;
+    color: indigo;
 }
 
 .mobile-overlay {
@@ -219,13 +211,7 @@ canvas {
 
     .restart-button {
         font-size: xx-large;
-        padding: 0 0 15px;
     }
-
-    /* .game-over-screen {
-        max-width: 720px;
-        max-height: 550px;
-    } */
 }
 
 @media (max-width: 1400px) {
@@ -255,12 +241,6 @@ canvas {
     .start-screen {
         max-height: 320px;
     }
-
-    /* 
-    .game-over-screen {
-        max-width: 720px;
-        max-height: 550px;
-    } */
 
     .playBtn {
         font-size: small;

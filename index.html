@@ -4,12 +4,11 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon_io/apple-touch-icon.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon_io/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon_io/favicon-16x16.png">
-        <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon_io/android-chrome-192x192.png">
-        <link rel="icon" type="image/png" sizes="512x512" href="assets/favicon_io/android-chrome-512x512.png">
-        <link rel="manifest" href="assets/favicon_io/site.webmanifest">
+        <link rel="icon" type="image/png" href="/assets/favicon/favicon-96x96.png" sizes="96x96" />
+        <link rel="icon" type="image/svg+xml" href="/assets/favicon/favicon.svg" />
+        <link rel="shortcut icon" href="/assets/favicon/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png" />
+        <link rel="manifest" href="/assets/favicon/site.webmanifest" />
 
         <link rel="stylesheet" href="standard.css">
         <link rel="stylesheet" href="style.css">
@@ -41,12 +40,12 @@
         <div id="checkOrientation">Please rotate your device to landscape mode. <br>
             Bitte drehen Sie Ihr Gerät in den Querformatmodus</div>
 
-            <!-- HEADLINE AND MUTE-BUTTON -->
+            <!-- HEADLINE AND MUTE-BUTTON ON DESKTOP -->
             <div id="headline-mute-button-div" class="headline-mute-button-div">
                 <h1 id="title">El Pollo Loco</h1>
                 <div id="mute-btn-div" style="padding-right: 20px">
-                    <img id="mute-on" onclick="toggleSpeakersDisplay(), stopAudio(gameStartAudio)" class="pointer speaker-icon" src="assets/icons/sound-turn-on.svg" alt="speaker-icon">
-                    <img id="mute-off" onclick="toggleSpeakersDisplay(), playAudio(gameStartAudio)" class="pointer speaker-icon d-none" src="assets/icons/sound-turn-off.svg" alt="speaker-icon">
+                    <img id="mute-on" onclick="toggleMute()" class="pointer speaker-icon" src="assets/icons/sound-turn-on.svg" alt="speaker-icon">
+                    <img id="mute-off" onclick="toggleMute()" class="pointer speaker-icon d-none" src="assets/icons/sound-turn-off.svg" alt="speaker-icon">
                 </div>
             </div>
            
@@ -85,13 +84,13 @@
             <canvas id="canvas" width="720" height="480"></canvas>   
             
 
-                <!--  Overlay for Mobile  -->
+                <!--  Overlay for Mobile (MOBILE SCREEN) -->
             <div id="mobile-overlay" class="mobile-overlay d-none">
                 <div class="panels-container">
 
                     <div class="panel-top">
-                        <img id="speaker-on" onclick="toggleSpeakersMobile(), stopAudio(gameStartAudio)" class="pointer speaker-icon" src="assets/icons/sound-turn-on.svg" alt="speaker-icon">
-                        <img id="speaker-off" onclick="toggleSpeakersMobile(), playAudio(gameStartAudio)" class="pointer speaker-icon d-none" src="assets/icons/sound-turn-off.svg" alt="speaker-icon">
+                        <img id="speaker-on" onclick="toggleMute()" class="pointer speaker-icon" src="assets/icons/sound-turn-on.svg" alt="speaker-icon">
+                        <img id="speaker-off" onclick="toggleMute()" class="pointer speaker-icon d-none" src="assets/icons/sound-turn-off.svg" alt="speaker-icon">
                     </div>
 
                     <div class="panel-bottom">

@@ -1,3 +1,4 @@
+let gameIsRunning = true;
 
 let canvas;
 let world;
@@ -7,21 +8,39 @@ let intervalIds = [];
 let mobileBtns = ['btnLeft', 'btnRight', 'btnJump', 'btnThrow'];
 let isMuted = false;
 
-allSounds = [
-    gameStartAudio = new Audio('audio/gameStart.mp3'),
-    finish_sound = new Audio('audio/finish_sound.mp3'),
-    you_lost = new Audio('audio/you_lost.mp3'),
-    soundForCoins = new Audio('audio/take_coin.mp3'),
-    walking_sound = new Audio('audio/walking.mp3'),
-    jumping_sound = new Audio('audio/juhu.mp3'),
-    squashing_sound = new Audio('audio/squash.mp3'),
-    getPain = new Audio('audio/pain.mp3'),
-    throw_bottle_sound = new Audio('audio/throw_bottle.mp3'),
-    burst_sound = new Audio('audio/burst_sound.mp3'),
-    endboss_alert = new Audio('audio/endboss.mp3'),
-    shock = new Audio('audio/shock.mp3'),
-    last_cry = new Audio('audio/last_cry.mp3')
+
+const gameStartAudio = new Audio('audio/gameStart.mp3');
+const finish_sound = new Audio('audio/finish_sound.mp3');
+const you_lost = new Audio('audio/you_lost.mp3');
+const soundForCoins = new Audio('audio/take_coin.mp3');
+const walking_sound = new Audio('audio/walking.mp3');
+const jumping_sound = new Audio('audio/juhu.mp3');
+const squashing_sound = new Audio('audio/squash.mp3');
+const getPain = new Audio('audio/pain.mp3');
+const throw_bottle_sound = new Audio('audio/throw_bottle.mp3');
+const burst_sound = new Audio('audio/burst_sound.mp3');
+const endboss_alert = new Audio('audio/endboss.mp3');
+const shock = new Audio('audio/shock.mp3');
+const last_cry = new Audio('audio/last_cry.mp3');
+
+let allSounds = [
+    gameStartAudio,
+    finish_sound,
+    you_lost,
+    soundForCoins,
+    walking_sound,
+    jumping_sound,
+    squashing_sound,
+    getPain,
+    throw_bottle_sound,
+    burst_sound,
+    endboss_alert,
+    shock,
+    last_cry
 ];
+
+let backgroundMusic = gameStartAudio;
+
 
 /**
  * start the game
@@ -30,7 +49,15 @@ function startGame() {
     document.getElementById('start-screen').classList.add('d-none');
     initLevel();
     init();
-    playAudio(this.gameStartAudio);
+
+    const savedTime = localStorage.getItem('audioCurrentTime');
+    if (savedTime !== null) {
+        backgroundMusic.currentTime = parseFloat(savedTime);
+    }
+
+    if (!isMuted) {
+        playAudio(backgroundMusic);
+    }
 }
 
 /**
@@ -41,16 +68,16 @@ function init() {
     world = new World(canvas, keyboard);
 }
 
+
 /**
  * stop the game, clear all intervals, restart the game
  */
 function stopGameAndRestart() {
-    stopAudio(this.you_lost);
-    intervalIds.forEach(id => clearInterval(id));
-    intervalIds.length = 0;
+    gameIsRunning = true;
     document.getElementById('game-over-screen').classList.add('d-none');
     startGame();
 }
+
 
 /**
  * 
@@ -62,33 +89,48 @@ function setStoppableInterval(fn, time) {
     intervalIds.push(id);
 }
 
-/**
- * to turn on/off audio speaker
- */
-function toggleSpeakersDisplay() {
-    document.getElementById('mute-on').classList.toggle('d-none');
-    document.getElementById('mute-off').classList.toggle('d-none');
-    isMuted = !isMuted;
-    localStorage.setItem('isMuted', isMuted);
-
-    allSounds.forEach(sound => {
-        sound.muted = isMuted;
-    });
-}
 
 /**
- * to turn on/off audio speaker
+ * Stop or continue playing sounds, save the position of the sound after interruption
  */
-function toggleSpeakersMobile() {
-    document.getElementById('speaker-on').classList.toggle('d-none');
-    document.getElementById('speaker-off').classList.toggle('d-none');
+function toggleMute() {
+    if (!isMuted) {
+        localStorage.setItem('audioCurrentTime', backgroundMusic.currentTime);
+    }
     isMuted = !isMuted;
-    localStorage.setItem('isMuted', isMuted);
+    localStorage.setItem('muted', isMuted.toString());
 
-    allSounds.forEach(sound => {
-        sound.muted = isMuted;
-    });
+    if (isMuted) {
+        stopAudio(backgroundMusic);
+    } else {
+        const savedTime = localStorage.getItem('audioCurrentTime');
+        if (savedTime !== null) {
+            backgroundMusic.currentTime = parseFloat(savedTime);
+        }
+        playAudio(backgroundMusic);
+    }
+    updateMuteButtons(isMuted);
 }
+
+
+/**
+ * To change speaker icons after muting or unmuting the sound.
+ * @param {boolean} muted  true or false
+ */
+function updateMuteButtons(muted) {
+    document.getElementById('mute-on')?.classList.toggle('d-none', muted);
+    document.getElementById('mute-off')?.classList.toggle('d-none', !muted);
+    document.getElementById('speaker-on')?.classList.toggle('d-none', muted);
+    document.getElementById('speaker-off')?.classList.toggle('d-none', !muted);
+}
+
+
+function getMuteStatus() {
+    const muted = localStorage.getItem('muted');
+    isMuted = muted;
+    // isMuted = muted === 'true';
+}
+
 
 /**
  * checked if mobile or display view, than removes aktion buttons or not
@@ -101,49 +143,54 @@ function checkIfMobile() {
     }
 }
 
+
 /**
  * start playing audio
  */
 function playAudio(audio) {
-    const savedTime = localStorage.getItem('audioCurrentTime');
-    if (savedTime) {
-        audio.currentTime = parseFloat(savedTime);
+    if (!isMuted) {
+        audio.play();
     }
-    audio.play();
 }
+
 
 /**
  * stop the playing audio
  */
 function stopAudio(audio) {
-    localStorage.setItem('audioCurrentTime', audio.currentTime);
     audio.pause();
 }
+
 
 /**
 * shows Endscreen "You won"
 */
 function showYouWon() {
-    this.finish_sound.play();
-    stopAudio(last_cry);
+    playAudio(finish_sound);
     document.getElementById('game-over-screen').classList.remove('d-none');
     document.getElementById('you-won-img').src = "assets/img/9_intro_outro_screens/win/won_2.png";
     document.getElementById('mobile-overlay').classList.add('d-none');
     intervalIds.forEach(id => clearInterval(id));
+    intervalIds.length = 0;
+    gameIsRunning = false;
 }
+
 
 /**
 * shows Endscreen "You lost"
 */
 function showYouLost() {
-    stopAudio(this.gameStartAudio);
-    playAudio(this.you_lost);
+    stopAudio(gameStartAudio);
+    playAudio(you_lost);
     document.getElementById('game-over-screen').classList.remove('d-none');
     document.getElementById('controls').classList.add('d-none');
     document.getElementById('you-won-img').src = "assets/img/9_intro_outro_screens/game_over/oh no you lost!.png";
     document.getElementById('mobile-overlay').classList.add('d-none');
     intervalIds.forEach(id => clearInterval(id));
+    intervalIds.length = 0;
+    gameIsRunning = false;
 }
+
 
 /**
  * for using the keyboard to move the Character, jump, throw. Listens if key is up
@@ -166,6 +213,7 @@ window.addEventListener("keyup", (event) => {
     }
 });
 
+
 /**
 * for using the keyboard to move the Character, jump, throw. Listens if key is up
 */
@@ -186,6 +234,7 @@ window.addEventListener("keydown", (event) => {
     }
 });
 
+
 /**
 * using of buttons on mobile devices, mobile screen
 */
@@ -197,6 +246,7 @@ window.addEventListener('DOMContentLoaded', () => {
     mobileBtnPress();
     mobileBtnRelease();
 });
+
 
 /**
  * listens for touch events on mobile devices - touchstart
@@ -214,6 +264,7 @@ function mobileBtnPress() {
     });
 }
 
+
 /**
  * listens if the touch button is released  - touchend
  * @param {string} id  - the id of the button
@@ -230,33 +281,19 @@ function mobileBtnRelease() {
         }, { passive: false });
     });
 
-    /**
-     * checks if the muted status exist and get it from the Local Storage.
-     */
-    window.addEventListener('load', () => {
-        const muteStatus = localStorage.getItem('isMuted');
-        if (muteStatus === 'true') {
-            isMuted = true;
-            allSounds.forEach(sound => sound.muted = true);
 
-            checkMuteBtnsDisplay();
-            checkMuteBtnsMobile();
+    /**
+    * checks if the muted status exist and get it from the Local Storage.
+    */
+    window.addEventListener('DOMContentLoaded', getMuteStatus);
+
+
+    /**
+     * it saved the play position of sound 
+     */
+    window.addEventListener('beforeunload', () => {
+        if (backgroundMusic && !isMuted) {
+            localStorage.setItem('audioCurrentTime', backgroundMusic.currentTime);
         }
     });
-
-    /**
-     *  it checks and if necessary changed the mute buttons on display
-     */
-    function checkMuteBtnsDisplay() {
-        document.getElementById('mute-on').classList.add('d-none');
-        document.getElementById('mute-off').classList.remove('d-none');
-    }
-
-    /**
-     * it checks and if necessary changed the mute buttons on mobile
-     */
-    function checkMuteBtnsMobile() {
-        document.getElementById('speaker-on')?.classList.add('d-none');
-        document.getElementById('speaker-off')?.classList.remove('d-none');
-    }
 }

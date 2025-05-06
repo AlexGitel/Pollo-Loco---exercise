@@ -99,7 +99,7 @@ class Endboss extends MovableObject {
     ifEndbossWon(walkTime) {
         if (this.world.character.isDead()) {
             this.otherDirection = true;
-            this.speed = 19;
+            this.speed = 23;
             this.moveRight()
             if (this.x >= 2600) {
                 this.otherDirection = false;

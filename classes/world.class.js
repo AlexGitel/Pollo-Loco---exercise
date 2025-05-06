@@ -31,6 +31,8 @@ class World {
      * to draw the images on the map
      */
     draw() {
+        if (!gameIsRunning) return;
+
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);
         this.addArrayObjectsToMap(this.level.backgroundObjects);
@@ -169,7 +171,7 @@ class World {
     collectCoins(coins, index) {
         if (this.character.isColliding(coins)) {
             this.character.getCoin();
-            soundForCoins.play();
+            playAudio(soundForCoins);
             this.statusbarCoins.setPercentage(this.character.coinsAmount);
             this.level.coins.splice(index, 1);
         }
