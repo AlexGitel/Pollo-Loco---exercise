@@ -4,6 +4,13 @@ class ChickenSmall extends MovableObject {
     height = 50;
     width = 40;
 
+    testOffset = {
+        top: 3,
+        right: 3,
+        left: 3,
+        bottom: 0,
+    };
+
     IMAGES_WALKING = [
         'assets/img/3_enemies_chicken/chicken_small/1_walk/1_w.png',
         'assets/img/3_enemies_chicken/chicken_small/1_walk/2_w.png',
@@ -23,6 +30,7 @@ class ChickenSmall extends MovableObject {
         this.speed = 0.3 + Math.random() * 0.25;
         this.animateChicken();
         this.splicable = false;
+        this.offset = { x: 3, y: 3, width: 6, height: 6 };
     }
 
     /**
@@ -35,7 +43,7 @@ class ChickenSmall extends MovableObject {
 
         setStoppableInterval(() => {
             this.animateImages(this.IMAGES_WALKING);
-        }, 270);
+        }, 250);
     }
 
 }

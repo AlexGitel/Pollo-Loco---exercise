@@ -50,8 +50,6 @@ class World {
         this.addArrayObjectsToMap(this.level.bottles);
         this.ctx.translate(-this.camera_x, 0);
 
-        this.character.updateAnimationCharacter();
-
         let self = this;
         requestAnimationFrame(function () {
             self.draw();
@@ -77,6 +75,8 @@ class World {
             this.flipImage(movObj);
         }
         this.ctx.drawImage(movObj.img, movObj.x, movObj.y, movObj.width, movObj.height);
+
+        movObj.drawFrame(this.ctx);
 
         if (movObj.otherDirection) {
             this.flipImageBack(movObj);
@@ -113,8 +113,6 @@ class World {
                     enemy.damaged();
                     if (enemy instanceof Chicken || enemy instanceof ChickenSmall) {
                         this.character.speedY = 20;
-                    } else {
-                        this.lostEnergy();
                     }
                     this.isSplicable(enemy);
                 } else {
@@ -135,9 +133,8 @@ class World {
             } else {
                 enemy.splicable = true;
                 this.level.enemies = this.level.enemies.filter(enemy => !enemy.splicable);
-                stopAudio(squashing_sound);
             }
-        }, 100);
+        }, 10);
     }
 
     /**
@@ -269,6 +266,6 @@ class World {
             this.checkCollisionsBottles();
             this.checkBottlesAmount();
             this.bottleHitEnemy();
-        }, 100);
+        }, 16);
     }
 }

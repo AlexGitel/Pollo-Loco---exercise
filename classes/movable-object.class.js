@@ -8,7 +8,20 @@ class MovableObject extends DrawableObject {
     coinsAmount = 0;
     bottlesAmount = 100;
     lastHit = 0;
-    offsetY = 15;
+
+    offset = {
+        x: 0,
+        y: 0,
+        width: 0,
+        height: 0,
+    }
+
+    testOffset = {
+        top: 0,
+        right: 0,
+        left: 0,
+        bottom: 0,
+    }
 
     /**
      * moving of movable objects, like Character, Endboss
@@ -77,11 +90,14 @@ class MovableObject extends DrawableObject {
      *  if Character.isColliding(Chicken, Endboss, enemies, coins)
      */
     isColliding(movObj) {
-        return (this.x + this.width) >= movObj.x &&
-            this.x <= (movObj.x + movObj.width) &&
-            (this.y + this.height + this.offsetY) >= movObj.y &&
-            (this.y + this.offsetY) <= (movObj.y + movObj.height);
+        return (
+            this.x + this.width - this.testOffset.right > movObj.x + movObj.testOffset.left &&
+            this.y + this.height - this.testOffset.bottom > movObj.y + movObj.testOffset.top &&
+            this.x + this.testOffset.left < movObj.x + movObj.width - movObj.testOffset.right &&
+            this.y + this.testOffset.top < movObj.y + movObj.height - movObj.testOffset.bottom
+        )
     }
+
 
     /**
     * Character or Endboss energy level after be hitted

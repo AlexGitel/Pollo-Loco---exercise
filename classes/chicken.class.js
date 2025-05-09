@@ -4,6 +4,13 @@ class Chicken extends MovableObject {
     height = 60;
     width = 50;
 
+    testOffset = {
+        top: 5,
+        right: 5,
+        left: 5,
+        bottom: 0,
+    };
+
     IMAGES_WALKING = [
         'assets/img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',
         'assets/img/3_enemies_chicken/chicken_normal/1_walk/2_w.png',
@@ -27,6 +34,7 @@ class Chicken extends MovableObject {
         this.speed = 0.23 + Math.random() * 0.25;
         this.animateChicken();
         this.splicable = false;
+        this.offset = { x: 5, y: 5, width: 10, height: 10 };
     }
 
     /**

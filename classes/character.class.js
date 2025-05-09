@@ -6,6 +6,13 @@ class Character extends MovableObject {
     speed = 14;
     world;
 
+    testOffset = {
+        top: 95,
+        right: 20,
+        left: 20,
+        bottom: 5,
+    };
+
     IMAGES_GET_A_NAP = [
         'assets/img/2_character_pepe/1_idle/long_idle/I-11.png',
         'assets/img/2_character_pepe/1_idle/long_idle/I-12.png',
@@ -68,13 +75,12 @@ class Character extends MovableObject {
         'assets/img/9_intro_outro_screens/game_over/game over!.png'
     ];
 
-    frameCount = 0;
-    frameSkip = 3;
     sleepTimeCounter = 0;
     isDeadCounter = 0;
 
     constructor() {
         super();
+        this.offset = { x: 15, y: 95, width: 30, height: 105 };
         this.loadImages(this.IMAGES_GET_A_NAP);
         this.loadImages(this.IMAGES_FALLING_DOWN);
         this.loadImages(this.IMAGES_WALKING);
@@ -83,41 +89,24 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_HURT);
         this.loadImage(this.IMAGES_GAME_OVER);
         this.applyGravity();
+        this.updateAnimationCharacter();
+        this.napAnimationCounter = 0;
     }
 
     /**
      * character get moving, jumping
      */
     updateAnimationCharacter() {
-        this.frameCount++;
-        if (this.frameCount >= this.frameSkip) {
+        setStoppableInterval(() => {
             this.characterFallingDown();
-            this.ifKeyRight();
-            this.ifKeyLeft();
-            this.ifJump();
-            this.characterDead();
-            this.characterHurt();
-            this.frameCount = 0;
-        }
-        this.updateCamera();
-        this.sleepTimeCounterChecking();
-    }
+            // this.ifKeyRight();
+            // this.ifKeyLeft();
+            // this.ifJump();
+            // this.characterDead();
+            // this.characterHurt();
+            this.updateCamera();
+        }, 20);
 
-    /**
-     * controls the use of key buttons and controls the sleepTimeCounter
-     * that will be needed for ifStanding().
-     */
-    sleepTimeCounterChecking() {
-        const noKeyPressed = !this.world.keyboard.RIGHT && !this.world.keyboard.LEFT
-            && !this.world.keyboard.SPACE && !this.world.keyboard.D;
-        if (noKeyPressed) {
-            if (this.sleepTimeCounter === 0) {
-                this.loadImage('assets/img/2_character_pepe/1_idle/idle/I-1.png');
-            }
-            this.sleepTimeCounter++;
-        } else {
-            this.sleepTimeCounter = 0;
-        }
     }
 
     /**
@@ -135,8 +124,14 @@ class Character extends MovableObject {
      * function for sleeping mode, if Character is standing
      */
     ifStanding() {
-        if (!this.isAboveGround() && this.sleepTimeCounter > 60) {
-            this.animateImages(this.IMAGES_GET_A_NAP);
+        if (!this.isAboveGround()) {
+            this.sleepTimeCounter++;
+        }
+        if (this.sleepTimeCounter > 60) {
+            this.napAnimationCounter++;
+            if (this.napAnimationCounter % 8 === 0) {
+                this.animateImages(this.IMAGES_GET_A_NAP);
+            }
         }
     }
 

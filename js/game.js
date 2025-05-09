@@ -1,3 +1,4 @@
+
 let gameIsRunning = true;
 
 let canvas;
@@ -41,7 +42,6 @@ let allSounds = [
 
 let backgroundMusic = gameStartAudio;
 
-
 /**
  * start the game
  */
@@ -49,12 +49,6 @@ function startGame() {
     document.getElementById('start-screen').classList.add('d-none');
     initLevel();
     init();
-
-    const savedTime = localStorage.getItem('audioCurrentTime');
-    if (savedTime !== null) {
-        backgroundMusic.currentTime = parseFloat(savedTime);
-    }
-
     if (!isMuted) {
         playAudio(backgroundMusic);
     }
@@ -68,7 +62,6 @@ function init() {
     world = new World(canvas, keyboard);
 }
 
-
 /**
  * stop the game, clear all intervals, restart the game
  */
@@ -77,7 +70,6 @@ function stopGameAndRestart() {
     document.getElementById('game-over-screen').classList.add('d-none');
     startGame();
 }
-
 
 /**
  * 
@@ -89,29 +81,20 @@ function setStoppableInterval(fn, time) {
     intervalIds.push(id);
 }
 
-
 /**
  * Stop or continue playing sounds, save the position of the sound after interruption
  */
 function toggleMute() {
-    if (!isMuted) {
-        localStorage.setItem('audioCurrentTime', backgroundMusic.currentTime);
-    }
     isMuted = !isMuted;
     localStorage.setItem('muted', isMuted.toString());
 
     if (isMuted) {
         stopAudio(backgroundMusic);
     } else {
-        const savedTime = localStorage.getItem('audioCurrentTime');
-        if (savedTime !== null) {
-            backgroundMusic.currentTime = parseFloat(savedTime);
-        }
         playAudio(backgroundMusic);
     }
     updateMuteButtons(isMuted);
 }
-
 
 /**
  * To change speaker icons after muting or unmuting the sound.
@@ -124,13 +107,10 @@ function updateMuteButtons(muted) {
     document.getElementById('speaker-off')?.classList.toggle('d-none', !muted);
 }
 
-
 function getMuteStatus() {
     const muted = localStorage.getItem('muted');
-    isMuted = muted;
-    // isMuted = muted === 'true';
+    isMuted = muted === 'true';
 }
-
 
 /**
  * checked if mobile or display view, than removes aktion buttons or not
@@ -143,7 +123,6 @@ function checkIfMobile() {
     }
 }
 
-
 /**
  * start playing audio
  */
@@ -153,14 +132,12 @@ function playAudio(audio) {
     }
 }
 
-
 /**
  * stop the playing audio
  */
 function stopAudio(audio) {
     audio.pause();
 }
-
 
 /**
 * shows Endscreen "You won"
@@ -175,12 +152,11 @@ function showYouWon() {
     gameIsRunning = false;
 }
 
-
 /**
 * shows Endscreen "You lost"
 */
 function showYouLost() {
-    stopAudio(gameStartAudio);
+    stopAudio(backgroundMusic);
     playAudio(you_lost);
     document.getElementById('game-over-screen').classList.remove('d-none');
     document.getElementById('controls').classList.add('d-none');
@@ -190,7 +166,6 @@ function showYouLost() {
     intervalIds.length = 0;
     gameIsRunning = false;
 }
-
 
 /**
  * for using the keyboard to move the Character, jump, throw. Listens if key is up
@@ -213,7 +188,6 @@ window.addEventListener("keyup", (event) => {
     }
 });
 
-
 /**
 * for using the keyboard to move the Character, jump, throw. Listens if key is up
 */
@@ -234,7 +208,6 @@ window.addEventListener("keydown", (event) => {
     }
 });
 
-
 /**
 * using of buttons on mobile devices, mobile screen
 */
@@ -246,7 +219,6 @@ window.addEventListener('DOMContentLoaded', () => {
     mobileBtnPress();
     mobileBtnRelease();
 });
-
 
 /**
  * listens for touch events on mobile devices - touchstart
@@ -264,7 +236,6 @@ function mobileBtnPress() {
     });
 }
 
-
 /**
  * listens if the touch button is released  - touchend
  * @param {string} id  - the id of the button
@@ -281,19 +252,8 @@ function mobileBtnRelease() {
         }, { passive: false });
     });
 
-
     /**
     * checks if the muted status exist and get it from the Local Storage.
     */
     window.addEventListener('DOMContentLoaded', getMuteStatus);
-
-
-    /**
-     * it saved the play position of sound 
-     */
-    window.addEventListener('beforeunload', () => {
-        if (backgroundMusic && !isMuted) {
-            localStorage.setItem('audioCurrentTime', backgroundMusic.currentTime);
-        }
-    });
 }
