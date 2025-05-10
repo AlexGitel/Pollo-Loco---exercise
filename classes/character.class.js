@@ -3,14 +3,14 @@ class Character extends MovableObject {
     y = 85;
     width = 90;
     height = 250;
-    speed = 14;
+    speed = 3;
     world;
 
     testOffset = {
         top: 95,
         right: 20,
         left: 20,
-        bottom: 5,
+        bottom: 5
     };
 
     IMAGES_GET_A_NAP = [
@@ -77,6 +77,10 @@ class Character extends MovableObject {
 
     sleepTimeCounter = 0;
     isDeadCounter = 0;
+    napAnimationCounter = 0;
+    walkingCounter = 0;
+    jumpingCounter = 0;
+
 
     constructor() {
         super();
@@ -90,7 +94,7 @@ class Character extends MovableObject {
         this.loadImage(this.IMAGES_GAME_OVER);
         this.applyGravity();
         this.updateAnimationCharacter();
-        this.napAnimationCounter = 0;
+        this.wasMovingBefore = false;
     }
 
     /**
@@ -99,14 +103,13 @@ class Character extends MovableObject {
     updateAnimationCharacter() {
         setStoppableInterval(() => {
             this.characterFallingDown();
-            // this.ifKeyRight();
-            // this.ifKeyLeft();
-            // this.ifJump();
+            this.ifKeyRight();
+            this.ifKeyLeft();
+            this.ifJump();
             // this.characterDead();
             // this.characterHurt();
             this.updateCamera();
         }, 20);
-
     }
 
     /**
@@ -115,7 +118,7 @@ class Character extends MovableObject {
     */
     characterFallingDown() {
         if (this.isAboveGround()) {
-            this.animateImagesOnce(this.IMAGES_FALLING_DOWN);
+            this.animateImages(this.IMAGES_FALLING_DOWN);
         }
         this.ifStanding();
     }
@@ -124,9 +127,25 @@ class Character extends MovableObject {
      * function for sleeping mode, if Character is standing
      */
     ifStanding() {
-        if (!this.isAboveGround()) {
+        if (!this.isAboveGround() && !this.ifKeyLeft() && !this.ifKeyRight()) {
+            if (this.wasMovingBefore) {
+                this.loadImage('assets/img/2_character_pepe/1_idle/idle/I-1.png');
+                this.wasMovingBefore = false;
+            }
             this.sleepTimeCounter++;
+            this.walkingCounter = 0;
+            this.playNapAnimation();
+        } else {
+            this.sleepTimeCounter = 0;
+            this.napAnimationCounter = 0;
+            this.wasMovingBefore = true;
         }
+    }
+
+    /**
+     * nap animation of character if hi is standing
+     */
+    playNapAnimation() {
         if (this.sleepTimeCounter > 60) {
             this.napAnimationCounter++;
             if (this.napAnimationCounter % 8 === 0) {
@@ -143,10 +162,12 @@ class Character extends MovableObject {
             if (this.x < 2340) {
                 this.moveRight();
             }
-            this.animateImages(this.IMAGES_WALKING);
+            this.playWalkAnimation();
             this.otherDirection = false;
             playAudio(walking_sound);
+            return true;
         }
+        return false;
     }
 
     /**
@@ -157,9 +178,21 @@ class Character extends MovableObject {
             if (this.x > -700) {
                 this.moveLeft();
             }
-            this.animateImages(this.IMAGES_WALKING);
+            this.playWalkAnimation();
             this.otherDirection = true;
             playAudio(walking_sound);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * walk animation of Character by moving left or right
+     */
+    playWalkAnimation() {
+        this.walkingCounter++;
+        if (this.walkingCounter % 8 === 0) {
+            this.animateImages(this.IMAGES_WALKING);
         }
     }
 
@@ -171,8 +204,15 @@ class Character extends MovableObject {
             if (!this.isAboveGround()) {
                 this.speedY = 30;
             }
-            this.animateImages(this.IMAGES_JUMPING);
+            this.playJumpAnimation();
             playAudio(jumping_sound);
+        }
+    }
+
+    playJumpAnimation() {
+        this.jumpingCounter++;
+        if (this.jumpingCounter % 8 === 0) {
+            this.animateImages(this.IMAGES_JUMPING);
         }
     }
 
