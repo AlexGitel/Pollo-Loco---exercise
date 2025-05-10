@@ -127,7 +127,7 @@ class Character extends MovableObject {
      * function for sleeping mode, if Character is standing
      */
     ifStanding() {
-        if (!this.isAboveGround() && !this.ifKeyLeft() && !this.ifKeyRight()) {
+        if (!this.isAboveGround() && !this.ifKeyLeft() && !this.ifKeyRight() && !this.ifJump()) {
             if (this.wasMovingBefore) {
                 this.loadImage('assets/img/2_character_pepe/1_idle/idle/I-1.png');
                 this.wasMovingBefore = false;
@@ -199,17 +199,42 @@ class Character extends MovableObject {
     /**
     * for jumping, if Key Space is pressed
     */
+    // ifJump() {
+    //     if (this.world.keyboard.SPACE) {
+    //         if (!this.isAboveGround()) {
+    //             this.speedY = 30;
+    //         }
+    //         this.jumpAnimation();
+    //         playAudio(jumping_sound);
+    //     }
+    // }
+
     ifJump() {
         if (this.world.keyboard.SPACE) {
             if (!this.isAboveGround()) {
                 this.speedY = 30;
             }
-            this.playJumpAnimation();
+            this.jumpAnimation();
             playAudio(jumping_sound);
+            return true;
         }
+        return false;
+
+
+        // if (this.world.keyboard.SPACE) {
+        //     this.speedY = 30;
+        //     this.isJumping = true;
+        //     playAudio(jumping_sound);
+        // }
+        // if (this.isJumping) {
+        //     this.jumpAnimation();
+        //     if (!this.isAboveGround()) {
+        //         this.isJumping = false;
+        //     }
+        // }
     }
 
-    playJumpAnimation() {
+    jumpAnimation() {
         this.jumpingCounter++;
         if (this.jumpingCounter % 8 === 0) {
             this.animateImages(this.IMAGES_JUMPING);
