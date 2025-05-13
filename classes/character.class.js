@@ -3,7 +3,7 @@ class Character extends MovableObject {
     y = 85;
     width = 90;
     height = 250;
-    speed = 4;
+    speed = 7;
     world;
 
     testOffset = {
@@ -76,12 +76,9 @@ class Character extends MovableObject {
     ];
 
     sleepTimeCounter = 0;
-    isDeadCounter = 0;
     napAnimationCounter = 0;
-    walkingCounter = 0;
-
-    jumpingCounter = 0;
-    isJumping = false;
+    walkAnimationCounter = 0;
+    isDeadCounter = 0;
 
     constructor() {
         super();
@@ -95,7 +92,7 @@ class Character extends MovableObject {
         this.loadImage(this.IMAGES_GAME_OVER);
         this.applyGravity();
         this.updateAnimationCharacter();
-        this.wasMovingBefore = false;
+        this.characterFallingDown();
     }
 
     /**
@@ -103,12 +100,12 @@ class Character extends MovableObject {
      */
     updateAnimationCharacter() {
         setStoppableInterval(() => {
-            this.characterFallingDown();
+            this.ifStanding();
             this.ifKeyRight();
             this.ifKeyLeft();
             this.ifJump();
-            // this.characterDead();
-            // this.characterHurt();
+            this.characterDead();
+            this.characterHurt();
             this.updateCamera();
         }, 20);
     }
@@ -118,36 +115,40 @@ class Character extends MovableObject {
     * if character has no moving, hi get a nap
     */
     characterFallingDown() {
-        if (this.isAboveGround()) {
-            this.animateImages(this.IMAGES_FALLING_DOWN);
-        }
-        this.ifStanding();
+        let fallingDown = setInterval(() => {
+            if (this.isAboveGround()) {
+                this.animateImages(this.IMAGES_FALLING_DOWN);
+            }
+            if (!this.isAboveGround()) {
+                this.loadImage('assets/img/2_character_pepe/1_idle/idle/I-1.png');
+                clearInterval(fallingDown);
+            }
+        }, 60);
     }
 
     /**
      * function for sleeping mode, if Character is standing
      */
     ifStanding() {
-        if (!this.isAboveGround() && !this.ifKeyLeft() && !this.ifKeyRight()) {
-            if (this.wasMovingBefore) {
-                this.loadImage('assets/img/2_character_pepe/1_idle/idle/I-1.png');
-                this.wasMovingBefore = false;
-            }
+        if (!this.isAboveGround() && !this.world.keyboard.RIGHT && !this.world.keyboard.LEFT && !this.world.keyboard.SPACE && !this.world.keyboard.D) {
+            this.walkAnimationCounter = 0;
             this.sleepTimeCounter++;
-            this.walkingCounter = 0;
+
+            if (this.sleepTimeCounter <= 50) {
+                this.loadImage('assets/img/2_character_pepe/1_idle/idle/I-1.png');
+            }
             this.playNapAnimation();
         } else {
             this.sleepTimeCounter = 0;
             this.napAnimationCounter = 0;
-            this.wasMovingBefore = true;
         }
     }
 
     /**
-     * nap animation of character if hi is standing
-     */
+    * nap animation of character if hi is standing
+    */
     playNapAnimation() {
-        if (this.sleepTimeCounter > 60) {
+        if (this.sleepTimeCounter > 50) {
             this.napAnimationCounter++;
             if (this.napAnimationCounter % 8 === 0) {
                 this.animateImages(this.IMAGES_GET_A_NAP);
@@ -156,19 +157,18 @@ class Character extends MovableObject {
     }
 
     /**
-     * if it is pressed Key Right
-     */
+    * if it is pressed Key Right
+    */
     ifKeyRight() {
         if (this.world.keyboard.RIGHT) {
+            this.walkAnimationCounter++;
             if (this.x < 2340) {
                 this.moveRight();
             }
-            this.playWalkAnimation();
             this.otherDirection = false;
+            this.playWalkAnimation();
             playAudio(walking_sound);
-            return true;
         }
-        return false;
     }
 
     /**
@@ -176,23 +176,21 @@ class Character extends MovableObject {
      */
     ifKeyLeft() {
         if (this.world.keyboard.LEFT) {
+            this.walkAnimationCounter++;
             if (this.x > -700) {
                 this.moveLeft();
             }
-            this.playWalkAnimation();
             this.otherDirection = true;
+            this.playWalkAnimation();
             playAudio(walking_sound);
-            return true;
         }
-        return false;
     }
 
     /**
      * walk animation of Character by moving left or right
      */
     playWalkAnimation() {
-        this.walkingCounter++;
-        if (this.walkingCounter % 8 === 0) {
+        if (this.walkAnimationCounter % 4 === 1) {
             this.animateImages(this.IMAGES_WALKING);
         }
     }
@@ -200,45 +198,25 @@ class Character extends MovableObject {
     /**
     * for jumping, if Key Space is pressed
     */
-
     ifJump() {
-        if (this.world.keyboard.SPACE) {
-            this.isJumping = true;
-            this.jumpingCounter++;
-            if (!this.isAboveGround()) {
-                this.speedY = 30;
-            }
-            playAudio(jumping_sound);
+        if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+            this.sleepTimeCounter = 0;
+            this.napAnimationCounter = 0;
+            this.speedY = 30;
             this.jumpAnimation();
+            playAudio(jumping_sound);
         }
     }
 
     jumpAnimation() {
-        console.log(this.jumpingCounter);
-
-        if (this.jumpingCounter % 8 === 0) {
+        let jumpAnimation = setInterval(() => {
             this.animateImages(this.IMAGES_JUMPING);
-        }
-        if (!this.isAboveGround()) {
-            this.isJumping = false;
-            this.jumpingCounter = 0;
-        }
+            if (!this.isAboveGround()) {
+                this.loadImage('assets/img/2_character_pepe/1_idle/idle/I-1.png');
+                clearInterval(jumpAnimation);
+            }
+        }, 1000 / 20);
     }
-
-    // ifJump() {
-    //     if (this.world.keyboard.SPACE) {
-    //         if (!this.isAboveGround()) {
-    //             this.speedY = 30;
-    //         }
-    //         this.jumpAnimation();
-    //         playAudio(jumping_sound);
-    //     }
-    // }
-
-    // jumpAnimation() {
-
-    //     this.animateImages(this.IMAGES_JUMPING);
-    // }
 
     /**
     * character get hurt - Chicken, Endboss collision.

@@ -9,12 +9,12 @@ class MovableObject extends DrawableObject {
     bottlesAmount = 100;
     lastHit = 0;
 
-    offset = {
-        x: 0,
-        y: 0,
-        width: 0,
-        height: 0
-    }
+    // offset = {
+    //     x: 0,
+    //     y: 0,
+    //     width: 0,
+    //     height: 0
+    // }
 
     testOffset = {
         top: 0,
@@ -104,7 +104,7 @@ class MovableObject extends DrawableObject {
     */
     hit() {
         if (this instanceof Character || this instanceof Endboss) {
-            this.energy -= 1.3;
+            this.energy -= 1;
             if (this.energy < 0) {
                 this.energy = 0;
             }
@@ -155,14 +155,7 @@ class MovableObject extends DrawableObject {
      * if enemy damaged, the image of dead enemy will be shown
      */
     chickensGetDamage() {
-        if (this instanceof Chicken) {
-            this.speed = 0;
-            this.loadImage('assets/img/3_enemies_chicken/chicken_normal/2_dead/dead.png');
-            playAudio(squashing_sound);
-        }
-        if (this instanceof ChickenSmall) {
-            this.speed = 0;
-            this.loadImage('assets/img/3_enemies_chicken/chicken_small/2_dead/dead.png');
+        if (this instanceof Chicken || this instanceof ChickenSmall) {
             playAudio(squashing_sound);
         }
     }

@@ -76,7 +76,7 @@ class World {
         }
         this.ctx.drawImage(movObj.img, movObj.x, movObj.y, movObj.width, movObj.height);
 
-        movObj.drawFrame(this.ctx);
+        // movObj.drawFrame(this.ctx);
 
         if (movObj.otherDirection) {
             this.flipImageBack(movObj);
@@ -241,7 +241,7 @@ class World {
         if (enemy instanceof Chicken || enemy instanceof ChickenSmall) {
             setTimeout(() => {
                 this.level.enemies.splice(i, 1)
-            }, 150);
+            }, 10);
         }
     }
 
@@ -266,6 +266,6 @@ class World {
             this.checkCollisionsBottles();
             this.checkBottlesAmount();
             this.bottleHitEnemy();
-        }, 16);
+        }, 40);
     }
 }
