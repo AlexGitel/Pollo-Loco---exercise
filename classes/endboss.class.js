@@ -5,7 +5,7 @@ class Endboss extends MovableObject {
     width = 200;
     speed = 12;
 
-    testOffset = {
+    saveOffset = {
         top: 20,
         right: 10,
         left: 10,
@@ -56,7 +56,6 @@ class Endboss extends MovableObject {
         this.animateEndboss();
         this.finalAnimation();
         this.isEndboss = true;
-        this.offset = { x: 10, y: 40, width: 20, height: 55 };
     }
 
     /**
@@ -108,7 +107,7 @@ class Endboss extends MovableObject {
         if (this.world.character.isDead()) {
             this.otherDirection = true;
             this.speed = 23;
-            this.moveRight()
+            this.moveRight();
             if (this.x >= 2600) {
                 this.otherDirection = false;
                 this.loadImage(this.IMAGES_ENDBOSS_ALERT[0]);

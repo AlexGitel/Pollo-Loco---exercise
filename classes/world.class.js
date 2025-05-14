@@ -76,8 +76,6 @@ class World {
         }
         this.ctx.drawImage(movObj.img, movObj.x, movObj.y, movObj.width, movObj.height);
 
-        // movObj.drawFrame(this.ctx);
-
         if (movObj.otherDirection) {
             this.flipImageBack(movObj);
         }

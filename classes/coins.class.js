@@ -4,7 +4,7 @@ class Coins extends MovableObject {
     width = 80;
     height = 80;
 
-    testOffset = {
+    saveOffset = {
         top: 30,
         right: 30,
         left: 30,
@@ -23,7 +23,6 @@ class Coins extends MovableObject {
         this.x = 350 + Math.random() * 2000;
         this.y = 150 + Math.random() * 220;
         this.animateCoins();
-        this.offset = { x: 25, y: 25, width: 50, height: 50 };
     }
 
     /**

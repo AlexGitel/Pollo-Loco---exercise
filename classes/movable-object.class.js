@@ -9,14 +9,7 @@ class MovableObject extends DrawableObject {
     bottlesAmount = 100;
     lastHit = 0;
 
-    // offset = {
-    //     x: 0,
-    //     y: 0,
-    //     width: 0,
-    //     height: 0
-    // }
-
-    testOffset = {
+    saveOffset = {
         top: 0,
         right: 0,
         left: 0,
@@ -91,10 +84,10 @@ class MovableObject extends DrawableObject {
      */
     isColliding(movObj) {
         return (
-            this.x + this.width - this.testOffset.right > movObj.x + movObj.testOffset.left &&
-            this.y + this.height - this.testOffset.bottom > movObj.y + movObj.testOffset.top &&
-            this.x + this.testOffset.left < movObj.x + movObj.width - movObj.testOffset.right &&
-            this.y + this.testOffset.top < movObj.y + movObj.height - movObj.testOffset.bottom
+            this.x + this.width - this.saveOffset.right > movObj.x + movObj.saveOffset.left &&
+            this.y + this.height - this.saveOffset.bottom > movObj.y + movObj.saveOffset.top &&
+            this.x + this.saveOffset.left < movObj.x + movObj.width - movObj.saveOffset.right &&
+            this.y + this.saveOffset.top < movObj.y + movObj.height - movObj.saveOffset.bottom
         )
     }
 
@@ -103,14 +96,15 @@ class MovableObject extends DrawableObject {
     * Character or Endboss energy level after be hitted
     */
     hit() {
-        if (this instanceof Character || this instanceof Endboss) {
+        if (this instanceof Endboss) {
             this.energy -= 1;
-            if (this.energy < 0) {
-                this.energy = 0;
-            }
-            else {
-                this.lastHit = new Date().getTime();
-            }
+        } else if (this instanceof Character) {
+            this.energy -= 2;
+            this.lastHit = new Date().getTime();
+        }
+
+        if (this.energy < 0) {
+            this.energy = 0;
         }
     }
 

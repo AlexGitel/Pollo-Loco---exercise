@@ -6,7 +6,7 @@ class Character extends MovableObject {
     speed = 7;
     world;
 
-    testOffset = {
+    saveOffset = {
         top: 95,
         right: 20,
         left: 20,
@@ -79,10 +79,10 @@ class Character extends MovableObject {
     napAnimationCounter = 0;
     walkAnimationCounter = 0;
     isDeadCounter = 0;
+    deadAnimationCounter = 0;
 
     constructor() {
         super();
-        this.offset = { x: 15, y: 95, width: 30, height: 105 };
         this.loadImages(this.IMAGES_GET_A_NAP);
         this.loadImages(this.IMAGES_FALLING_DOWN);
         this.loadImages(this.IMAGES_WALKING);
@@ -104,7 +104,6 @@ class Character extends MovableObject {
             this.ifKeyRight();
             this.ifKeyLeft();
             this.ifJump();
-            this.characterDead();
             this.characterHurt();
             this.updateCamera();
         }, 20);
@@ -130,7 +129,8 @@ class Character extends MovableObject {
      * function for sleeping mode, if Character is standing
      */
     ifStanding() {
-        if (!this.isAboveGround() && !this.world.keyboard.RIGHT && !this.world.keyboard.LEFT && !this.world.keyboard.SPACE && !this.world.keyboard.D) {
+        let noKeyPressed = !this.world.keyboard.RIGHT && !this.world.keyboard.LEFT && !this.world.keyboard.SPACE && !this.world.keyboard.D;
+        if (!this.isAboveGround() && noKeyPressed && !this.isDead()) {
             this.walkAnimationCounter = 0;
             this.sleepTimeCounter++;
 
@@ -219,27 +219,37 @@ class Character extends MovableObject {
     }
 
     /**
-    * character get hurt - Chicken, Endboss collision.
+    * character get hurt after collision with Chicken, Endboss, than dead
     */
     characterHurt() {
-        if (this.isHurt()) {
+        if (this.isHurt() && !this.isDead()) {
             playAudio(getPain);
             this.animateImages(this.IMAGES_HURT);
         }
+        if (this.isDead()) {
+            this.deadAnimationCounter++;
+            this.isDeadCounter++;
+            this.deadAnimation();
+        }
     }
 
-    /**
-     * in case if character is dead, game over.
-     */
-    characterDead() {
-        if (this.isDead()) {
-            this.speed = 0;
-            this.isDeadCounter++;
+    deadAnimation() {
+        // if (this.isDead()) {
+        stopAudio(getPain);
+        this.speed = 0;
+        if (this.deadAnimationCounter % 3 === 0) {
             this.animateImages(this.IMAGES_DEAD);
-            if (this.isDeadCounter === 60) {
-                showYouLost();
-            }
         }
+        if (this.isDeadCounter === 100) {
+            this.deadAnimationCounter = 0;
+            this.isDeadCounter = 0;
+            showYouLost();
+            console.log(this.deadAnimationCounter);
+            console.log(this.isDeadCounter);
+
+
+        }
+        // }
     }
 
     /**

@@ -4,7 +4,7 @@ class Chicken extends MovableObject {
     height = 60;
     width = 50;
 
-    testOffset = {
+    saveOffset = {
         top: 5,
         right: 5,
         left: 5,
@@ -34,7 +34,6 @@ class Chicken extends MovableObject {
         this.speed = 0.23 + Math.random() * 0.25;
         this.animateChicken();
         this.splicable = false;
-        this.offset = { x: 5, y: 5, width: 10, height: 10 };
     }
 
     /**
