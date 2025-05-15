@@ -240,14 +240,10 @@ class Character extends MovableObject {
         if (this.deadAnimationCounter % 3 === 0) {
             this.animateImages(this.IMAGES_DEAD);
         }
-        if (this.isDeadCounter === 100) {
+        if (this.isDeadCounter === 120) {
             this.deadAnimationCounter = 0;
             this.isDeadCounter = 0;
             showYouLost();
-            console.log(this.deadAnimationCounter);
-            console.log(this.isDeadCounter);
-
-
         }
         // }
     }

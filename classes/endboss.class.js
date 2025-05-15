@@ -125,7 +125,7 @@ class Endboss extends MovableObject {
         if (this.attackingWalk === 'left') {
             targetLeft = this.world.character.x - 200;
         } else if (this.attackingWalk === 'right') {
-            targetRight = this.world.character.x + 200;
+            targetRight = this.world.character.x + 150;
         }
         this.backAndForth(targetLeft, targetRight,);
     }
