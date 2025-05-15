@@ -3,7 +3,7 @@ class Endboss extends MovableObject {
     y = 137;
     height = 320;
     width = 200;
-    speed = 12;
+    speed = 16;
 
     saveOffset = {
         top: 20,
@@ -71,8 +71,7 @@ class Endboss extends MovableObject {
                 playAudio(endboss_alert);
                 this.animateImages(this.IMAGES_ENDBOSS_ALERT);
                 counter++;
-            }
-            if (counter >= maxRepeat) {
+            } if (counter >= maxRepeat) {
                 clearInterval(intervalTime);
                 this.endbossWalkingStart();
             }
@@ -104,11 +103,12 @@ class Endboss extends MovableObject {
      * if character dead, Endboss goes to his start position
      */
     ifEndbossWon(walkTime) {
+        let observationPoint = this.world.character.x + 150;
         if (this.world.character.isDead()) {
             this.otherDirection = true;
             this.speed = 23;
             this.moveRight();
-            if (this.x >= 2600) {
+            if (this.x >= observationPoint) {
                 this.otherDirection = false;
                 this.loadImage(this.IMAGES_ENDBOSS_ALERT[0]);
                 clearInterval(walkTime);
@@ -117,15 +117,37 @@ class Endboss extends MovableObject {
     }
 
     /**
-     * to persue the character
+     * endboss persues the character
      */
     persueCharacter() {
-        if (this.world.character.x > this.x) {
-            this.otherDirection = true;
+        let targetLeft;
+        let targetRight;
+        if (this.attackingWalk === 'left') {
+            targetLeft = this.world.character.x - 200;
+        } else if (this.attackingWalk === 'right') {
+            targetRight = this.world.character.x + 200;
+        }
+        this.backAndForth(targetLeft, targetRight,);
+    }
+
+    /**
+     * 
+     * @param {number} targetLeft  position to character's left side
+     * @param {number} targetRight position to character's right side
+     */
+    backAndForth(targetLeft, targetRight,) {
+        if (this.x < targetRight) {
             this.moveRight();
-        } else if (this.world.character.x < this.x) {
-            this.otherDirection = false;
+            this.otherDirection = true;
+        } else if (this.x > targetLeft) {
             this.moveLeft();
+            this.otherDirection = false;
+        } else {
+            if (this.attackingWalk === 'left') {
+                this.attackingWalk = 'right';
+            } else {
+                this.attackingWalk = 'left';
+            }
         }
     }
 
