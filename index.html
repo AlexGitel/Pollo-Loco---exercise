@@ -109,7 +109,10 @@
             
             <!-- G A M E  O V E R  S C R E E N -->
             <div id="game-over-screen" class="game-over-screen d-none">
-                <button class="restart-button pointer" onclick="stopGameAndRestart()">Start again?</button>
+                <div class="game-over-screen-btns">
+                    <span class="restart-button pointer" onclick="stopGameAndRestart()">Start again?</span>
+                    <span class="menu-button pointer" onclick="goToMenu()">Menu</span>
+                </div>
                 <img id="you-won-img" class="game-over-img" src="" alt="you-won-image">
             </div>
 

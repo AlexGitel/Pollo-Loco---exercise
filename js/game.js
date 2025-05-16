@@ -2,6 +2,7 @@
 let gameIsRunning = true;
 
 let canvas;
+let ctx;
 let world;
 let character;
 let keyboard = new Keyboard();
@@ -46,6 +47,7 @@ let backgroundMusic = gameStartAudio;
  * start the game
  */
 function startGame() {
+    gameIsRunning = true;
     document.getElementById('start-screen').classList.add('d-none');
     initLevel();
     init();
@@ -59,6 +61,7 @@ function startGame() {
  */
 function init() {
     canvas = document.getElementById('canvas');
+    ctx = canvas.getContext('2d');
     world = new World(canvas, keyboard);
 }
 
@@ -69,6 +72,18 @@ function stopGameAndRestart() {
     gameIsRunning = true;
     document.getElementById('game-over-screen').classList.add('d-none');
     startGame();
+}
+
+/**
+ * go to menu page
+ */
+function goToMenu() {
+    gameIsRunning = false;
+    document.getElementById('game-over-screen').classList.add('d-none');
+    document.getElementById('start-screen').classList.remove('d-none');
+    document.getElementById('controls').classList.remove('d-none');
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
 /**
@@ -89,8 +104,11 @@ function toggleMute() {
     localStorage.setItem('muted', isMuted.toString());
 
     if (isMuted) {
+        localStorage.setItem('pausedPosition', backgroundMusic.currentTime.toString());
         stopAudio(backgroundMusic);
     } else {
+        const savedPosition = parseFloat(localStorage.getItem('pausedPosition')) || 0;
+        backgroundMusic.currentTime = savedPosition;
         playAudio(backgroundMusic);
     }
     updateMuteButtons(isMuted);
@@ -107,20 +125,20 @@ function updateMuteButtons(muted) {
     document.getElementById('speaker-off')?.classList.toggle('d-none', !muted);
 }
 
+/**
+ * check if it was muted or not befor
+ */
 function getMuteStatus() {
     const muted = localStorage.getItem('muted');
     isMuted = muted === 'true';
-}
-
-/**
- * checked if mobile or display view, than removes aktion buttons or not
- */
-function checkIfMobile() {
-    if (window.innerWidth <= 1400) {
-        document.getElementById('mobile-overlay').classList.remove('d-none');
+    if (!isMuted) {
+        const savedPosition = parseFloat(localStorage.getItem('pausedPosition')) || 0;
+        backgroundMusic.currentTime = savedPosition;
+        playAudio(backgroundMusic);
     } else {
-        document.getElementById('mobile-overlay').classList.add('d-none');
+        stopAudio(backgroundMusic);
     }
+    updateMuteButtons(isMuted);
 }
 
 /**
@@ -165,6 +183,17 @@ function showYouLost() {
     intervalIds.forEach(id => clearInterval(id));
     intervalIds.length = 0;
     gameIsRunning = false;
+}
+
+/**
+ * checked if mobile or display view, than removes aktion buttons or not
+ */
+function checkIfMobile() {
+    if (window.innerWidth <= 1400) {
+        document.getElementById('mobile-overlay').classList.remove('d-none');
+    } else {
+        document.getElementById('mobile-overlay').classList.add('d-none');
+    }
 }
 
 /**
@@ -218,6 +247,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
     mobileBtnPress();
     mobileBtnRelease();
+    getMuteStatus();
 });
 
 /**
@@ -251,9 +281,4 @@ function mobileBtnRelease() {
             world.singleThrow = true;
         }, { passive: false });
     });
-
-    /**
-    * checks if the muted status exist and get it from the Local Storage.
-    */
-    window.addEventListener('DOMContentLoaded', getMuteStatus);
 }

@@ -115,11 +115,19 @@ canvas {
     z-index: 3;
 }
 
-.restart-button {
-    background-color: transparent;
-    border: none;
-    font-size: xxx-large;
+.game-over-screen-btns {
+    display: flex;
     position: absolute;
+    gap: 50px;
+}
+
+.restart-button {
+    font-size: xxx-large;
+    color: indigo;
+}
+
+.menu-button {
+    font-size: xxx-large;
     color: indigo;
 }
 
@@ -209,7 +217,8 @@ canvas {
         font-size: large;
     }
 
-    .restart-button {
+    .restart-button,
+    .menu-button {
         font-size: xx-large;
     }
 }
@@ -232,7 +241,8 @@ canvas {
         display: none;
     }
 
-    .restart-button {
+    .restart-button,
+    .menu-button {
         font-size: larger;
     }
 }
