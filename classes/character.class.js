@@ -13,6 +13,19 @@ class Character extends MovableObject {
         bottom: 5
     };
 
+    IMAGES_IDLE = [
+        'assets/img/2_character_pepe/1_idle/idle/I-1.png',
+        'assets/img/2_character_pepe/1_idle/idle/I-2.png',
+        'assets/img/2_character_pepe/1_idle/idle/I-3.png',
+        'assets/img/2_character_pepe/1_idle/idle/I-4.png',
+        'assets/img/2_character_pepe/1_idle/idle/I-5.png',
+        'assets/img/2_character_pepe/1_idle/idle/I-6.png',
+        'assets/img/2_character_pepe/1_idle/idle/I-7.png',
+        'assets/img/2_character_pepe/1_idle/idle/I-8.png',
+        'assets/img/2_character_pepe/1_idle/idle/I-9.png',
+        'assets/img/2_character_pepe/1_idle/idle/I-10.png'
+    ];
+
     IMAGES_GET_A_NAP = [
         'assets/img/2_character_pepe/1_idle/long_idle/I-11.png',
         'assets/img/2_character_pepe/1_idle/long_idle/I-12.png',
@@ -75,6 +88,10 @@ class Character extends MovableObject {
         'assets/img/9_intro_outro_screens/game_over/game over!.png'
     ];
 
+    wasWalking = false;
+    inactiveState = 0;
+    idleAnimationCounter = 0;
+
     sleepTimeCounter = 0;
     napAnimationCounter = 0;
     walkAnimationCounter = 0;
@@ -83,6 +100,7 @@ class Character extends MovableObject {
 
     constructor() {
         super();
+        this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_GET_A_NAP);
         this.loadImages(this.IMAGES_FALLING_DOWN);
         this.loadImages(this.IMAGES_WALKING);
@@ -100,6 +118,7 @@ class Character extends MovableObject {
      */
     updateAnimationCharacter() {
         setStoppableInterval(() => {
+            this.stopWalkingAnimation();
             this.ifStanding();
             this.ifKeyRight();
             this.ifKeyLeft();
@@ -132,15 +151,31 @@ class Character extends MovableObject {
         let noKeyPressed = !this.world.keyboard.RIGHT && !this.world.keyboard.LEFT && !this.world.keyboard.SPACE && !this.world.keyboard.D;
         if (!this.isAboveGround() && noKeyPressed && !this.isDead()) {
             this.walkAnimationCounter = 0;
+            this.inactiveState++;
+            this.playIdleAnimation();
             this.sleepTimeCounter++;
-
-            if (this.sleepTimeCounter <= 50) {
-                this.loadImage('assets/img/2_character_pepe/1_idle/idle/I-1.png');
-            }
-            this.playNapAnimation();
-        } else {
+        }
+        else {
             this.sleepTimeCounter = 0;
             this.napAnimationCounter = 0;
+            this.inactiveState = 0;
+        }
+    }
+
+    /**
+    * idle animation after inactive state
+    */
+    playIdleAnimation() {
+        if (this.inactiveState >= 40) {
+            this.idleAnimationCounter++;
+            if (this.idleAnimationCounter % 13 === 0) {
+                this.animateImages(this.IMAGES_IDLE);
+            }
+        }
+        if (this.sleepTimeCounter >= 170) {
+            this.inactiveState = 0;
+            this.idleAnimationCounter = 0;
+            this.playNapAnimation();
         }
     }
 
@@ -148,11 +183,9 @@ class Character extends MovableObject {
     * nap animation of character if hi is standing
     */
     playNapAnimation() {
-        if (this.sleepTimeCounter > 50) {
-            this.napAnimationCounter++;
-            if (this.napAnimationCounter % 8 === 0) {
-                this.animateImages(this.IMAGES_GET_A_NAP);
-            }
+        this.napAnimationCounter++;
+        if (this.napAnimationCounter % 8 === 0) {
+            this.animateImages(this.IMAGES_GET_A_NAP);
         }
     }
 
@@ -196,6 +229,20 @@ class Character extends MovableObject {
     }
 
     /**
+     * function to show stand image after walking
+     */
+    stopWalkingAnimation() {
+        let noKeyPressed = !this.world.keyboard.RIGHT && !this.world.keyboard.LEFT;
+        if (this.wasWalking && noKeyPressed && !this.isAboveGround()) {
+            this.loadImage('assets/img/2_character_pepe/1_idle/idle/I-1.png');
+            this.wasWalking = false;
+        }
+        if (!noKeyPressed) {
+            this.wasWalking = true;
+        }
+    }
+
+    /**
     * for jumping, if Key Space is pressed
     */
     ifJump() {
@@ -233,8 +280,10 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+    * if character dead, play dead animation
+    */
     deadAnimation() {
-        // if (this.isDead()) {
         stopAudio(getPain);
         this.speed = 0;
         if (this.deadAnimationCounter % 3 === 0) {
@@ -245,7 +294,6 @@ class Character extends MovableObject {
             this.isDeadCounter = 0;
             showYouLost();
         }
-        // }
     }
 
     /**

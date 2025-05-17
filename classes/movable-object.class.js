@@ -98,7 +98,6 @@ class MovableObject extends DrawableObject {
         )
     }
 
-
     /**
     * Character or Endboss energy level after be hitted
     */
