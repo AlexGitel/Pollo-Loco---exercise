@@ -57,14 +57,14 @@ class Character extends MovableObject {
     ];
 
     IMAGES_JUMPING = [
-        'assets/img/2_character_pepe/3_jump/J-31.png',
         'assets/img/2_character_pepe/3_jump/J-32.png',
         'assets/img/2_character_pepe/3_jump/J-33.png',
         'assets/img/2_character_pepe/3_jump/J-34.png',
         'assets/img/2_character_pepe/3_jump/J-35.png',
         'assets/img/2_character_pepe/3_jump/J-36.png',
         'assets/img/2_character_pepe/3_jump/J-37.png',
-        'assets/img/2_character_pepe/3_jump/J-38.png'
+        'assets/img/2_character_pepe/3_jump/J-38.png',
+        'assets/img/2_character_pepe/3_jump/J-39.png'
     ];
 
     IMAGES_DEAD = [
@@ -91,12 +91,14 @@ class Character extends MovableObject {
     wasWalking = false;
     inactiveState = 0;
     idleAnimationCounter = 0;
-
     sleepTimeCounter = 0;
     napAnimationCounter = 0;
     walkAnimationCounter = 0;
+    jumpAnimationCounter = 0;
     isDeadCounter = 0;
     deadAnimationCounter = 0;
+    fallingDown = true;
+    wasInAir = false;
 
     constructor() {
         super();
@@ -123,6 +125,7 @@ class Character extends MovableObject {
             this.ifKeyRight();
             this.ifKeyLeft();
             this.ifJump();
+            this.jumpAnimation();
             this.characterHurt();
             this.updateCamera();
         }, 20);
@@ -140,6 +143,7 @@ class Character extends MovableObject {
             if (!this.isAboveGround()) {
                 this.loadImage('assets/img/2_character_pepe/1_idle/idle/I-1.png');
                 clearInterval(fallingDown);
+                this.fallingDown = false;
             }
         }, 60);
     }
@@ -172,7 +176,7 @@ class Character extends MovableObject {
                 this.animateImages(this.IMAGES_IDLE);
             }
         }
-        if (this.sleepTimeCounter >= 170) {
+        if (this.sleepTimeCounter >= 190) {
             this.inactiveState = 0;
             this.idleAnimationCounter = 0;
             this.playNapAnimation();
@@ -223,7 +227,7 @@ class Character extends MovableObject {
      * walk animation of Character by moving left or right
      */
     playWalkAnimation() {
-        if (this.walkAnimationCounter % 4 === 1) {
+        if (!this.isAboveGround() && this.walkAnimationCounter % 4 === 1) {
             this.animateImages(this.IMAGES_WALKING);
         }
     }
@@ -250,19 +254,28 @@ class Character extends MovableObject {
             this.sleepTimeCounter = 0;
             this.napAnimationCounter = 0;
             this.speedY = 30;
-            this.jumpAnimation();
             playAudio(jumping_sound);
         }
     }
 
+    /**
+     * jump animation if character is above ground (jumping)
+     */
     jumpAnimation() {
-        let jumpAnimation = setInterval(() => {
-            this.animateImages(this.IMAGES_JUMPING);
-            if (!this.isAboveGround()) {
-                this.loadImage('assets/img/2_character_pepe/1_idle/idle/I-1.png');
-                clearInterval(jumpAnimation);
+        if (this.isAboveGround()) {
+            this.wasInAir = true;
+            if (this.jumpAnimationCounter % 5 === 0) {
+                const frameIndex = Math.floor(this.jumpAnimationCounter / 5) % this.IMAGES_JUMPING.length;
+                this.loadImage(this.IMAGES_JUMPING[frameIndex]);
             }
-        }, 1000 / 20);
+            this.jumpAnimationCounter++;
+        } else {
+            if (this.wasInAir) {
+                this.loadImage('assets/img/2_character_pepe/1_idle/idle/I-1.png');
+                this.wasInAir = false;
+            }
+            this.jumpAnimationCounter = 0;
+        }
     }
 
     /**
