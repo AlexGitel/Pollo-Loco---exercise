@@ -83,7 +83,7 @@ class Endboss extends MovableObject {
      */
     endbossWalkingStart() {
         let walkTime = setInterval(() => {
-            if (this.world.character.x <= 2400) {
+            if (this.world.character.x <= 2350) {
                 this.animateImages(this.IMAGES_WALKING);
                 stopAudio(shock);
                 if (!this.isDead() && !this.world.character.isDead()) {

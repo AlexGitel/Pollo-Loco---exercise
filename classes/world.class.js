@@ -106,6 +106,7 @@ class World {
      */
     checkCollisionsEnemy() {
         this.level.enemies.forEach((enemy) => {
+            if ((enemy instanceof Chicken || enemy instanceof ChickenSmall) && enemy.isDead) return;
             if (this.character.isColliding(enemy)) {
                 if (this.character.speedY < 0 && this.character.isAboveGround()) {
                     enemy.damaged();
@@ -113,9 +114,7 @@ class World {
                         this.character.speedY = 20;
                     }
                     this.isSplicable(enemy);
-                } else {
-                    this.lostEnergy();
-                }
+                } else { this.lostEnergy(); }
             }
         });
     }
@@ -125,14 +124,15 @@ class World {
      * @param {Array} enemy Array for enemies (new Chicken(), new ChickenSmall(), new Endboss)
      */
     isSplicable(enemy) {
-        setTimeout(() => {
-            if (enemy instanceof Endboss) {
-                enemy.splicable = false;
-            } else {
-                enemy.splicable = true;
-                this.level.enemies = this.level.enemies.filter(enemy => !enemy.splicable);
-            }
-        }, 10);
+        if (enemy instanceof Endboss) {
+            enemy.splicable = false;
+        } else {
+            enemy.isDead = true;
+            enemy.playDeathAnimation();
+            setTimeout(() => {
+                this.level.enemies = this.level.enemies.filter(e => e !== enemy);
+            }, 1000);
+        }
     }
 
     /**

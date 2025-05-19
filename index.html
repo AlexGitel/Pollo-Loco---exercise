@@ -60,7 +60,7 @@
                         <span> < = Left / Right = ></span>
                     </div>
                     
-                    <div class="playBtn pointer" onclick="startGame()">Play</div>
+                    <div id="start-btn-desktop" class="playBtn pointer" onclick="startGame()">Play</div>
                 </div> 
 
                 <!-- Section about controls buttons (startscreen mobile) -->
@@ -71,7 +71,7 @@
                         <div class="info-icons-div"><img class="info-icon-bottle" src="assets/icons/bottle.png" alt="bottle-icon"> = Throw</div>
                         <div class="info-icons-div"><img class="info-icon-arrow" style="transform: rotate(-90deg);" src="assets/icons/arrow.png" alt="arrow-icon"> = Jump</div>
                     </div>
-                    <div class="playBtn pointer" onclick="startGame()">Play</div>
+                    <div id="start-btn-mobile" class="playBtn pointer" onclick="startGame()">Play</div>
                 </div> 
 
                 <a href="imprint.html">Impressum</a>
@@ -131,6 +131,9 @@
                 
                 window.addEventListener("resize", checkOrientation);
                 window.addEventListener("orientationchange", checkOrientation);
+
+                document.getElementById('start-btn-desktop')?.addEventListener('click', () => {startGame();});
+                document.getElementById('start-btn-mobile')?.addEventListener('click', () => {startGame();});
             </script>
     </body>
 </html>

@@ -30,19 +30,31 @@ class ChickenSmall extends MovableObject {
         this.speed = 0.3 + Math.random() * 0.25;
         this.animateChicken();
         this.splicable = false;
+        this.imageDead = 'assets/img/3_enemies_chicken/chicken_small/2_dead/dead.png';
+        this.isDead = false;
     }
 
     /**
      * chicken get moving to the left
      */
     animateChicken() {
-        setStoppableInterval(() => {
+        this.moveInterval = setStoppableInterval(() => {
             this.moveLeft();
         }, 1000 / 70);
 
-        setStoppableInterval(() => {
+        this.walkingInterval = setStoppableInterval(() => {
             this.animateImages(this.IMAGES_WALKING);
         }, 250);
     }
 
+    /**
+     * dead animation of chicken if is dead (image bevor removing)
+     */
+    playDeathAnimation() {
+        this.isDead = true;
+        this.speed = 0;
+        clearInterval(this.moveInterval);
+        clearInterval(this.walkingInterval);
+        this.img.src = this.imageDead;
+    }
 }
