@@ -51,9 +51,9 @@ function startGame() {
     document.getElementById('start-screen').classList.add('d-none');
     initLevel();
     init();
-    // if (!isMuted) {
-    //     playAudio(backgroundMusic);
-    // }
+    if (!isMuted) {
+        playAudio(backgroundMusic);
+    }
 }
 
 /**
@@ -63,9 +63,6 @@ function init() {
     canvas = document.getElementById('canvas');
     ctx = canvas.getContext('2d');
     world = new World(canvas, keyboard);
-    if (!isMuted) {
-        playAudio(backgroundMusic);
-    }
 }
 
 /**

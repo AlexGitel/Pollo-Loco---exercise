@@ -42,9 +42,7 @@ class Character extends MovableObject {
     IMAGES_FALLING_DOWN = [
         'assets/img/2_character_pepe/3_jump/J-35.png',
         'assets/img/2_character_pepe/3_jump/J-36.png',
-        'assets/img/2_character_pepe/3_jump/J-37.png',
-        'assets/img/2_character_pepe/3_jump/J-38.png',
-        'assets/img/2_character_pepe/1_idle/idle/I-1.png'
+        'assets/img/2_character_pepe/3_jump/J-37.png'
     ];
 
     IMAGES_WALKING = [
@@ -57,7 +55,6 @@ class Character extends MovableObject {
     ];
 
     IMAGES_JUMPING = [
-        'assets/img/2_character_pepe/3_jump/J-32.png',
         'assets/img/2_character_pepe/3_jump/J-33.png',
         'assets/img/2_character_pepe/3_jump/J-34.png',
         'assets/img/2_character_pepe/3_jump/J-35.png',
@@ -89,6 +86,7 @@ class Character extends MovableObject {
     ];
 
     wasWalking = false;
+    fallCounter = 0;
     inactiveState = 0;
     idleAnimationCounter = 0;
     sleepTimeCounter = 0;
@@ -136,6 +134,7 @@ class Character extends MovableObject {
     * if character has no moving, hi get a nap
     */
     characterFallingDown() {
+        this.fallCounter++;
         let fallingDown = setInterval(() => {
             if (this.isAboveGround()) {
                 this.animateImages(this.IMAGES_FALLING_DOWN);

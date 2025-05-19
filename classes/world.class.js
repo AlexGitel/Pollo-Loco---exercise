@@ -131,7 +131,7 @@ class World {
             enemy.playDeathAnimation();
             setTimeout(() => {
                 this.level.enemies = this.level.enemies.filter(e => e !== enemy);
-            }, 1000);
+            }, 1500);
         }
     }
 
