@@ -100,17 +100,17 @@ class Character extends MovableObject {
 
     constructor() {
         super();
+        this.loadImages(this.IMAGES_FALLING_DOWN);
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_GET_A_NAP);
-        this.loadImages(this.IMAGES_FALLING_DOWN);
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_JUMPING);
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_HURT);
         this.loadImage(this.IMAGES_GAME_OVER);
         this.applyGravity();
-        this.updateAnimationCharacter();
         this.characterFallingDown();
+        this.updateAnimationCharacter();
     }
 
     /**
@@ -134,7 +134,6 @@ class Character extends MovableObject {
     * if character has no moving, hi get a nap
     */
     characterFallingDown() {
-        this.fallCounter++;
         let fallingDown = setInterval(() => {
             if (this.isAboveGround()) {
                 this.animateImages(this.IMAGES_FALLING_DOWN);
@@ -144,7 +143,7 @@ class Character extends MovableObject {
                 clearInterval(fallingDown);
                 this.fallingDown = false;
             }
-        }, 60);
+        }, 260);
     }
 
     /**
@@ -175,7 +174,7 @@ class Character extends MovableObject {
                 this.animateImages(this.IMAGES_IDLE);
             }
         }
-        if (this.sleepTimeCounter >= 190) {
+        if (this.sleepTimeCounter >= 200) {
             this.inactiveState = 0;
             this.idleAnimationCounter = 0;
             this.playNapAnimation();

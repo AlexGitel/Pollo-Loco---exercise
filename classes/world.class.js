@@ -129,6 +129,7 @@ class World {
         } else {
             enemy.isDead = true;
             enemy.playDeathAnimation();
+            stopAudio(squashing_sound);
             setTimeout(() => {
                 this.level.enemies = this.level.enemies.filter(e => e !== enemy);
             }, 1500);
@@ -221,7 +222,7 @@ class World {
             for (let i = this.level.enemies.length - 1; i >= 0; i--) {
                 let enemy = this.level.enemies[i];
                 if (bottle.isColliding(enemy)) {
-                    this.enemyConsequences(enemy, i);
+                    this.enemyConsequences(enemy);
                 }
             }
         });
@@ -232,14 +233,12 @@ class World {
      * @param {Object} - each enemy that got hit
      * @param {number} - index of the enemy
      */
-    enemyConsequences(enemy, i) {
+    enemyConsequences(enemy) {
         enemy.hit();
         this.statusbarEndboss.setPercentage(enemy.energy);
         enemy.damaged();
         if (enemy instanceof Chicken || enemy instanceof ChickenSmall) {
-            setTimeout(() => {
-                this.level.enemies.splice(i, 1)
-            }, 10);
+            this.isSplicable(enemy);
         }
     }
 

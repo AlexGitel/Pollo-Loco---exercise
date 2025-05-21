@@ -132,13 +132,8 @@ function updateMuteButtons(muted) {
 function getMuteStatus() {
     const muted = localStorage.getItem('muted');
     isMuted = muted === 'true';
-    if (!isMuted) {
-        const savedPosition = parseFloat(localStorage.getItem('pausedPosition')) || 0;
-        backgroundMusic.currentTime = savedPosition;
-        playAudio(backgroundMusic);
-    } else {
-        stopAudio(backgroundMusic);
-    }
+    localStorage.removeItem('pausedPosition');
+
     updateMuteButtons(isMuted);
 }
 
