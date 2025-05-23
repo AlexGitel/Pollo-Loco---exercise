@@ -174,7 +174,7 @@ class Character extends MovableObject {
                 this.animateImages(this.IMAGES_IDLE);
             }
         }
-        if (this.sleepTimeCounter >= 200) {
+        if (this.sleepTimeCounter >= 300) {
             this.inactiveState = 0;
             this.idleAnimationCounter = 0;
             this.playNapAnimation();

@@ -38,9 +38,8 @@ class ThrowableObject extends MovableObject {
             this.flightLeft();
 
             if (!this.isAboveGround()) {
-                this.playSplashAnimation();
                 stopAudio(throw_bottle_sound);
-                playAudio(burst_sound);
+                this.playSplashAnimation();
                 clearInterval(flyTime);
             }
         }, 25);
@@ -72,6 +71,7 @@ class ThrowableObject extends MovableObject {
     * Plays the splash animation of the bottle
     */
     playSplashAnimation() {
+        playAudio(burst_sound);
         let index = 0;
         setStoppableInterval(() => {
             if (index < this.BOTTLES_SPLASHING.length) {

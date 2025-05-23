@@ -51,7 +51,6 @@ class Chicken extends MovableObject {
      * dead animation of chicken if is dead (image bevor removing)
      */
     playDeathAnimation() {
-        this.isDead = true;
         this.speed = 0;
         clearInterval(this.moveInterval);
         clearInterval(this.walkingInterval);

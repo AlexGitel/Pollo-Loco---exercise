@@ -129,7 +129,6 @@ class World {
         } else {
             enemy.isDead = true;
             enemy.playDeathAnimation();
-            stopAudio(squashing_sound);
             setTimeout(() => {
                 this.level.enemies = this.level.enemies.filter(e => e !== enemy);
             }, 1500);
@@ -219,10 +218,15 @@ class World {
      */
     bottleHitEnemy() {
         this.throwableObject.forEach((bottle) => {
+            if (bottle.alreadyHit) return;
             for (let i = this.level.enemies.length - 1; i >= 0; i--) {
                 let enemy = this.level.enemies[i];
                 if (bottle.isColliding(enemy)) {
+                    setTimeout(() => {
+                        bottle.alreadyHit = true;
+                    }, 100);
                     this.enemyConsequences(enemy);
+                    break;
                 }
             }
         });
@@ -249,6 +253,9 @@ class World {
         if (this.character.bottlesAmount <= 100) {
             this.statusbarBottles.setPercentage(this.character.bottlesAmount);
         }
+        // if (this.character.bottlesAmount <= 0 && this.statusbarEndboss.percentage > 0) {
+        //     showYouLost();
+        // }
     }
 
     /**

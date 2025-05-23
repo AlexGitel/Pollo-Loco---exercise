@@ -103,7 +103,7 @@ class MovableObject extends DrawableObject {
     */
     hit() {
         if (this instanceof Endboss) {
-            this.energy -= 1;
+            this.energy -= 4.5;
         } else if (this instanceof Character) {
             this.energy -= 0.5;
             this.lastHit = new Date().getTime();

@@ -65,7 +65,7 @@ class Endboss extends MovableObject {
         let counter = 0;
         let maxRepeat = 6;
         let intervalTime = setInterval(() => {
-            if (this.world.character.x >= 2300) {
+            if (this.world.character.x >= 2200) {
                 stopAudio(gameStartAudio);
                 playAudio(shock);
                 playAudio(endboss_alert);
