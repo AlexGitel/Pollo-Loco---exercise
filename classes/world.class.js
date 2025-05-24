@@ -253,9 +253,11 @@ class World {
         if (this.character.bottlesAmount <= 100) {
             this.statusbarBottles.setPercentage(this.character.bottlesAmount);
         }
-        // if (this.character.bottlesAmount <= 0 && this.statusbarEndboss.percentage > 0) {
-        //     showYouLost();
-        // }
+        if (this.statusbarBottles.percentage <= 0 && this.level.bottles <= 0) {
+            setTimeout(() => {
+                showYouLost();
+            }, 2000);
+        }
     }
 
     /**
