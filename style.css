@@ -53,8 +53,11 @@ body {
 
 .playBtn {
     background-color: transparent;
-    border: none;
     font-size: large;
+    border: 2px solid black;
+    padding: 0px 5px;
+    border-radius: 12px;
+    display: inline-block;
 }
 
 .game-over-img {
@@ -313,7 +316,7 @@ canvas {
     }
 
     a {
-        font-size: xx-small;
+        font-size: small;
     }
 }
 
