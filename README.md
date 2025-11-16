@@ -4,6 +4,8 @@ This project was created as part of a training course and serves as an exercise 
 It is a 2D jump-and-run game where you help Pepe collect items, defeat enemies, and ultimately beat the final boss.
 
 
+
+
 🎮 Game Description
 
 Your task is to defeat the final boss. Pepe can jump and throw bottles.
@@ -12,6 +14,8 @@ You can also defeat them by throwing bottles — but use them wisely, because th
 
 The final boss barely reacts to jumps, so bottles are the only way to deal real damage.
 Collect more bottles and coins along the way to prepare for the final fight.
+
+
 
 
 ⭐ Features
@@ -29,6 +33,9 @@ Sound effects for actions and hits
 Animated background and parallax scrolling
 
 Clean object-oriented code structure (classes for player, enemies, objects, world)
+
+
+
 
 🕹️ Controls
 Key	Action
