@@ -8,8 +8,8 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 ## 🐔 Jump, Run & Throw – Game Project
 
-This project was created as part of a training course and serves as an exercise in object-oriented JavaScript.
-It is a 2D jump-and-run game where you help Pepe collect items, defeat enemies, and ultimately beat the final boss.
+This project was created as part of a training course by Developer Akademie Munich, and serves as an exercise in object-oriented JavaScript.
+It is a 2D jump-and-run game, where you help Pepe collect items, defeat enemies, and ultimately beat the final boss.
 
 ## 🎮  Game Description
 
