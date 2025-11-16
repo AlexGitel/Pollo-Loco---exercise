@@ -6,12 +6,12 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload
 
-## 🐔 Jump, Run & Throw – OOP Game Project
+## 🐔 Jump, Run & Throw – Game Project
 
 This project was created as part of a training course and serves as an exercise in object-oriented JavaScript.
 It is a 2D jump-and-run game where you help Pepe collect items, defeat enemies, and ultimately beat the final boss.
 
-## 🎮 Game Description
+## 🎮  Game Description
 
 Your task is to defeat the final boss. Pepe can jump and throw bottles.
 Jumping allows you to eliminate smaller enemies like Chicken and Chicken Small.
