@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload.
 
 ## 🐔 Jump, Run & Throw – Game Project
 
@@ -22,19 +22,19 @@ Collect more bottles and coins along the way to prepare for the final fight.
 
 ## ⭐ Features
 
-Animated player character (running, jumping, throwing)
+Animated player character (running, jumping, throwing).
 
-Multiple enemy types with different behaviors
+Multiple enemy types with different behaviors.
 
-Bottle throwing mechanic
+Bottle throwing mechanic.
 
-Collectible items such as coins and bottles
+Collectible items such as coins and bottles.
 
-Sound effects for actions and hits
+Sound effects for actions and hits.
 
-Animated background and parallax scrolling
+Animated background and parallax scrolling.
 
-Clean object-oriented code structure (classes for player, enemies, objects, world)
+Clean object-oriented code structure (classes for player, enemies, objects, world).
 
 ## 🕹️ Controls
 
@@ -47,17 +47,14 @@ Clean object-oriented code structure (classes for player, enemies, objects, worl
 
 ## 🚀 Installation & Start
 
-Clone or download the repository
+Clone or download the repository.
 
-Open the project folder
+Open the project folder.
 
 Start a simple local web server, for example:
 
-npx serve
+ng serve --open
 
+or use Live Server in VS Code.
 
-or use Live Server in VS Code
-
-Open index.html in your browser
-
-Enjoy the game 🎉
+Enjoy the game! 🎉
